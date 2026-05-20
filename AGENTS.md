@@ -1,294 +1,259 @@
-# Navfolio / AI-Native Blog System
+# Navfolio Agent Guide
 
-This project is an AI-native personal blog and digital garden built with Astro.
+Navfolio is an Astro-first personal blog, digital garden, and AI-native editorial space. The product direction is content-first: calm reading, lightweight interaction, notebook-like atmosphere, and implementation-friendly structure.
 
-The project focuses on:
-
-- article-first reading experience
-- subtle and lightweight interaction
-- notebook-like visual atmosphere
-- calm and restrained aesthetics
-- implementation-friendly layouts
-- modular AI-assisted development
-
-The UI should feel:
+The interface should feel:
 
 - soft but structured
-- expressive but not noisy
-- dynamic but not exaggerated
+- expressive but quiet
+- dynamic but restrained
 - lightweight like GitHub
 - readable like a notebook
-- slightly playful in motion
+- personal and editorial, not commercial
 
 Avoid:
 
-- over-designed visuals
-- heavy shadows
-- excessive gradients
-- strong neumorphism
-- visually noisy decorations
-- oversized floating animations
-- random UI invention
-- inconsistent spacing systems
+- generic AI-generated layouts
+- SaaS landing page patterns
+- heavy shadows or strong neumorphism
+- excessive gradients and decorative noise
+- oversized animations or restless motion
+- inconsistent spacing, color, and typography systems
 
----
+## Repository Sources of Truth
 
-# Development Philosophy
-
-This repository uses an AI-collaborative architecture.
-
-The project is organized into:
+Agent guidance lives in `.agents/`.
 
 ```txt
-.agent/
+.agents/
 ├─ skills/
 ├─ plans/
 ├─ reviewers/
 └─ workflows/
 ```
 
-Definitions:
+Use these folders before making code changes:
 
-- `skills/`
-  Visual language, UI personality, motion style, spacing, aesthetic constraints.
+- `.agents/workflows/` defines how to work.
+- `.agents/plans/` defines product behavior and feature requirements when present.
+- `.agents/skills/` defines visual language, typography, surface treatment, and motion.
+- `.agents/reviewers/` defines final self-review standards.
 
-- `plans/`
-  Product logic, interaction behavior, state rules, system requirements.
+If a matching plan does not exist, do not block. Infer the smallest reasonable behavior from the user request and existing code, then keep the implementation narrow.
 
-- `reviewers/`
-  Self-review standards for UI quality, accessibility, consistency, and performance.
+## Required Agent Flow
 
-- `workflows/`
-  Development processes and engineering conventions.
+Before coding:
 
-Always treat these folders as the primary source of truth.
+1. Identify the task type.
+2. Read the matching workflow in `.agents/workflows/`.
+3. Read related plans in `.agents/plans/` if present.
+4. Read only the relevant visual skills in `.agents/skills/`.
+5. Inspect existing routes, layouts, components, utilities, styles, and content sources.
+6. Implement the smallest complete change.
+7. Run the relevant reviewer checklists from `.agents/reviewers/`.
+8. Verify with Bun commands.
+9. Summarize what changed and what was verified.
 
----
+Do not jump straight into coding for visual or product changes. First understand the local pattern and the intended behavior.
 
-# Required Workflow Before Coding
+## Workflow Selection
 
-Before implementing any feature:
+Use these workflows as the primary operating instructions:
 
-1. Read related documents under `.agent/plans/`
-2. Read related visual skills under `.agent/skills/`
-3. Follow reviewer constraints under `.agent/reviewers/`
-4. Keep implementation modular and composable
-5. Prefer simple architecture over abstraction-heavy patterns
+- `.agents/workflows/implement-feature.md` for new pages, components, content behavior, interactions, or configuration.
+- `.agents/workflows/fix-bug.md` for broken behavior, regressions, rendering issues, routing problems, CSS bugs, or build failures.
+- `.agents/workflows/redesign-page.md` for visual redesign, layout improvements, hierarchy, motion, or responsive polish.
+- `.agents/workflows/refactor-component.md` for restructuring code while preserving behavior.
+- `.agents/workflows/review-before-submit.md` before final response, commit, or PR.
 
-Do not immediately start coding without understanding the related plans and skills.
+When a task spans multiple categories, follow the workflow for the primary risk first, then apply `review-before-submit.md`.
 
----
+## Plans Usage
 
-# Visual Design Principles
+`.agents/plans/` is for product logic and behavior contracts:
 
-The project follows these visual rules:
+- page responsibilities
+- feature requirements
+- interaction rules
+- state behavior
+- content model expectations
+- accepted constraints and non-goals
 
-## Layout
+When implementing from a plan:
 
-- Prefer clean grid systems
-- Maintain stable spacing rhythm
-- Avoid chaotic asymmetry
-- Responsive behavior must feel intentional
-- Desktop and mobile layouts should share the same visual language
+- Treat the plan as the behavioral source of truth.
+- Prefer code that directly expresses the plan instead of adding broad abstractions.
+- If the plan conflicts with existing code, preserve existing behavior unless the user request clearly asks to change it.
+- If the plan is missing or incomplete, make a small implementation assumption and state it in the final response when relevant.
 
-## Cards
+## Skills Usage
 
-Cards should resemble GitHub-style lightweight grouping:
+Use only the skills that match the change:
 
-- extremely subtle borders
-- minimal shadow usage
-- soft separation instead of strong elevation
-- calm background contrast
-- avoid thick outlines
+- `quietfolio` for calm editorial pages, long-form reading, layout rhythm, restrained color, and subtle motion.
+- `github-soft-surface` for cards, borders, surfaces, quiet hover states, and GitHub-like grouping.
+- `blog-visual-style` for typography, Maple Mono, LXGW WenKai, metadata, code text, and article reading.
 
-## Motion
+Skills are not decorative inspiration. They are implementation constraints. Reuse their rules through CSS variables, existing components, and local layout patterns.
 
-Motion should feel:
+## Reviewer Usage
 
-- soft
-- restrained
-- low-amplitude
-- slightly alive
+Use reviewers as final checklists:
+
+- `ai-drift-review.md` for avoiding generic AI/template output.
+- `anti-saas-review.md` for avoiding product-marketing tone.
+- `article-page-review.md` for article reading pages and TOC.
+- `homepage-review.md` for homepage structure and atmosphere.
+- `editorial-review.md` for writing-first flow.
+- `typography-review.md` for line length, hierarchy, and rhythm.
+- `spacing-review.md` for whitespace consistency.
+- `surface-review.md` for borders, cards, and shadows.
+- `color-review.md` for muted palette discipline.
+- `motion-review.md` for calm, low-amplitude motion.
+- `mobile-review.md` for small-screen reading comfort.
+- `visual-density-review.md` for low visual pressure.
+
+Apply the reviewers that match the touched surface. Do not mechanically run every checklist for every tiny code change.
+
+## Astro and Code Conventions
+
+This project is Astro-first.
+
+Prefer:
+
+- Astro components for UI composition
+- TypeScript for utilities and client scripts
+- content collections for structured content
+- CSS variables and existing global tokens
+- server-rendered markup by default
+- partial hydration only where interactivity requires it
+- small, composable components
+- simple data flow over abstraction-heavy patterns
 
 Avoid:
 
-- bouncing
-- elastic animations
-- large parallax movement
-- dramatic hover transforms
+- introducing heavy frameworks without a clear need
+- client-side hydration for static UI
+- broad rewrites during focused tasks
+- one-off style systems when tokens already exist
+- hidden global behavior that is hard to trace
 
-Preferred motion:
+Important paths:
 
-- opacity fade
-- subtle translate
-- soft scale
-- smooth active-state interpolation
+- `src/pages/` for routes
+- `src/layouts/` for page shells
+- `src/components/` for reusable UI
+- `src/styles/global.css` for global styles and tokens
+- `src/content.config.ts` and `src/content/` for content collections
+- `src/utils/` for shared behavior
+- `src/data/site.ts` and `src/config/site.toml` for site data/config
 
-## Typography
+## Visual Principles
 
-Typography is content-first.
+Layout:
 
-Requirements:
+- Use clean grids and stable spacing rhythm.
+- Keep desktop and mobile visually related.
+- Avoid chaotic asymmetry.
+- Preserve reading flow over decorative composition.
 
-- strong readability
-- stable vertical rhythm
-- avoid oversized headings
-- avoid decorative typography
-- preserve calm reading flow
+Cards and surfaces:
 
-Article content is the visual center of the page.
+- Use subtle borders.
+- Use shadows sparingly and lightly.
+- Prefer soft separation over strong elevation.
+- Avoid nested cards and heavy boxed sections.
 
----
+Motion:
 
-# Interaction Principles
+- Prefer opacity, subtle translate, and soft scale.
+- Keep hover movement low-amplitude.
+- Avoid bouncing, elastic movement, dramatic parallax, and flashy entrances.
+- Use motion to clarify state, not to attract attention.
 
-Interactions should prioritize:
+Typography:
 
-- reading continuity
-- low cognitive load
-- subtle feedback
-- stable positioning
-- predictable behavior
+- Article content is the visual center.
+- Keep line length and line-height comfortable.
+- Use stable heading rhythm.
+- Avoid oversized headings inside compact UI.
+- Use `blog-visual-style` rules when touching fonts or article typography.
 
-Do not create interaction effects that distract from article reading.
+## TOC and Reading Position
 
----
-
-# TOC (Table of Contents) Principles
-
-The article TOC is a reading-position indicator, not decorative navigation.
+The article TOC is a reading-position indicator, not decoration.
 
 Requirements:
 
 - sync active state with article scroll position
-- clicking TOC items smoothly navigates to headings
-- active heading updates in real time
-- active state should feel lightweight and calm
-- use IntersectionObserver instead of heavy scroll calculations
+- smoothly navigate when clicking TOC items
+- update active heading in real time
+- keep active state lightweight and calm
+- use `IntersectionObserver`
 
 Avoid:
 
-- scroll-jank
-- aggressive animations
-- excessive active indicators
+- scroll polling
+- scroll jank
+- aggressive active indicators
 - flashing transitions
 
----
-
-# Performance Principles
+## Performance Principles
 
 Performance is part of the design quality.
 
-Always prefer:
+Prefer:
 
-- IntersectionObserver over scroll polling
-- transform/opacity animations over layout-triggering properties
+- `IntersectionObserver` over scroll listeners
+- transform/opacity animations over layout-triggering animation
 - lightweight DOM structures
 - minimal re-rendering
-- implementation simplicity
+- minimal client hydration
+- simple utility functions over dependency additions
 
 Avoid:
 
-- expensive scroll listeners
 - layout thrashing
-- unnecessary observers
+- expensive scroll calculations
 - oversized component trees
-- excessive client-side hydration
+- unnecessary observers
+- dependency additions for small local behavior
 
-Prefer Astro islands and partial hydration whenever possible.
+## Bun Commands
 
----
+Use Bun for this repository. Do not write npm, pnpm, or yarn commands unless explicitly requested.
 
-# Astro Conventions
+Common commands:
 
-This project is Astro-first.
-
-Preferred stack:
-
-- Astro
-- TypeScript
-- minimal client hydration
-- content collections
-- CSS variables
-- modular components
-
-Avoid introducing heavy frameworks unless necessary.
-
----
-
-# Mobile Design Principles
-
-Mobile experience is equally important.
-
-Requirements:
-
-- touch-friendly spacing
-- stable scrolling
-- lightweight motion
-- avoid overcrowded layouts
-- preserve reading comfort
-
-Mobile interactions may become:
-
-- card-stack style
-- swipe-based sections
-- collapsible TOC
-- floating utility actions
-
-But should remain implementation-friendly.
-
----
-
-# AI Collaboration Rules
-
-When implementing:
-
-- follow existing design language
-- do not invent unrelated visual styles
-- preserve consistency across pages
-- reuse spacing/motion systems
-- keep components composable
-
-When uncertain:
-
-- prioritize simplicity
-- prioritize readability
-- prioritize consistency
-- prioritize maintainability
-
-Do not optimize prematurely.
-
----
-
-# Self Review Requirements
-
-Before completing implementation, self-check:
-
-- Is the UI visually lighter or heavier than existing pages?
-- Are shadows too noticeable?
-- Is spacing still consistent?
-- Does motion feel calm?
-- Is reading experience uninterrupted?
-- Is mobile behavior coherent?
-- Does the feature feel integrated into the existing system?
-
-If not, refine before final output.
-
----
-
-# Desired Feeling
-
-The final experience should feel like:
-
-- a calm digital notebook
-- an AI-native personal space
-- a modern developer journal
-- soft structured minimalism
-- subtle emotional motion
-- readable and intentional
-
-The design should feel memorable through restraint, not complexity.
-
+```bash
+bun install
+bun run dev
+bun run build
+bun run preview
+bun run format
+bun run format:check
 ```
 
-```
+Verification guidance:
+
+- Run `bun install` only when dependencies changed or are missing.
+- Run `bun run build` after meaningful code, route, content schema, or Astro config changes.
+- Run `bun run format:check` before final review when formatting may have changed.
+- Run `bun run dev` when manual browser verification is needed.
+
+## Final Self-Check
+
+Before finishing, confirm:
+
+- The newest user request is answered.
+- The relevant workflow was followed.
+- Related plans were checked when available.
+- Relevant skills and reviewers were applied.
+- The UI remains calm, readable, and integrated.
+- Mobile behavior is coherent.
+- Motion is subtle and useful.
+- Build/format checks were run when appropriate.
+- Any unverified areas are stated honestly.
+
+The best Navfolio change should feel memorable through restraint, not complexity.
