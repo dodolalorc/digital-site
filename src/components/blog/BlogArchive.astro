@@ -55,7 +55,10 @@ function getPageHref(pageNumber: number) {
     {
       page.data.map((post, index) => (
         <li class="post-item">
-          <a class="post-link" href={withBase(`/blog/${post.id}/`)}>
+          <a
+            class:list={['post-link', { 'without-thumb': !post.data.heroImage }]}
+            href={withBase(`/blog/${post.id}/`)}
+          >
             <div class="post-copy">
               <div>
                 <span class="post-index">{String(postOffset + index + 1).padStart(2, '0')}</span>
@@ -167,6 +170,12 @@ function getPageHref(pageNumber: number) {
     transform: translateY(-1px);
   }
 
+  .post-link.without-thumb,
+  .post-item:first-child .post-link.without-thumb {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+  }
+
   .post-copy {
     position: relative;
     z-index: 1;
@@ -188,6 +197,10 @@ function getPageHref(pageNumber: number) {
     color: var(--paper-ink);
     font-size: clamp(1.28rem, 2vw, 1.72rem);
     line-height: 1.24;
+  }
+
+  .post-link.without-thumb .title {
+    max-width: none;
   }
 
   .date {
