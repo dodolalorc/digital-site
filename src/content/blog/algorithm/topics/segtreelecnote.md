@@ -4,6 +4,7 @@ description: "线段树寒假讲义笔记，介绍建树、区间查询、区间
 date: "2024-03-13T13:29:07+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 数据结构
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - 线段树专题
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
