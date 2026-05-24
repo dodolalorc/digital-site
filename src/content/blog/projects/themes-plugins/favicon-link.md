@@ -4,7 +4,11 @@ description: "记录为博客跳转链接添加 favicon 图标的字段设计与
 date: "2025-08-21T01:31:51+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 项目实践
+  - 博客主题
+  - Quartz
+  - 前端
 comments: true
 sidebar:
   enable: true

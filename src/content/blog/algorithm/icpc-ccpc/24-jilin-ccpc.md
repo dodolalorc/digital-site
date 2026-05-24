@@ -4,7 +4,11 @@ description: "2024 吉林省赛补题记录，包含 The Easiest Problem、Recha
 date: "2024-07-05T14:30:27+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 竞赛编程
+  - ICPC/CCPC
+  - 补题记录
 comments: true
 sidebar:
   enable: true
