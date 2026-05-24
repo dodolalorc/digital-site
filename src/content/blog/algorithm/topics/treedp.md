@@ -4,7 +4,11 @@ description: "树形动态规划刷题记录，整理没有上司的舞会、加
 date: "2024-03-09T21:51:07+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 动态规划
+  - 树形DP
+  - 刷题记录
 comments: true
 sidebar:
   enable: true
