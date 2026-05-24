@@ -92,6 +92,10 @@ repo = "dodolalorc/dodolalorc.github.io"
 repo_id = "R_kgDOLYjsRQ"
 category = "Announcements"
 category_id = "DIC_kwDOLYjsRc4Clp7p"
+repo = "dodolalorc/dodolalorc.github.io"
+repo_id = "R_kgDOLYjsRQ"
+category = "Announcements"
+category_id = "DIC_kwDOLYjsRc4Clp7p"
 mapping = "pathname"
 strict = "0"
 reactions_enabled = "1"
@@ -116,6 +120,16 @@ pageview = true
 comment = true
 
 [config.profile]
+name = "dodola"
+handle = "@dodolalorc"
+role = "Developer"
+company = "@bytedance"
+location = "Shenzhen, China"
+email = "dodolalorc@gmail.com"
+website = "https://dodolalorc.cn/"
+github = "https://github.com/dodolalorc"
+meta = "普通小牛马"
+avatar = "https://avatars.githubusercontent.com/u/114007020?v=4"
 name = "dodola"
 handle = "@dodolalorc"
 role = "Developer"
@@ -158,17 +172,27 @@ text = [
   "Ideals Never Tolerate Jeers.",
   "Always able to start.",
   "Ready to move, rebuild, begin.",
+  "Ideals Never Tolerate Jeers.",
+  "Always able to start.",
+  "Ready to move, rebuild, begin.",
 ]
+image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [config.home.intro]
+title = "here is dodola"
+name = "dodola"
 title = "here is dodola"
 name = "dodola"
 body = [
   "我是一个记录开发旅程的写作者和爱好者。",
   "这里更像是一个轻量的个人数字空间，分享技术文章和开发经验。",
   "可以在about页面了解更多。",
+  "我是一个记录开发旅程的写作者和爱好者。",
+  "这里更像是一个轻量的个人数字空间，分享技术文章和开发经验。",
+  "可以在about页面了解更多。",
 ]
+image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [config.home.latest]
@@ -184,9 +208,13 @@ icon = "compass"
 title = "关于本主题"
 subtitle = "A personal dashboard template built with Astro"
 href = "https://github.com/dodolalorc/astro-navfolio"
+title = "关于本主题"
+subtitle = "A personal dashboard template built with Astro"
+href = "https://github.com/dodolalorc/astro-navfolio"
 
 [[config.home.navigation]]
 icon = "pen"
+title = "(水水的)技术博客"
 title = "(水水的)技术博客"
 subtitle = "Essays, notes, and field reports"
 href = "/blog"
@@ -196,9 +224,15 @@ icon = "briefcase"
 title = "简历"
 subtitle = "Coming soon~"
 href = "/"
+title = "简历"
+subtitle = "Coming soon~"
+href = "/"
 
 [[config.home.navigation]]
 icon = "github"
+title = "Open Source Space"
+subtitle = "更多开源小工具"
+href = "https://github.com/navfolio"
 title = "Open Source Space"
 subtitle = "更多开源小工具"
 href = "https://github.com/navfolio"
@@ -270,17 +304,20 @@ tooltip = "https://www.bilibili.com/"
 copy = false
 
 [[config.home.doing]]
-text = "完成 Navfolio 主题 v0.3.0 的定制和优化"
+text = "完成 Navfolio 主题 v0.1.0 的定制和优化"
 mark = "01"
 
 [[config.home.doing]]
+text = "补充更多的博客文章和开发笔记细节"
 text = "补充更多的博客文章和开发笔记细节"
 mark = "02"
 
 [[config.home.doing]]
 text = "CS336 课程学习中"
+text = "CS336 课程学习中"
 mark = "03"
 
 [[config.home.doing]]
+text = "毕业旅行计划安排和执行中"
 text = "毕业旅行计划安排和执行中"
 mark = "04"
