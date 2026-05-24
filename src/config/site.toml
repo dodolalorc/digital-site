@@ -1,10 +1,10 @@
 [config.site]
-title = "navfolio"
-description = "A personal navigation portfolio starter built with Astro."
-pageTitle = "navfolio | Digital Publication Space"
-pageDescription = "A calm AI-native personal publication space for notes, links, and writing."
-repository = "https://github.com/dodolalorc/astro-navfolio"
-footerNote = "Released as an open-source starter."
+title = "dodola"
+description = "记录和分享我的开发者旅程。"
+pageTitle = "dodola | Digital Space"
+pageDescription = "dodola的对外个人数字空间"
+repository = "https://github.com/dodolalorc/"
+footerNote = "© 2026 dodola. All rights reserved."
 
 [config.vibe]
 showTrail = true
@@ -12,7 +12,7 @@ showTrail = true
 [config.theme]
 # Available palettes:
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
-palette = "green-soft"
+palette = "green-vivid"
 
 [config.fonts]
 # 英文与代码感 UI 字体
@@ -49,10 +49,10 @@ maxResults = 6
 postsPerPage = 6
 
 [config.comments.giscus]
-repo = ""
-repo_id = ""
-category = ""
-category_id = ""
+repo = "dodolalorc/dodolalorc.github.io"
+repo_id = "R_kgDOLYjsRQ"
+category = "Announcements"
+category_id = "DIC_kwDOLYjsRc4Clp7p"
 mapping = "pathname"
 strict = "0"
 reactions_enabled = "1"
@@ -77,16 +77,16 @@ pageview = true
 comment = true
 
 [config.profile]
-name = "navfolio"
-handle = "@navfolio"
-role = "A Cat Developer"
-company = "Independent Studio"
-location = "Remote"
-email = "hello@navfolio.site"
-website = "https://astro.navfolio.site/"
-github = "https://github.com/dodolalorc/astro-navfolio"
-meta = "Open-source maintainer"
-avatar = "/images/logo.png"
+name = "dodola"
+handle = "@dodolalorc"
+role = "Developer"
+company = "@bytedance"
+location = "Shenzhen, China"
+email = "dodolalorc@gmail.com"
+website = "https://dodolalorc.cn/"
+github = "https://github.com/dodolalorc"
+meta = "普通小牛马"
+avatar = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [[config.topNav.links]]
 label = "Home"
@@ -113,24 +113,21 @@ layout = "grid"
 
 [config.home.quote]
 text = [
-  "Navigate your world,",
-  "Showcase your story,",
-  "and keep everything in one place.",
+  "Ideals Never Tolerate Jeers.",
+  "Always able to start.",
+  "Ready to move, rebuild, begin.",
 ]
-image = "/images/logo-with-name.png"
+image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [config.home.intro]
-title = "here is navfolio"
-name = "navfolio"
+title = "here is dodola"
+name = "dodola"
 body = [
-  "The name combines \"Navigation\" and \"Portfolio\".",
-  "Navfolio prioritizes lightweight organization, seamless reading, and developer-friendly aesthetics.",
-  "It’s less a resume than a personal OS for your ideas, projects, notes, and online presence.",
-  "这个名字融合了“导航”与“作品集”。",
-  "Navfolio 专注于轻量级组织、流畅的阅读体验，以及对开发者友好的美学设计。",
-  "它不像一份简历，更像是一个属于你自己的个人操作系统——承载想法、项目、笔记与网络足迹。",
+  "我是一个记录开发旅程的写作者和爱好者。",
+  "这里更像是一个轻量的个人数字空间，分享技术文章和开发经验。",
+  "可以在about页面了解更多。",
 ]
-image = "/images/logo-cat.png"
+image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [config.home.latest]
 count = 1
@@ -142,36 +139,36 @@ dateArchiveBaseHref = ""
 
 [[config.home.navigation]]
 icon = "compass"
-title = "Portfolio"
-subtitle = "Selected work and case studies"
-href = "https://astro.navfolio.site/"
+title = "关于本主题"
+subtitle = "A personal dashboard template built with Astro"
+href = "https://github.com/dodolalorc/astro-navfolio"
 
 [[config.home.navigation]]
 icon = "pen"
-title = "Blog"
+title = "(水水的)技术博客"
 subtitle = "Essays, notes, and field reports"
 href = "/blog"
 
 [[config.home.navigation]]
 icon = "briefcase"
-title = "Resume"
-subtitle = "Career profile and experience"
-href = "https://github.com/dodolalorc/navfolio"
+title = "简历"
+subtitle = "Coming soon~"
+href = "/"
 
 [[config.home.navigation]]
 icon = "github"
-title = "Open Source"
-subtitle = "Code, experiments, and tools"
-href = "https://github.com/dodolalorc/astro-navfolio"
+title = "Open Source Space"
+subtitle = "更多开源小工具"
+href = "https://github.com/navfolio"
 
 [[config.home.connect]]
 label = "GitHub"
-href = "https://github.com/dodolalorc/astro-navfolio"
+href = "https://github.com/dodolalorc"
 icon = "github"
 
 [[config.home.connect]]
 label = "Website"
-href = "https://astro.navfolio.site/"
+href = "https://dodolalorc.cn/"
 icon = "compass"
 
 [[config.home.connect]]
@@ -186,25 +183,21 @@ icon = "repo"
 
 [[config.home.connect]]
 label = "Email"
-href = "mailto:hello@navfolio.site"
+href = "mailto:dodolalorc@gmail.com"
 icon = "mail"
 
 [[config.home.doing]]
-text = "Shipping a personal dashboard template"
+text = "完成 Navfolio 主题 v0.1.0 的定制和优化"
 mark = "01"
 
 [[config.home.doing]]
-text = "Writing reusable notes for future projects"
+text = "补充更多的博客文章和开发笔记细节"
 mark = "02"
 
 [[config.home.doing]]
-text = "Improving static-site publishing workflow"
+text = "CS336 课程学习中"
 mark = "03"
 
 [[config.home.doing]]
-text = "Collecting useful developer resources"
+text = "毕业旅行计划安排和执行中"
 mark = "04"
-
-[[config.home.doing]]
-text = "Exploring small open-source ideas"
-mark = "05"
