@@ -4,7 +4,11 @@ description: "2024 牛客寒假营第 2 场补题记录，围绕 Tokitsukaze 系
 date: "2024-02-09T14:46:52+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 竞赛编程
+  - 牛客寒假营
+  - 补题记录
 comments: true
 sidebar:
   enable: true

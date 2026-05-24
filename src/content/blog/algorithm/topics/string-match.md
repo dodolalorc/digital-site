@@ -4,7 +4,11 @@ description: "字符串匹配专题笔记，整理暴力匹配、前缀函数、
 date: "2024-01-05T14:11:58+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 字符串
+  - KMP
+  - 字符串哈希
 comments: true
 sidebar:
   enable: true

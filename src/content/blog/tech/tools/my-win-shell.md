@@ -4,7 +4,11 @@ description: "Windows 终端配置笔记，整理 PowerShell 模块命令、Oh M
 date: "2025-08-23T02:05:47+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 开发工具
+  - Windows
+  - 终端配置
+  - oh-my-posh
 comments: true
 sidebar:
   enable: true

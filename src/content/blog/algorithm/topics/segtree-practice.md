@@ -4,7 +4,11 @@ description: "线段树专题练习记录，围绕扫描线、区间维护等题
 date: "2024-08-16T22:43:59+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 数据结构
+  - 线段树
+  - 刷题记录
 comments: true
 sidebar:
   enable: true

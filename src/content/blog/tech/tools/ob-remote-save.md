@@ -4,7 +4,11 @@ description: "Obsidian 远程同步方案记录，整理 infiniCloud 与 Obsidia
 date: "2026-05-12T15:56:01+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 开发工具
+  - Obsidian
+  - 同步方案
+  - Git
 comments: true
 sidebar:
   enable: true

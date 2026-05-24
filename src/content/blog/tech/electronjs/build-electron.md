@@ -4,7 +4,11 @@ description: "Electron 构建环境记录，整理 Chromium 开发工具、Elect
 date: "2025-04-25T13:27:50+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - Electron
+  - 桌面应用
+  - 构建部署
+  - 脚本
 comments: true
 sidebar:
   enable: true

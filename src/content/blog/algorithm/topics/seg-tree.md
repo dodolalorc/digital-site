@@ -4,7 +4,11 @@ description: "线段树模板笔记，整理线段树的基本结构、建树和
 date: "2024-01-06T21:53:21+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 数据结构
+  - 线段树
+  - 模板
 comments: true
 sidebar:
   enable: true
