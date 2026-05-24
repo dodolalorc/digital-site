@@ -4,7 +4,10 @@ description: "回溯专题刷题笔记，从四色定理背景引入，整理回
 date: "2024-01-03T11:45:58+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 刷题记录
+  - 回溯
 comments: true
 sidebar:
   enable: true
