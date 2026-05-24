@@ -4,7 +4,11 @@ description: "大文件上传下载笔记，整理切片上传的基本术语、
 date: "2025-03-17T13:17:45+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 前端
+  - 文件上传
+  - 网络
+  - 性能优化
 comments: true
 sidebar:
   enable: true

@@ -4,7 +4,11 @@ description: "前端手写代码笔记，整理千分位格式化、深浅拷贝
 date: "2025-03-13T14:08:19+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 前端
+  - JavaScript
+  - 面试题
+  - 代码片段
 comments: true
 sidebar:
   enable: true

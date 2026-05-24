@@ -4,7 +4,11 @@ description: "GitHub Actions 实践笔记，记录 SSH Key、Secrets、workflow 
 date: "2024-07-05T23:11:39+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 开发工具
+  - GitHub Actions
+  - 自动化部署
+  - CI/CD
 comments: true
 sidebar:
   enable: true
