@@ -4,6 +4,7 @@ description: "计算几何模板笔记，整理二维几何中的点线表示、
 date: "2024-03-09T21:54:39+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 计算几何
@@ -12,6 +13,9 @@ categories:
   - 算法
 series:
   - 计算几何专题
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

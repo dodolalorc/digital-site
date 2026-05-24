@@ -4,6 +4,7 @@ description: "2024 牛客暑假多校训练营 Day8 的补题记录，整理 Hai
 date: "2024-08-09T00:26:32+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 竞赛编程
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - 2024 牛客暑假多校训练营
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

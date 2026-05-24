@@ -4,6 +4,7 @@ description: "Windows 终端配置笔记，整理 PowerShell 模块命令、Oh M
 date: "2025-08-23T02:05:47+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 开发工具
   - Windows
@@ -13,6 +14,9 @@ categories:
   - 开发工具
 series:
   - 开发环境配置
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
