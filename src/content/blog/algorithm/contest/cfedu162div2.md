@@ -4,6 +4,7 @@ description: "Educational Codeforces Round 162 Div.2 的补题记录，整理 Mo
 date: "2024-02-29T14:57:07+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 竞赛编程
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - Codeforces 补题记录
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

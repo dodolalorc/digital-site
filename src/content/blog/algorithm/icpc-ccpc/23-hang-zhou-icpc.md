@@ -4,6 +4,7 @@ description: "2023 杭州 ICPC 区域赛补题记录，整理 Snake Move 和 Mys
 date: "2024-11-23T18:51:44+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 竞赛编程
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - ICPC/CCPC 补题记录
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

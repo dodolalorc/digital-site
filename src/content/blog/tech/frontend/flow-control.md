@@ -4,6 +4,7 @@ description: "前端流量控制笔记，整理防抖、节流、请求队列等
 date: "2025-03-17T11:40:19+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 前端
   - JavaScript
@@ -13,6 +14,9 @@ categories:
   - 前端
 series:
   - 前端性能优化
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

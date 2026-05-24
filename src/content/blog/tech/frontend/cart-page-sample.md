@@ -4,6 +4,7 @@ description: "购物车页面制作教程，围绕需求分析、整体布局、
 date: "2024-07-06T19:16:27+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 前端
   - 页面实现
@@ -13,6 +14,9 @@ categories:
   - 前端
 series:
   - 页面实现案例
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

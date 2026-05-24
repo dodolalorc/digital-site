@@ -4,6 +4,7 @@ description: "记录为最近笔记列表添加排序和筛选功能的配置方
 date: "2025-08-02T03:55:35+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 项目实践
   - 博客主题
@@ -13,6 +14,9 @@ categories:
   - 项目实践
 series:
   - 博客主题改造
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
