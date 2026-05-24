@@ -4,6 +4,7 @@ description: "字符串匹配专题笔记，整理暴力匹配、前缀函数、
 date: "2024-01-05T14:11:58+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 字符串
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - 字符串算法专题
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

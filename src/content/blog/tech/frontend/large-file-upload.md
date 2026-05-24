@@ -4,6 +4,7 @@ description: "大文件上传下载笔记，整理切片上传的基本术语、
 date: "2025-03-17T13:17:45+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 前端
   - 文件上传
@@ -13,6 +14,9 @@ categories:
   - 前端
 series:
   - 前端性能优化
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

@@ -4,6 +4,7 @@ description: "关键渲染路径笔记，梳理 DOM、CSSOM、渲染树、布局
 date: "2025-10-09T02:17:10+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 前端
   - 浏览器原理
@@ -13,6 +14,9 @@ categories:
   - 前端
 series:
   - 浏览器原理
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

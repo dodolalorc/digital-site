@@ -4,6 +4,7 @@ description: "Codeforces Round 980 Div.2 的补题记录，整理利率、买柠
 date: "2024-11-26T14:28:27+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 竞赛编程
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - Codeforces 补题记录
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

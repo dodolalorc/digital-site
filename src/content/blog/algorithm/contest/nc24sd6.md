@@ -4,6 +4,7 @@ description: "2024 牛客暑假多校训练营 Day6 的补题记录，整理 Cak
 date: "2024-08-05T10:15:52+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 算法
   - 竞赛编程
@@ -13,6 +14,9 @@ categories:
   - 算法
 series:
   - 2024 牛客暑假多校训练营
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
