@@ -4,7 +4,11 @@ description: "Codeforces Round 931 Div.2 的补题记录，整理极值构造、
 date: "2024-03-13T12:26:22+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 竞赛编程
+  - Codeforces
+  - 补题记录
 comments: true
 sidebar:
   enable: true

@@ -4,7 +4,11 @@ description: "JavaScript 链式调用设计笔记，以 Vue createApp 和 Promis
 date: "2025-03-17T09:26:02+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 前端
+  - JavaScript
+  - 设计模式
+  - Vue
 comments: true
 sidebar:
   enable: true

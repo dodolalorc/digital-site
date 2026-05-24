@@ -4,7 +4,11 @@ description: "线性动态规划刷题记录，整理数字三角形、导弹拦
 date: "2024-03-09T21:47:13+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 动态规划
+  - 线性DP
+  - 刷题记录
 comments: true
 sidebar:
   enable: true
