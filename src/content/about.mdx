@@ -1,6 +1,6 @@
 ---
-title: '关于 navfolio'
-description: '一个安静的 Astro 个人发布空间，用于整合主页、博客、项目文档、Vibe 短记录、搜索和评论系统。'
+title: '关于 dodola'
+description: '欢迎光临某个互联网中的小垃圾筒（'
 date: '2026-05-01T00:00:00+08:00'
 draft: false
 showHeroImage: false
@@ -8,7 +8,7 @@ tags:
   - About
   - Navfolio
   - Personal Site
-comments: false
+comments: true
 sidebar:
   enable: false
   toc: false
@@ -17,72 +17,116 @@ sidebar:
 
 import FriendLinkCard from '../components/mdx/FriendLinkCard.astro';
 
-navfolio 是一个轻量的个人发布起点，适合想把个人资料、常用链接、项目笔记、长文写作和短记录集中到同一处的人。
+欢迎来到 dodola 的博客！本博客从大二时期开始更新，你可以在这里看到大量的旧文章（主要是ACMer时期的算法题解内容），和一些新的文章（主要是关于开发的内容）。
 
-它把个人网站从“静态简历页”转向“可阅读的内容操作面板”：既是公开思考的笔记本，也是身份入口的轻量索引，同时还是可长期积累的写作归档空间。
+如果你对算法题解或开发感兴趣，可以在博客页中找到相关内容。与此同时，今后也会更新一些技术的学习内容、个人的杂文和meme等水水的内容。无论如何，如果你能在这里找到有用的内容。或者想和我交流，可以在文章下方留言，或者通过社媒联系我。
 
-如果这个项目对你有帮助，欢迎在 GitHub 仓库点一个 star：[dodolalorc/astro-navfolio](https://github.com/dodolalorc/astro-navfolio)。
+## 爱好和感兴趣的事情
 
-## 这个空间适合做什么
+嘛嘛我还是很喜欢编程的（虽然技术菜菜的），在本科事情曾把时间大量的花在~提升智力~学习算法上，和开发相关的内容，也希望能一直保持一个积极学习和跟进前沿技术的态度🌷
 
-你可以在这里沉淀长期笔记、文章草稿、项目记录、生活片段，以及那些原本会分散在多个主页与仓库里的上下文信息。
+喜欢看音乐剧！读小说/看电影/看动漫，是一个融不进二次元又不熟悉三次元的2.5次元。
 
-默认内容是示例数据。替换 starter 内容时，通常优先编辑这些位置：
+经常刷新的ip会是深圳（欢迎来深圳的小伙伴们找我玩！）
 
-- `src/config/site.toml`：站点标题、作者资料、导航、首页、主题、搜索和评论配置。
-- `src/content/blog/`：长文、教程和模块使用手册。
-- `src/content/projects/`：项目入口和项目文档。
-- `src/content/vibe/`：更短、更即时的记录。
-- `src/content/about.mdx`：当前这个关于页面。
+## 友链交换！
 
-## 它是如何构建的
+欢迎和我交换友链！
 
-项目采用 Astro-first、内容驱动、默认静态输出的方式。你可以直接编辑 Markdown 和 MDX 内容，将其渲染为文章页面，并部署到 GitHub Pages、Vercel、Netlify、Cloudflare Pages，或任何支持 Astro 构建的平台。
-
-视觉语言刻意保持克制：结构柔和、界面低噪、排版可读，交互也以轻量为主，服务阅读而不打断阅读。
-
-## 当前支持的模块
-
-- 内容集合：博客、项目、About 和 Vibe 都由 Astro Content Collection 管理。
-- 全文搜索：Pagefind 负责构建静态搜索索引，支持 `Ctrl+K` / `Cmd+K`。
-- 评论系统：可在 giscus、utterances、Waline 和关闭状态之间切换。
-- 主题色盘：站点维护者可以在 `site.toml` 中选择内置色盘。
-- MDX 组件：支持友链卡片、长图、轮播和可缩放图片等内容组件。
-- RSS / Sitemap：构建时自动生成，适合静态站点发布。
-
-## 相关链接
+```json
+{
+  "name": "dodola",
+  "url": "https://dodolalorc.cn/",
+  "avatar": "https://avatars.githubusercontent.com/u/114007020?v=4",
+  "bio": "要是人生能像星露谷就好了。✨",
+}
+```
 
 <FriendLinkCard
   items={[
     {
-      name: '主题作者：哆哆啦',
-      url: 'https://dodolalorc.cn/',
-      bio: '项目作者的个人主页',
-      avatar: 'https://avatars.githubusercontent.com/u/114007020?v=4',
+      "name": "dodola",
+      "url": "https://dodolalorc.cn/",
+      "avatar": "https://avatars.githubusercontent.com/u/114007020?v=4",
+      "bio": "要是人生能像星露谷就好了。✨",
     },
     {
-      name: 'Astro',
-      url: 'https://astro.build/',
-      bio: 'Navfolio 的静态站点框架',
-      avatar: 'https://astro.build/assets/press/astro-icon-light-gradient.svg',
+      "name": "思想犯",
+      "url": "https://virgiling.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/71817082?v=4",
+      "bio": "一个活的相对失败的 CSer 😢",
     },
     {
-      name: 'Bun',
-      url: 'https://bun.com/',
-      bio: '项目使用的运行时和包管理工具',
-      avatar: 'https://bun.com/favicon.ico',
+      "name": "Windlinxy",
+      "url": "https://windlinxy.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/80376027?v=4",
+      "bio": "测试岗牛马的失败生活 🐴",
     },
     {
-      name: 'Starlight',
-      url: 'https://starlight.astro.build/',
-      bio: 'Astro 官方文档主题，也是搜索方案的重要参考',
-      avatar: 'https://starlight.astro.build/_astro/hero-star.CRrHICv4_Z1lBjS1.webp',
+      "name": "YorkWu's Blog",
+      "url": "https://wyy.ink/",
+      "avatar": "https://wyy.ink/img/%E5%A4%B4%E5%83%8F.jpg",
+      "bio": "ddl:一个很强的学长QwQ！！👍",
     },
     {
-      name: 'giscus',
-      url: 'https://giscus.app/zh-CN',
-      bio: '基于 GitHub Discussions 的评论系统',
-      avatar: 'https://giscus.app/favicon.ico',
+      "name": "无双",
+      "url": "https://blog.wushuang233.com/",
+      "avatar": "https://blog.wushuang233.com/usr/themes/handsome/assets/img/avatar.jpg",
+      "bio": "ddl:是很强的陈老师！👨‍🏫",
     },
+    {
+      "name": "Roses",
+      "url": "https://rossqaq.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/69858629?v=4",
+      "bio": "NENU 唯一懂 C++ 的人 💻",
+    },
+    {
+      "name": "Steve Paul",
+      "url": "https://gsteve-paul.github.io/",
+      "avatar": "https://avatars.githubusercontent.com/u/120476557?v=4",
+      "bio": "唯一史诗神 👑",
+    },
+    {
+      "name": "Ling_1",
+      "url": "https://ling101w.github.io/",
+      "avatar": "https://ling101w.github.io/me.jpg",
+      "bio": "参见网安爷✌️",
+    },
+    {
+      "name": "artemis",
+      "url": "https://1artemise.github.io/",
+      "avatar": "https://1artemise.github.io/images/%E8%83%8C%E6%99%AF.jpg",
+      "bio": "101的学妹✌️",
+    },
+    {
+      "name": "lvyneko",
+      "url": "https://lvyovo-wiki.tech/",
+      "avatar": "https://lvyovo-wiki.tech/images/blogger/8bef74996f3f1aeb.png",
+      "bio": "ddl强力推荐的高质量高产宝藏博主！💎",
+    },
+    {
+      "name": "一清三白",
+      "url": "https://sanbaiblog.cn/",
+      "avatar": "https://s21.ax1x.com/2025/01/05/pE9CfDU.jpg",
+      "bio": "克己慎独 守心明性",
+    },
+    {
+      "name": "Echo 的小窝",
+      "url": "https://www.liveout.cn/",
+      "avatar": "https://liveout.cn/usr/uploads/pic/icon1.jpg",
+      "bio": "漂泊于互联网中的小窝 🏠",
+    },
+    {
+      "name": "松種小窝",
+      "url": "https://pineseed.cn/",
+      "avatar": "https://pineseed.cn/wp-content/uploads/2024/08/picture.jpg",
+      "bio": "花开又花落，时节暗中迁 🌸",
+    },
+    {
+      "name": "幻雪的博客",
+      "url": "https://huanxueblog.top/",
+      "avatar": "https://testingcf.jsdelivr.net/gh/huanxueshengmou/picture-host/huanxueblog_avatar.webp",
+      "bio": "腐烂于花海，致死于所爱 🌹",
+    }
   ]}
 />
