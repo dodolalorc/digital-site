@@ -4,6 +4,7 @@ description: "Obsidian 远程同步方案记录，整理 infiniCloud 与 Obsidia
 date: "2026-05-12T15:56:01+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 开发工具
   - Obsidian
@@ -13,6 +14,9 @@ categories:
   - 开发工具
 series:
   - Obsidian 工作流
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true

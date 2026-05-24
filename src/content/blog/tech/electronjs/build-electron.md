@@ -4,6 +4,7 @@ description: "Electron 构建环境记录，整理 Chromium 开发工具、Elect
 date: "2025-04-25T13:27:50+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - Electron
   - 桌面应用
@@ -13,6 +14,9 @@ categories:
   - 桌面应用
 series:
   - Electron 构建
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
