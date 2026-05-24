@@ -4,7 +4,11 @@ description: "2024 牛客暑假多校训练营 Day1 的补题记录，围绕 Bit
 date: "2024-07-16T19:36:00+08:00"
 draft: false
 showHeroImage: false
-tags: []
+tags:
+  - 算法
+  - 竞赛编程
+  - 牛客多校
+  - 补题记录
 comments: true
 sidebar:
   enable: true
