@@ -4,6 +4,7 @@ description: "JavaScript 链式调用设计笔记，以 Vue createApp 和 Promis
 date: "2025-03-17T09:26:02+08:00"
 draft: false
 showHeroImage: false
+<<<<<<< HEAD
 tags:
   - 前端
   - JavaScript
@@ -13,6 +14,9 @@ categories:
   - 前端
 series:
   - JavaScript 基础
+=======
+tags: []
+>>>>>>> 9a7dec1 (update personal info)
 comments: true
 sidebar:
   enable: true
