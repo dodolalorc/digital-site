@@ -34,7 +34,7 @@ sidebar:
 
 后来我把思路改成了：
 
-```txt
+```bash
 UI 页面：用字体子集
 文章正文：用系统字体或完整字体
 ```
@@ -55,7 +55,7 @@ UI 页面：用字体子集
 
 扫描范围大概是这些：
 
-```txt
+```bash
 src/pages
 src/components
 src/layouts
@@ -67,7 +67,7 @@ site.toml
 
 生成流程大概是：
 
-```txt
+```bash
 扫描 UI 文本
 提取中文字符
 生成 chars.txt
@@ -109,11 +109,7 @@ UI 层再单独声明这个子集字体：
 
 ```css
 .article-content {
-  font-family:
-    "PingFang SC",
-    "Microsoft YaHei",
-    system-ui,
-    sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
 }
 ```
 
@@ -139,7 +135,7 @@ body {
 
 对博客这类站点来说，我现在更倾向于这个方案：
 
-```txt
+```bash
 界面用子集字体，正文用稳定字体。
 ```
 
