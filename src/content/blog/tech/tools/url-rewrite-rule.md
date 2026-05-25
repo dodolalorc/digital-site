@@ -9,6 +9,10 @@ tags:
   - URL重写
   - 静态资源
   - 部署
+categories:
+  - 前端
+series:
+  - 部署与静态资源
 comments: true
 sidebar:
   enable: true

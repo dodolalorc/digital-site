@@ -9,6 +9,10 @@ tags:
   - 图论
   - 最短路
   - 模板
+categories:
+  - 算法
+series:
+  - 图论专题
 comments: true
 sidebar:
   enable: true

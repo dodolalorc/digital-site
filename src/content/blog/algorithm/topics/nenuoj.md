@@ -8,6 +8,10 @@ tags:
   - 算法
   - 刷题记录
   - NENU OJ
+categories:
+  - 算法
+series:
+  - NENU OJ 刷题记录
 comments: true
 sidebar:
   enable: true

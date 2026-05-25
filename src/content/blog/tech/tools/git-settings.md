@@ -9,6 +9,10 @@ tags:
   - Git
   - SSH
   - 环境配置
+categories:
+  - 开发工具
+series:
+  - 开发环境配置
 comments: true
 sidebar:
   enable: true

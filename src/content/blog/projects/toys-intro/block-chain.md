@@ -8,6 +8,10 @@ tags:
   - 项目实践
   - Rust
   - 区块链
+categories:
+  - 项目实践
+series:
+  - Rust 区块链项目
 comments: true
 sidebar:
   enable: true
