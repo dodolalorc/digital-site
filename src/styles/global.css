@@ -68,8 +68,8 @@
   --font-body: var(--font-mono);
   --font-display: var(--font-mono);
   --font-note: var(--font-mono);
-  --font-article: 'LXGW WenKai Full', 'Maple Mono', var(--font-cjk-system);
-  --font-heading: 'LXGW WenKai Full', 'Maple Mono', var(--font-cjk-system);
+  --font-article: 'Maple Mono', 'LXGW WenKai Full', var(--font-cjk-system);
+  --font-heading: 'Maple Mono', 'LXGW WenKai Full', var(--font-cjk-system);
   --font-meta: var(--font-mono);
   --font-code: var(--font-mono);
   --font-ui-label: var(--font-mono);
