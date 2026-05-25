@@ -9,6 +9,10 @@ tags:
   - 动态规划
   - 区间DP
   - 刷题记录
+categories:
+  - 算法
+series:
+  - 动态规划专题
 comments: true
 sidebar:
   enable: true

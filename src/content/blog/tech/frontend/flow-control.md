@@ -9,6 +9,10 @@ tags:
   - JavaScript
   - 流量控制
   - 性能优化
+categories:
+  - 前端
+series:
+  - 前端性能优化
 comments: true
 sidebar:
   enable: true
