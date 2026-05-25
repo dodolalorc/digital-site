@@ -9,6 +9,10 @@ tags:
   - JavaScript
   - 设计模式
   - Vue
+categories:
+  - 前端
+series:
+  - JavaScript 基础
 comments: true
 sidebar:
   enable: true

@@ -9,6 +9,10 @@ tags:
   - Obsidian
   - GitHub Actions
   - 博客工作流
+categories:
+  - 开发工具
+series:
+  - 自动化发布工作流
 comments: true
 sidebar:
   enable: true

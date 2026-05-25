@@ -8,6 +8,10 @@ tags:
   - 前端
   - 浏览器API
   - MutationObserver
+categories:
+  - 前端
+series:
+  - 浏览器 API
 comments: true
 sidebar:
   enable: true

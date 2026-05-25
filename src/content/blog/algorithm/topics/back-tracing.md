@@ -8,6 +8,10 @@ tags:
   - 算法
   - 刷题记录
   - 回溯
+categories:
+  - 算法
+series:
+  - 回溯专题
 comments: true
 sidebar:
   enable: true

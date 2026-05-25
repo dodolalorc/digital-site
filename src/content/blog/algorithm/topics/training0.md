@@ -9,6 +9,10 @@ tags:
   - 竞赛编程
   - 刷题记录
   - 队内训练
+categories:
+  - 算法
+series:
+  - 队内训练记录
 comments: true
 sidebar:
   enable: true
