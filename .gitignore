@@ -30,5 +30,5 @@ AGENTS.md
 scripts/fonts/ui-chars.txt
 public/fonts/lxgw-ui-subset.woff2
 
-# content docs: https://github.com/dodolalorc/astro-navfolio-docs
+# content docs: https://github.com/navfolio/astro-navfolio-docs
 src/content/
