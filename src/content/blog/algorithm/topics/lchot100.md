@@ -8,6 +8,10 @@ tags:
   - 算法
   - LeetCode
   - 刷题记录
+categories:
+  - 算法
+series:
+  - LeetCode Hot 100
 comments: true
 sidebar:
   enable: true

@@ -9,6 +9,10 @@ tags:
   - 数据结构
   - 线段树
   - 讲义
+categories:
+  - 算法
+series:
+  - 线段树专题
 comments: true
 sidebar:
   enable: true

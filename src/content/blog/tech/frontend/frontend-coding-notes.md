@@ -9,6 +9,10 @@ tags:
   - JavaScript
   - 面试题
   - 代码片段
+categories:
+  - 前端
+series:
+  - 前端手写题
 comments: true
 sidebar:
   enable: true

@@ -8,6 +8,10 @@ tags:
   - 前端
   - CSS
   - 选择器优先级
+categories:
+  - 前端
+series:
+  - CSS 样式基础
 comments: true
 sidebar:
   enable: true

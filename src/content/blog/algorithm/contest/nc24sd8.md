@@ -9,6 +9,10 @@ tags:
   - 竞赛编程
   - 牛客多校
   - 补题记录
+categories:
+  - 算法
+series:
+  - 2024 牛客暑假多校训练营
 comments: true
 sidebar:
   enable: true

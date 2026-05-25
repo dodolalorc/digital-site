@@ -9,6 +9,10 @@ tags:
   - 竞赛编程
   - ICPC/CCPC
   - 补题记录
+categories:
+  - 算法
+series:
+  - ICPC/CCPC 补题记录
 comments: true
 sidebar:
   enable: true

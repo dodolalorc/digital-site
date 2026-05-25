@@ -8,6 +8,10 @@ tags:
   - 算法
   - 计算几何
   - 模板
+categories:
+  - 算法
+series:
+  - 计算几何专题
 comments: true
 sidebar:
   enable: true

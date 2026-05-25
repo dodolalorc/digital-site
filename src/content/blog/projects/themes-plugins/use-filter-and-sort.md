@@ -9,6 +9,10 @@ tags:
   - 博客主题
   - Quartz
   - 前端
+categories:
+  - 项目实践
+series:
+  - 博客主题改造
 comments: true
 sidebar:
   enable: true

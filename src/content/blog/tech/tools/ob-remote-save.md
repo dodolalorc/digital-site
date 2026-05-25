@@ -9,6 +9,10 @@ tags:
   - Obsidian
   - 同步方案
   - Git
+categories:
+  - 开发工具
+series:
+  - Obsidian 工作流
 comments: true
 sidebar:
   enable: true
