@@ -8,6 +8,10 @@ tags:
   - 算法
   - 图论
   - 拓扑排序
+categories:
+  - 算法
+series:
+  - 图论专题
 comments: true
 sidebar:
   enable: true
