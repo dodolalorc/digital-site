@@ -9,6 +9,10 @@ tags:
   - 竞赛编程
   - HDU
   - 补题记录
+categories:
+  - 算法
+series:
+  - HDU 训练赛补题记录
 comments: true
 sidebar:
   enable: true

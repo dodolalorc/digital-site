@@ -9,6 +9,10 @@ tags:
   - 竞赛编程
   - 牛客寒假营
   - 补题记录
+categories:
+  - 算法
+series:
+  - 2024 牛客寒假营
 comments: true
 sidebar:
   enable: true
