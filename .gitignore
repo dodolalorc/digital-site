@@ -29,6 +29,3 @@ AGENTS.md
 # generated font files
 scripts/fonts/ui-chars.txt
 public/fonts/lxgw-ui-subset.woff2
-
-# content docs: https://github.com/navfolio/astro-navfolio-docs
-src/content/
