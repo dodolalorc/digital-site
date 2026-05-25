@@ -9,6 +9,10 @@ tags:
   - JavaScript
   - 构建工具
   - Rollup
+categories:
+  - 前端
+series:
+  - 前端工程化
 comments: true
 sidebar:
   enable: true

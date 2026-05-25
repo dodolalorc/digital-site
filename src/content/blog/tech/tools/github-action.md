@@ -9,6 +9,10 @@ tags:
   - GitHub Actions
   - 自动化部署
   - CI/CD
+categories:
+  - 开发工具
+series:
+  - 自动化发布工作流
 comments: true
 sidebar:
   enable: true

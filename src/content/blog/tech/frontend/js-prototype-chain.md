@@ -8,6 +8,10 @@ tags:
   - 前端
   - JavaScript
   - 原型链
+categories:
+  - 前端
+series:
+  - JavaScript 基础
 comments: true
 sidebar:
   enable: true
