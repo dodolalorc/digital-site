@@ -11,6 +11,10 @@ tags:
   - 前端
   - 字体子集化
   - CSS
+categories:
+  - 前端
+series:
+  - 前端性能优化
 comments: true
 sidebar:
   enable: true

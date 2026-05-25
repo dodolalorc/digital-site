@@ -9,6 +9,10 @@ tags:
   - 桌面应用
   - 构建部署
   - 脚本
+categories:
+  - 桌面应用
+series:
+  - Electron 构建
 comments: true
 sidebar:
   enable: true
