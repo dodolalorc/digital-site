@@ -9,6 +9,10 @@ tags:
   - 字符串
   - KMP
   - 字符串哈希
+categories:
+  - 算法
+series:
+  - 字符串算法专题
 comments: true
 sidebar:
   enable: true

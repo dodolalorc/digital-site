@@ -9,6 +9,10 @@ tags:
   - JavaScript
   - 浏览器原理
   - 垃圾回收
+categories:
+  - 前端
+series:
+  - 浏览器原理
 comments: true
 sidebar:
   enable: true

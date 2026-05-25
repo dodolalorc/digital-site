@@ -8,6 +8,10 @@ tags:
   - 网络
   - DNS
   - 浏览器原理
+categories:
+  - 前端
+series:
+  - 浏览器原理
 comments: true
 sidebar:
   enable: true
