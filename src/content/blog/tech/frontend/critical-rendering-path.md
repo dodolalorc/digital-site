@@ -9,6 +9,10 @@ tags:
   - 浏览器原理
   - Web性能
   - 关键渲染路径
+categories:
+  - 前端
+series:
+  - 浏览器原理
 comments: true
 sidebar:
   enable: true

@@ -9,6 +9,10 @@ tags:
   - 页面实现
   - CSS
   - JavaScript
+categories:
+  - 前端
+series:
+  - 页面实现案例
 comments: true
 sidebar:
   enable: true

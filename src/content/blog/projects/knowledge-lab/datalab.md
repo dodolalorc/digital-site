@@ -9,6 +9,10 @@ tags:
   - CSAPP
   - 计算机系统
   - 实验记录
+categories:
+  - 计算机系统
+series:
+  - CSAPP 实验记录
 comments: true
 sidebar:
   enable: true
