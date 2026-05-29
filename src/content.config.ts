@@ -16,7 +16,6 @@ const sidebarSchema = z
   .optional();
 
 const remoteImageSchema = z
-  .string()
   .url()
   .refine((src) => /^https?:\/\//i.test(src), 'Remote images must start with http:// or https://');
 
@@ -136,7 +135,7 @@ const siteConfig = defineCollection({
       description: z.string(),
       pageTitle: z.string(),
       pageDescription: z.string(),
-      repository: z.string().url(),
+      repository: z.url(),
       footerNote: z.string(),
     }),
     vibe: z
@@ -215,9 +214,9 @@ const siteConfig = defineCollection({
       role: z.string(),
       company: z.string(),
       location: z.string(),
-      email: z.string().email(),
-      website: z.string().url(),
-      github: z.string().url(),
+      email: z.email(),
+      website: z.url(),
+      github: z.url(),
       meta: z.string(),
       avatar: z.string(),
     }),
