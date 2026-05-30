@@ -175,7 +175,7 @@ href = "mailto:dodolalorc@gmail.com"
 icon = "mail"
 
 [[config.home.doing]]
-text = "完成 Navfolio 主题 v0.1.0 的定制和优化"
+text = "完成 Navfolio 主题 v0.3.0 的定制和优化"
 mark = "01"
 
 [[config.home.doing]]
