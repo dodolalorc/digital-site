@@ -68,13 +68,19 @@
   async function waitForCurrentPageFonts() {
     if (!document.fonts?.ready) return;
 
+    let timeoutId: ReturnType<typeof window.setTimeout> | undefined;
+    const timeoutPromise = new Promise((resolve) => {
+      timeoutId = window.setTimeout(resolve, 2000);
+    });
+
     try {
-      await Promise.race([
-        document.fonts.ready,
-        new Promise((resolve) => window.setTimeout(resolve, 2000)),
-      ]);
+      await Promise.race([document.fonts.ready, timeoutPromise]);
     } catch {
       // Warmup is progressive only. Ignore font readiness failures.
+    } finally {
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
     }
   }
 
