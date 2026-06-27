@@ -438,6 +438,36 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     background: transparent;
   }
 
+  .article-content :global(.katex),
+  .article-content :global(mjx-container) {
+    color: var(--paper-ink);
+    font-size: 0.98em;
+  }
+
+  .article-content :global(.katex-display),
+  .article-content :global(mjx-container[display='true']) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 1.4em 0;
+    padding: 0.18em 0 0.24em;
+  }
+
+  .article-content :global(.katex-display > .katex) {
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  .article-content :global(mjx-container[display='true']) {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .article-content :global(mjx-container:not([display='true'])) {
+    display: inline-block;
+    line-height: 0;
+    vertical-align: -0.08em;
+  }
+
   .article-content :global(.expressive-code) {
     margin: 28px 0 30px;
     font-family: var(--font-code);

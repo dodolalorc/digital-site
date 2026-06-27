@@ -22,6 +22,9 @@ wrap = true
 preserveIndent = true
 collapseStyle = "collapsible-auto"
 
+[config.math]
+render = "katex" # "katex" | "mathjax"
+
 [config.comments]
 enabled = false
 provider = "none"

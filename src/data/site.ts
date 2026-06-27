@@ -30,6 +30,7 @@ export type SiteVibe = SiteConfig['vibe'];
 export type SiteSearch = SiteConfig['search'];
 export type SiteBlog = SiteConfig['blog'];
 export type SiteCode = SiteConfig['code'];
+export type SiteMath = SiteConfig['math'];
 export type HomeNavigationItem = SiteConfig['home']['navigation'][number];
 export type HomeConnectItem = SiteConfig['home']['connect'][number];
 export type HomeDoingItem = SiteConfig['home']['doing'][number];
