@@ -39,6 +39,7 @@ const articleSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =>
   });
 
 const commentProviderSchema = z.enum(['giscus', 'utterances', 'waline', 'none']);
+const mathRendererSchema = z.enum(['katex', 'mathjax']);
 const paletteSchema = z.enum([
   'green-soft',
   'green-vivid',
@@ -65,6 +66,12 @@ const defaultCodeConfig = {
   preserveIndent: true,
   collapseStyle: 'github',
 } as const;
+
+const defaultMathConfig = {
+  render: 'katex',
+} satisfies {
+  render: z.infer<typeof mathRendererSchema>;
+};
 
 const defaultGiscusConfig = {
   repo: '',
@@ -163,6 +170,12 @@ const siteConfig = defineCollection({
       })
       .optional()
       .default(defaultCodeConfig),
+    math: z
+      .object({
+        render: mathRendererSchema.optional().default(defaultMathConfig.render),
+      })
+      .optional()
+      .default(defaultMathConfig),
     comments: z
       .object({
         enabled: z.boolean().optional().default(false),
