@@ -32,41 +32,20 @@ import { ArrowUp } from 'lucide-astro';
         button.tabIndex = visible ? 0 : -1;
       };
 
-      const shouldShow = () => window.scrollY > window.innerHeight;
-
       if (marker) {
         const observer = new IntersectionObserver(([entry]) => {
           setVisible(entry.boundingClientRect.top < 0 && !entry.isIntersecting);
         });
 
         observer.observe(marker);
-      } else {
-        let frame = 0;
-        const update = () => {
-          frame = 0;
-          setVisible(shouldShow());
-        };
-
-        window.addEventListener(
-          'scroll',
-          () => {
-            if (!frame) {
-              frame = window.requestAnimationFrame(update);
-            }
-          },
-          { passive: true },
-        );
       }
 
-      window.addEventListener('resize', () => setVisible(shouldShow()));
       button.addEventListener('click', () => {
         window.scrollTo({
           top: 0,
           behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
         });
       });
-
-      setVisible(shouldShow());
     }
   };
 
