@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import ScrollToTopButton from '../components/ScrollToTopButton.astro';
 import SmartImage from '../components/SmartImage.astro';
 import BlogTopNav from '../components/blog/BlogTopNav.astro';
 import { getThemePalette } from '../data/site';
@@ -103,6 +104,7 @@ const palette = await getThemePalette();
         </div>
       </article>
     </main>
+    <ScrollToTopButton />
     <Footer />
   </body>
 </html>
