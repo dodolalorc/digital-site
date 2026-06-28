@@ -12,6 +12,10 @@ export interface SeriesGroup extends ContentGroup {
   posts: BlogPost[];
 }
 
+export interface TagGroup extends ContentGroup {
+  posts: BlogPost[];
+}
+
 export interface SeriesContext {
   name: string;
   slug: string;
@@ -113,11 +117,12 @@ export function getPostsByCategory(posts: BlogPost[], categorySlug: string) {
   );
 }
 
-export function getAllTags(posts: BlogPost[]): ContentGroup[] {
+export function getAllTags(posts: BlogPost[]): TagGroup[] {
   return [...createGroupMap(posts, 'tags').values()]
     .map(({ name, slug, posts: groupPosts }) => ({
       name,
       slug,
+      posts: groupPosts,
       count: groupPosts.length,
     }))
     .sort((a, b) => b.count - a.count || sortByName(a, b));
