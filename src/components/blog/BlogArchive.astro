@@ -101,7 +101,7 @@ function getPageHref(pageNumber: number) {
                       ))}
                     </span>
                   )}
-                  {post.data.tags.length > 0 && (
+                  {post.data.tags && post.data.tags.length > 0 && (
                     <span class="post-tags">
                       {post.data.tags.map((tag) => (
                         <a class="post-tag" href={withBase(`/tags/${slugifyGroupName(tag)}/`)}>
