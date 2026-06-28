@@ -11,10 +11,44 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const linkHref = `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
 ---
 
-<a class="back-link" href={linkHref}>
+<a class="back-link" href={linkHref} data-back-link>
   <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" />
   <span>{label}</span>
 </a>
+
+<script>
+  const navfolioWindow = window as Window & { __navfolioBackLinkInitialized?: boolean };
+
+  if (!navfolioWindow.__navfolioBackLinkInitialized) {
+    navfolioWindow.__navfolioBackLinkInitialized = true;
+
+    document.addEventListener('click', (event) => {
+      const link =
+        event.target instanceof Element ? event.target.closest('[data-back-link]') : null;
+
+      if (!(link instanceof HTMLAnchorElement)) {
+        return;
+      }
+
+      const hasSameOriginReferrer = (() => {
+        if (!document.referrer) {
+          return false;
+        }
+
+        try {
+          return new URL(document.referrer).origin === window.location.origin;
+        } catch {
+          return false;
+        }
+      })();
+
+      if (hasSameOriginReferrer && window.history.length > 1) {
+        event.preventDefault();
+        window.history.back();
+      }
+    });
+  }
+</script>
 
 <style>
   .back-link {

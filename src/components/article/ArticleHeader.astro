@@ -3,6 +3,9 @@ import SmartImage from '../SmartImage.astro';
 import PageView from '../comments/PageView.astro';
 import FormattedDate from '../FormattedDate.astro';
 import Icon from '../Icon.astro';
+import { slugifyGroupName } from '../../utils/content-groups';
+
+type TagLink = string | { name: string; slug: string };
 
 interface Props {
   title: string;
@@ -10,7 +13,7 @@ interface Props {
   date?: Date;
   wordCount: number;
   readingTime: string;
-  tags?: string[];
+  tags?: TagLink[];
   categories?: { name: string; slug: string }[];
   series?: { name: string; slug: string; current?: number; total?: number }[];
   heroImage?: ImageMetadata | string;
@@ -38,7 +41,10 @@ const {
   showPageView = false,
 } = Astro.props;
 const wordCountLabel = `${wordCount.toLocaleString('en-US')} words`;
-const hasTags = tags.length > 0;
+const tagLinks = tags.map((tag) =>
+  typeof tag === 'string' ? { name: tag, slug: slugifyGroupName(tag) } : tag,
+);
+const hasTags = tagLinks.length > 0;
 const hasCategories = categories.length > 0;
 const hasSeries = series.length > 0;
 const hasGroups = hasCategories || hasSeries;
@@ -71,8 +77,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
             {showPageView && <PageView pathname={pathname} />}
             {hasTags && (
               <span class="meta-item tag-list">
-                {tags.map((tag) => (
-                  <span class="tag">#{tag}</span>
+                {tagLinks.map((tag) => (
+                  <a class="tag" href={`${basePath}/tags/${tag.slug}/`}>
+                    #{tag.name}
+                  </a>
                 ))}
               </span>
             )}
@@ -145,8 +153,10 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
           {showPageView && <PageView pathname={pathname} />}
           {hasTags && (
             <span class="meta-item tag-list">
-              {tags.map((tag) => (
-                <span class="tag">#{tag}</span>
+              {tagLinks.map((tag) => (
+                <a class="tag" href={`${basePath}/tags/${tag.slug}/`}>
+                  #{tag.name}
+                </a>
               ))}
             </span>
           )}
@@ -283,6 +293,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--paper-accent);
     font-family: var(--font-serif-cn);
     font-weight: 700;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .tag:hover {
+    color: var(--paper-ink);
+  }
+
+  .tag:focus-visible,
+  .group-link:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--paper-line-strong);
+    outline-offset: 3px;
   }
 
   .group-meta-line {

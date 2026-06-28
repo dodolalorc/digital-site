@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import BackLink from '../../components/blog/BackLink.astro';
+import BlogArchive from '../../components/blog/BlogArchive.astro';
+import BlogTopNav from '../../components/blog/BlogTopNav.astro';
+import { getSiteConfig } from '../../data/site';
+import { sortByDateDesc } from '../../utils/content-dates';
+import { getAllTags, getPostsByTag } from '../../utils/content-groups';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return getAllTags(posts).map((tag) => {
+    const tagPosts = sortByDateDesc(getPostsByTag(posts, tag.slug));
+
+    return {
+      params: { tag: tag.slug },
+      props: {
+        tag,
+        page: {
+          data: tagPosts,
+          currentPage: 1,
+          lastPage: 1,
+          total: tagPosts.length,
+          size: tagPosts.length,
+          url: {
+            current: `/tags/${tag.slug}/`,
+          },
+        },
+      },
+    };
+  });
+}
+
+const { site, theme } = await getSiteConfig();
+const palette = theme.palette;
+const { tag, page } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN" data-palette={palette}>
+  <head>
+    <BaseHead title={`${tag.name} | ${site.title}`} description={site.description} />
+    <style>
+      main {
+        width: min(100%, var(--layout-shell-width));
+        max-width: none;
+        padding: 118px var(--layout-page-gutter) var(--layout-page-bottom);
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding-top: 88px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <BlogTopNav />
+    <main data-pagefind-body>
+      <BackLink href="/blog/" label="Back" />
+      <BlogArchive
+        page={page}
+        headerKicker="Tag"
+        headerTitle={tag.name}
+        headerNote={`${tag.count} ${tag.count === 1 ? 'article' : 'articles'} with this tag.`}
+      />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -104,7 +104,9 @@ function getPageHref(pageNumber: number) {
                   {post.data.tags.length > 0 && (
                     <span class="post-tags">
                       {post.data.tags.map((tag) => (
-                        <span class="post-tag">#{tag}</span>
+                        <a class="post-tag" href={withBase(`/tags/${slugifyGroupName(tag)}/`)}>
+                          #{tag}
+                        </a>
                       ))}
                     </span>
                   )}
@@ -282,6 +284,21 @@ function getPageHref(pageNumber: number) {
 
   .post-tag {
     color: var(--paper-accent);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .post-tag:hover {
+    color: var(--paper-ink);
+  }
+
+  .post-tag:focus-visible,
+  .post-group:focus-visible,
+  .title-link:focus-visible,
+  .thumb-wrap:focus-visible {
+    border-radius: 4px;
+    outline: 2px solid var(--paper-line-strong);
+    outline-offset: 3px;
   }
 
   .post-tag + .post-tag::before,

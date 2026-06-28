@@ -87,6 +87,10 @@ const wordCount = englishWords.length + cjkChars.length;
 const readingMinutes = Math.max(1, Math.ceil(englishWords.length / 220 + cjkChars.length / 500));
 const readingTime = `${readingMinutes} min read`;
 const tags = post.data.tags ?? [];
+const tagLinks = tags.map((name) => ({
+  name,
+  slug: slugifyGroupName(name),
+}));
 const categoryLinks = (post.data.categories ?? []).map((name) => ({
   name,
   slug: slugifyGroupName(name),
@@ -149,7 +153,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
             date={date}
             wordCount={wordCount}
             readingTime={readingTime}
-            tags={tags}
+            tags={tagLinks}
             categories={categoryLinks}
             series={seriesLinks}
             heroImage={heroImage}
