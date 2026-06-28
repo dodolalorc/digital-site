@@ -1,0 +1,147 @@
+---
+import { ArrowUp } from 'lucide-astro';
+---
+
+<span class="scroll-top-marker" data-scroll-top-marker aria-hidden="true"></span>
+<button
+  class="scroll-top-button"
+  type="button"
+  aria-label="返回顶部"
+  title="返回顶部"
+  aria-hidden="true"
+  tabindex="-1"
+  data-scroll-top-button
+>
+  <ArrowUp size={18} stroke-width={2} aria-hidden="true" focusable="false" />
+</button>
+
+<script>
+  const initScrollToTopButton = () => {
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-scroll-top-button]')) {
+      if (button.dataset.scrollTopReady === 'true') {
+        continue;
+      }
+
+      button.dataset.scrollTopReady = 'true';
+      const marker = button.previousElementSibling;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      const setVisible = (visible: boolean) => {
+        button.dataset.visible = visible ? 'true' : 'false';
+        button.setAttribute('aria-hidden', String(!visible));
+        button.tabIndex = visible ? 0 : -1;
+      };
+
+      const shouldShow = () => window.scrollY > window.innerHeight;
+
+      if (marker) {
+        const observer = new IntersectionObserver(([entry]) => {
+          setVisible(entry.boundingClientRect.top < 0 && !entry.isIntersecting);
+        });
+
+        observer.observe(marker);
+      } else {
+        let frame = 0;
+        const update = () => {
+          frame = 0;
+          setVisible(shouldShow());
+        };
+
+        window.addEventListener(
+          'scroll',
+          () => {
+            if (!frame) {
+              frame = window.requestAnimationFrame(update);
+            }
+          },
+          { passive: true },
+        );
+      }
+
+      window.addEventListener('resize', () => setVisible(shouldShow()));
+      button.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+        });
+      });
+
+      setVisible(shouldShow());
+    }
+  };
+
+  initScrollToTopButton();
+  document.addEventListener('astro:page-load', initScrollToTopButton);
+</script>
+
+<style>
+  .scroll-top-marker {
+    position: absolute;
+    top: 100vh;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+
+  .scroll-top-button {
+    position: fixed;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 45;
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-nav);
+    color: var(--paper-ink-soft);
+    box-shadow: var(--paper-shadow);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px) scale(0.98);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      border-color 180ms ease,
+      background 180ms ease,
+      color 180ms ease;
+  }
+
+  .scroll-top-button[data-visible='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .scroll-top-button:hover,
+  .scroll-top-button:focus-visible {
+    border-color: var(--paper-line-strong);
+    background: var(--paper-control-hover);
+    color: var(--paper-accent);
+  }
+
+  .scroll-top-button:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--paper-accent), transparent 58%);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 720px) {
+    .scroll-top-button {
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(14px, env(safe-area-inset-bottom));
+      width: 40px;
+      height: 40px;
+      border-radius: 7px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-top-button {
+      transition: none;
+    }
+  }
+</style>
