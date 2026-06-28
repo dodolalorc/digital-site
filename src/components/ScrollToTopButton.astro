@@ -16,6 +16,27 @@ import { ArrowUp } from 'lucide-astro';
 </button>
 
 <script>
+  type ScrollToTopState = {
+    lifecycleReady: boolean;
+    observers: Set<IntersectionObserver>;
+  };
+
+  const scrollTopWindow = window as Window & {
+    __navfolioScrollTopState?: ScrollToTopState;
+  };
+  const scrollTopState = (scrollTopWindow.__navfolioScrollTopState ??= {
+    lifecycleReady: false,
+    observers: new Set<IntersectionObserver>(),
+  });
+
+  const disconnectScrollToTopObservers = () => {
+    for (const observer of scrollTopState.observers) {
+      observer.disconnect();
+    }
+
+    scrollTopState.observers.clear();
+  };
+
   const initScrollToTopButton = () => {
     for (const button of document.querySelectorAll<HTMLButtonElement>('[data-scroll-top-button]')) {
       if (button.dataset.scrollTopReady === 'true') {
@@ -38,6 +59,7 @@ import { ArrowUp } from 'lucide-astro';
         });
 
         observer.observe(marker);
+        scrollTopState.observers.add(observer);
       }
 
       button.addEventListener('click', () => {
@@ -50,7 +72,12 @@ import { ArrowUp } from 'lucide-astro';
   };
 
   initScrollToTopButton();
-  document.addEventListener('astro:page-load', initScrollToTopButton);
+
+  if (!scrollTopState.lifecycleReady) {
+    scrollTopState.lifecycleReady = true;
+    document.addEventListener('astro:before-swap', disconnectScrollToTopObservers);
+    document.addEventListener('astro:page-load', initScrollToTopButton);
+  }
 </script>
 
 <style>
