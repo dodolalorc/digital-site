@@ -8,8 +8,6 @@ import { ArrowUp } from 'lucide-astro';
   type="button"
   aria-label="返回顶部"
   title="返回顶部"
-  aria-hidden="true"
-  tabindex="-1"
   data-scroll-top-button
 >
   <ArrowUp size={18} stroke-width={2} aria-hidden="true" focusable="false" />
@@ -52,6 +50,8 @@ import { ArrowUp } from 'lucide-astro';
         button.setAttribute('aria-hidden', String(!visible));
         button.tabIndex = visible ? 0 : -1;
       };
+
+      setVisible(false);
 
       if (marker) {
         const observer = new IntersectionObserver(([entry]) => {
