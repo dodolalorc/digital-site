@@ -22,12 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
-
-      - name: Checkout content docs
-        uses: actions/checkout@v6
         with:
-          repository: navfolio/astro-navfolio-docs
-          path: .content-docs
+          submodules: recursive
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -43,15 +39,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Replace local content with docs content
-        run: |
-          rm -rf src/content
-          mkdir -p src/content
-          rsync -a --delete --exclude='.git' .content-docs/ src/content/
-          rm -rf src/content/.git
+      - name: Ensure docs submodule is available
+        run: git submodule update --init --recursive
 
       - name: Build site
         env:
+          NAVFOLIO_CONTENT_SOURCE: docs
           SITE_URL: https://astro.navfolio.site
           SITE_BASE: /
           NAVFOLIO_COMMENTS_ENABLED: ${{ vars.NAVFOLIO_COMMENTS_ENABLED }}
@@ -60,7 +53,7 @@ jobs:
           NAVFOLIO_GISCUS_REPO_ID: ${{ vars.NAVFOLIO_GISCUS_REPO_ID }}
           NAVFOLIO_GISCUS_CATEGORY: ${{ vars.NAVFOLIO_GISCUS_CATEGORY }}
           NAVFOLIO_GISCUS_CATEGORY_ID: ${{ vars.NAVFOLIO_GISCUS_CATEGORY_ID }}
-        run: bun run build
+        run: bun run docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

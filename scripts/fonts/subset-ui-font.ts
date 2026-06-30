@@ -6,15 +6,21 @@ const projectRoot = process.cwd();
 const uiCharsPath = join(projectRoot, 'scripts/fonts/ui-chars.txt');
 const outputFontPath = join(projectRoot, 'public/fonts/lxgw-ui-subset.woff2');
 const sourceFontPath = join(projectRoot, 'public/fonts/LXGWWenKai-Regular.ttf');
+const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
+const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
 
 const sourceDirs = ['src/pages', 'src/components', 'src/layouts', 'src/config'];
-const contentFrontmatterDirs = ['src/content/blog', 'src/content/projects', 'src/content/vibe'];
-const lightweightContentDirs = ['src/content/vibe'];
+const contentFrontmatterDirs = [
+  `${contentRoot}/blog`,
+  `${contentRoot}/projects`,
+  `${contentRoot}/vibe`,
+];
+const lightweightContentDirs = [`${contentRoot}/vibe`];
 const lightweightContentFiles = [
-  'src/content/about.mdx',
-  'src/content/about.md',
-  'src/content/projects/index.mdx',
-  'src/content/projects/index.md',
+  `${contentRoot}/about.mdx`,
+  `${contentRoot}/about.md`,
+  `${contentRoot}/projects/index.mdx`,
+  `${contentRoot}/projects/index.md`,
 ];
 const sourceExtensions = new Set(['.astro', '.ts', '.js', '.mjs', '.cjs', '.json', '.toml']);
 const frontmatterExtensions = new Set(['.md', '.mdx']);

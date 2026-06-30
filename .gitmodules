@@ -1,0 +1,3 @@
+[submodule "src/docs"]
+	path = src/docs
+	url = https://github.com/navfolio/astro-navfolio-docs
