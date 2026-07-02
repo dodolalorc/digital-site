@@ -2,7 +2,7 @@
 title: "Git 配置管理指南：多项目多身份实践"
 description: ""
 date: "2026-07-02T06:17:01.289Z"
-draft: true
+draft: false
 sticky: false
 showHeroImage: false
 tags:
