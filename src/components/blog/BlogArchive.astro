@@ -200,6 +200,10 @@ function getPageHref(pageNumber: number) {
     window.__navfolioArchivePostClick = true;
 
     document.addEventListener('click', (event) => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
       const target = event.target;
       if (!(target instanceof Element)) return;
       if (target.closest('a, button, input, select, textarea, summary, [data-no-card-click]')) {
@@ -212,10 +216,14 @@ function getPageHref(pageNumber: number) {
       const post = target.closest('[data-archive-post-href]');
       if (!(post instanceof HTMLElement)) return;
 
-      const href = post.dataset.archivePostHref;
-      if (!href) return;
+      const link = post.querySelector('.title-link');
+      if (link instanceof HTMLElement) {
+        link.click();
+        return;
+      }
 
-      window.location.href = href;
+      const href = post.dataset.archivePostHref;
+      if (href) window.location.href = href;
     });
   })();
 </script>
@@ -378,11 +386,11 @@ function getPageHref(pageNumber: number) {
     border-radius: 999px;
     background: linear-gradient(
       90deg,
-      rgba(100, 112, 88, 0),
-      rgba(100, 112, 88, 0.26) 16%,
-      rgba(122, 90, 46, 0.42) 52%,
-      rgba(100, 112, 88, 0.24) 84%,
-      rgba(100, 112, 88, 0)
+      transparent,
+      var(--paper-line-strong) 16%,
+      var(--paper-accent) 52%,
+      var(--paper-line-strong) 84%,
+      transparent
     );
     content: '';
     transform: scaleX(0);
@@ -393,27 +401,12 @@ function getPageHref(pageNumber: number) {
   }
 
   .title-link:hover {
-    color: #7a5a2e;
+    color: var(--paper-accent);
   }
 
   .title-link:hover::before {
     transform: scaleX(1);
     transform-origin: left;
-  }
-
-  :root[data-theme='dark'] .title-link:hover {
-    color: #e4c482;
-  }
-
-  :root[data-theme='dark'] .title-link::before {
-    background: linear-gradient(
-      90deg,
-      rgba(183, 194, 168, 0),
-      rgba(183, 194, 168, 0.22) 16%,
-      rgba(228, 196, 130, 0.36) 52%,
-      rgba(183, 194, 168, 0.2) 84%,
-      rgba(183, 194, 168, 0)
-    );
   }
 
   .post-pin {
@@ -719,6 +712,7 @@ function getPageHref(pageNumber: number) {
       mask-image:
         linear-gradient(to bottom, #000 62%, transparent),
         radial-gradient(120% 120% at 50% 0, #000 58%, transparent 82%);
+      mask-composite: intersect;
       -webkit-mask-image:
         linear-gradient(to bottom, #000 62%, transparent),
         radial-gradient(120% 120% at 50% 0, #000 58%, transparent 82%);
