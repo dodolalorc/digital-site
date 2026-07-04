@@ -42,6 +42,7 @@
   --page-header-spacing: 54px;
   --page-header-spacing-mobile: 28px;
   --font-config-en: 'Maple Mono';
+  --font-config-code: 'Maple Mono';
   --font-config-zh: 'ChillRoundM';
   --font-config-zh-subset: 'ChillRoundM UI Subset';
   --font-cjk-system: var(--font-config-en), 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
@@ -59,7 +60,7 @@
     var(--font-config-en), var(--font-config-zh-subset), var(--font-config-zh),
     var(--font-cjk-system);
   --font-meta: var(--font-mono);
-  --font-code: var(--font-mono);
+  --font-code: var(--font-config-code), var(--font-mono);
   --font-ui-label: var(--font-mono);
   --gray-gradient: rgba(226, 231, 224, 0.38), var(--paper-bg);
   --box-shadow: var(--paper-shadow-lift);

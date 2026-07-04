@@ -8,15 +8,16 @@ import CategoryCard from '../../../components/blog/CategoryCard.astro';
 import { getSiteConfig } from '../../../data/site';
 import { getAllCategories } from '../../../utils/content-groups';
 
-const { site, theme } = await getSiteConfig();
+const { site, theme, pages } = await getSiteConfig();
 const palette = theme.palette;
+const pageMeta = pages.blog.categories;
 const categories = getAllCategories(await getCollection('blog', ({ data }) => !data.draft));
 ---
 
 <!doctype html>
 <html lang="zh-CN" data-palette={palette}>
   <head>
-    <BaseHead title={`${site.title} | Categories`} description={site.description} />
+    <BaseHead title={`${pageMeta.title} | ${site.title}`} description={pageMeta.note} />
     <style>
       main {
         width: min(100%, var(--layout-shell-width));
@@ -62,12 +63,13 @@ const categories = getAllCategories(await getCollection('blog', ({ data }) => !d
       <BackLink href="/blog/" label="Back" />
       <header class="archive-hero archive-header-shared page-header-spacing">
         <div class="archive-header-main">
-          <p class="archive-kicker">Browse notes</p>
-          <h1 class="archive-title">Categories</h1>
+          <p class="archive-kicker">{pageMeta.kicker}</p>
+          <h1 class="archive-title">{pageMeta.title}</h1>
         </div>
-        <p class="archive-note">
-          A quiet index of recurring topics, gathered from article frontmatter.
-        </p>
+        <div class="archive-copy">
+          {pageMeta.subtitle && <p class="archive-subtitle">{pageMeta.subtitle}</p>}
+          {pageMeta.note && <p class="archive-note">{pageMeta.note}</p>}
+        </div>
       </header>
 
       {

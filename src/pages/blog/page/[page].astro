@@ -8,9 +8,9 @@ import { getSiteConfig } from '../../../data/site';
 import { sortBlogPostsForArchive } from '../../../utils/content-dates';
 
 export async function getStaticPaths() {
-  const { blog } = await getSiteConfig();
+  const { pages } = await getSiteConfig();
   const posts = sortBlogPostsForArchive(await getCollection('blog', ({ data }) => !data.draft));
-  const postsPerPage = blog.postsPerPage;
+  const postsPerPage = pages.blog.postsPerPage;
   const totalPages = Math.max(1, Math.ceil(posts.length / postsPerPage));
 
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
@@ -76,6 +76,7 @@ const { page, postOffset } = Astro.props;
         headerTitle={pageMeta.title}
         headerSubtitle={pageMeta.subtitle}
         headerNote={pageMeta.note}
+        coverImageStyle={pageMeta.coverImageStyle}
       />
     </main>
     <Footer />

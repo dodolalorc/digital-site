@@ -8,15 +8,16 @@ import SeriesCard from '../../../components/blog/SeriesCard.astro';
 import { getSiteConfig } from '../../../data/site';
 import { getAllSeries } from '../../../utils/content-groups';
 
-const { site, theme } = await getSiteConfig();
+const { site, theme, pages } = await getSiteConfig();
 const palette = theme.palette;
+const pageMeta = pages.blog.series;
 const series = getAllSeries(await getCollection('blog', ({ data }) => !data.draft));
 ---
 
 <!doctype html>
 <html lang="zh-CN" data-palette={palette}>
   <head>
-    <BaseHead title={`${site.title} | Series`} description={site.description} />
+    <BaseHead title={`${pageMeta.title} | ${site.title}`} description={pageMeta.note} />
     <style>
       main {
         width: min(100%, var(--layout-shell-width));
@@ -51,12 +52,13 @@ const series = getAllSeries(await getCollection('blog', ({ data }) => !data.draf
       <BackLink href="/blog/" label="Back" />
       <header class="archive-hero archive-header-shared page-header-spacing">
         <div class="archive-header-main">
-          <p class="archive-kicker">Reading paths</p>
-          <h1 class="archive-title">Series</h1>
+          <p class="archive-kicker">{pageMeta.kicker}</p>
+          <h1 class="archive-title">{pageMeta.title}</h1>
         </div>
-        <p class="archive-note">
-          Connected notes that can be followed in the order they were written.
-        </p>
+        <div class="archive-copy">
+          {pageMeta.subtitle && <p class="archive-subtitle">{pageMeta.subtitle}</p>}
+          {pageMeta.note && <p class="archive-note">{pageMeta.note}</p>}
+        </div>
       </header>
 
       {

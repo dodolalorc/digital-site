@@ -34,8 +34,9 @@ export async function getStaticPaths() {
   });
 }
 
-const { site, theme } = await getSiteConfig();
+const { site, theme, pages } = await getSiteConfig();
 const palette = theme.palette;
+const pageMeta = pages.blog;
 const { tag, page } = Astro.props;
 ---
 
@@ -66,6 +67,7 @@ const { tag, page } = Astro.props;
         headerKicker="Tag"
         headerTitle={tag.name}
         headerNote={`${tag.count} ${tag.count === 1 ? 'article' : 'articles'} with this tag.`}
+        coverImageStyle={pageMeta.coverImageStyle}
       />
     </main>
     <Footer />

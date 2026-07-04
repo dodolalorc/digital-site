@@ -15,6 +15,7 @@ palette = "green-soft"
 [config.fonts]
 # 英文与代码感 UI 字体
 en = "Maple Mono"
+code = "Maple Mono"
 # 模板内可直接选择：ChillRoundM、LXGW WenKai
 # 中文阅读字体
 zh = "ChillRoundM"
@@ -43,14 +44,26 @@ shortcut = "mod+k"
 placeholder = "Search notes..."
 maxResults = 6
 
-[config.blog]
-postsPerPage = 6
-
 [config.pages.blog]
 title = "Writing notes"
 kicker = "Notebook archive"
 subtitle = "Notes from the margins."
 note = "Field notes, drafts, and technical margins arranged for slow browsing."
+postsPerPage = 6
+# Article list cover style: "card" keeps a framed thumbnail, "mask" blends it into the right side.
+coverImageStyle = "mask"
+
+[config.pages.blog.categories]
+title = "Categories"
+kicker = "Browse notes"
+subtitle = ""
+note = "A quiet index of recurring topics, gathered from article frontmatter."
+
+[config.pages.blog.series]
+title = "Series"
+kicker = "Reading paths"
+subtitle = ""
+note = "Connected notes that can be followed in the order they were written."
 
 [config.pages.projects]
 title = "Projects"
@@ -126,7 +139,6 @@ label = "About"
 href = "/about"
 
 [config.home]
-layout = "grid"
 
 [config.home.quote]
 text = [

@@ -8,11 +8,11 @@ import GroupNav from '../../components/blog/GroupNav.astro';
 import { getSiteConfig } from '../../data/site';
 import { sortBlogPostsForArchive } from '../../utils/content-dates';
 
-const { site, theme, blog, pages } = await getSiteConfig();
+const { site, theme, pages } = await getSiteConfig();
 const palette = theme.palette;
 const pageMeta = pages.blog;
 const posts = sortBlogPostsForArchive(await getCollection('blog', ({ data }) => !data.draft));
-const postsPerPage = blog.postsPerPage;
+const postsPerPage = pageMeta.postsPerPage;
 const totalPages = Math.max(1, Math.ceil(posts.length / postsPerPage));
 const page = {
   data: posts.slice(0, postsPerPage),
@@ -54,6 +54,7 @@ const page = {
         headerTitle={pageMeta.title}
         headerSubtitle={pageMeta.subtitle}
         headerNote={pageMeta.note}
+        coverImageStyle={pageMeta.coverImageStyle}
       >
         <GroupNav slot="after-header" />
       </BlogArchive>

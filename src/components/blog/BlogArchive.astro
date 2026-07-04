@@ -1,11 +1,13 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { ChevronsRight } from 'lucide-astro';
 import FormattedDate from '../FormattedDate.astro';
 import SmartImage from '../SmartImage.astro';
 import { slugifyGroupName } from '../../utils/content-groups';
 import { isStickyEntry } from '../../utils/content-dates';
 
 type BlogPost = CollectionEntry<'blog'>;
+type CoverImageStyle = 'card' | 'mask';
 
 interface PaginationState {
   currentPage: number;
@@ -28,6 +30,7 @@ interface Props {
   headerTitle?: string;
   headerSubtitle?: string;
   headerNote?: string;
+  coverImageStyle?: CoverImageStyle;
 }
 
 const {
@@ -37,6 +40,7 @@ const {
   headerTitle = 'Writing notes',
   headerSubtitle,
   headerNote,
+  coverImageStyle = 'card',
 } = Astro.props;
 const defaultHeaderSubtitle =
   'Loose pages, technical margins, and small notes gathered into a readable stack.';
@@ -74,11 +78,23 @@ function getPageHref(pageNumber: number) {
     {
       page.data.map((post, index) => (
         <li class="post-item">
-          <article class:list={['post-link', { 'without-thumb': !post.data.heroImage }]}>
+          <article
+            class:list={[
+              'post-link',
+              `cover-style-${coverImageStyle}`,
+              { 'without-thumb': !post.data.heroImage },
+            ]}
+            data-archive-post-href={withBase(`/blog/${post.id}/`)}
+          >
             <div class="post-copy">
               <div>
-                <span class="post-index">{String(postOffset + index + 1).padStart(2, '0')}</span>
                 <h2 class="title">
+                  <span class="post-index" aria-hidden="true">
+                    <span class="post-index-number">
+                      {String(postOffset + index + 1).padStart(2, '0')}
+                    </span>
+                    <ChevronsRight class="post-index-icon" size={20} strokeWidth={1.9} />
+                  </span>
                   <a class="title-link" href={withBase(`/blog/${post.id}/`)}>
                     {post.data.title}
                   </a>
@@ -177,6 +193,41 @@ function getPageHref(pageNumber: number) {
   )
 }
 
+<script is:inline>
+  (() => {
+    if (window.__navfolioArchivePostClick) return;
+
+    window.__navfolioArchivePostClick = true;
+
+    document.addEventListener('click', (event) => {
+      if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('a, button, input, select, textarea, summary, [data-no-card-click]')) {
+        return;
+      }
+
+      const selection = window.getSelection?.();
+      if (selection && selection.type === 'Range') return;
+
+      const post = target.closest('[data-archive-post-href]');
+      if (!(post instanceof HTMLElement)) return;
+
+      const link = post.querySelector('.title-link');
+      if (link instanceof HTMLElement) {
+        link.click();
+        return;
+      }
+
+      const href = post.dataset.archivePostHref;
+      if (href) window.location.href = href;
+    });
+  })();
+</script>
+
 <style>
   .post-stack {
     display: grid;
@@ -195,7 +246,8 @@ function getPageHref(pageNumber: number) {
     grid-template-columns: minmax(0, 1fr) 210px;
     gap: 30px;
     align-items: center;
-    min-height: 132px;
+    box-sizing: border-box;
+    height: 200px;
     padding: 26px 0;
     overflow: visible;
     border: 1px solid var(--paper-line);
@@ -204,6 +256,7 @@ function getPageHref(pageNumber: number) {
     background: transparent;
     box-shadow: none;
     color: var(--paper-ink);
+    cursor: pointer;
     transform: translateY(0);
     transition:
       transform 180ms ease,
@@ -228,6 +281,15 @@ function getPageHref(pageNumber: number) {
     min-height: auto;
   }
 
+  .post-link.cover-style-mask {
+    grid-template-columns: minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  .post-link.cover-style-mask .post-copy {
+    width: min(64%, 720px);
+  }
+
   .post-copy {
     position: relative;
     z-index: 1;
@@ -242,10 +304,56 @@ function getPageHref(pageNumber: number) {
   }
 
   .post-index {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 2.6ch;
+    height: 1.2em;
     color: var(--paper-ink-faint);
     font-family: var(--font-meta);
-    font-size: 0.76rem;
+    font-size: 0.86rem;
     letter-spacing: 0.1em;
+  }
+
+  .post-index-number {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    opacity: 1;
+    transform: translateX(0);
+    transition:
+      opacity 240ms ease,
+      transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .post-index-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.4em;
+    height: 1.4em;
+    color: var(--paper-ink-faint);
+    opacity: 0;
+    transform: translate(-50%, -50%) translateX(-6px);
+    transition:
+      opacity 240ms ease,
+      transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .post-link:hover .post-index-number {
+    opacity: 0;
+    transform: translateX(5px);
+  }
+
+  .post-link:hover .post-index-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%);
   }
 
   .title {
@@ -259,13 +367,46 @@ function getPageHref(pageNumber: number) {
   }
 
   .title-link {
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    margin: 0 -2px -2px;
+    padding: 0 2px 2px;
     color: var(--paper-ink);
     text-decoration: none;
-    transition: color 180ms ease;
+    transition: color 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .title-link::before {
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+    left: 2px;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--paper-line-strong) 16%,
+      var(--paper-accent) 52%,
+      var(--paper-line-strong) 84%,
+      transparent
+    );
+    content: '';
+    transform: scaleX(0);
+    transform-origin: right;
+    transition:
+      transform 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      background-color 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .title-link:hover {
     color: var(--paper-accent);
+  }
+
+  .title-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
   .post-pin {
@@ -388,6 +529,38 @@ function getPageHref(pageNumber: number) {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%, 0 calc(100% - 18px));
   }
 
+  .post-link.cover-style-mask .thumb-wrap {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    z-index: 0;
+    width: min(38%, 520px);
+    height: min(calc(100% - 52px), 200px);
+    border: 0;
+    border-radius: 0 10px 10px 0;
+    background: transparent;
+    clip-path: none;
+    filter: saturate(0.82) contrast(0.96);
+    opacity: 0.72;
+    mask-image:
+      linear-gradient(to right, transparent, #000 48%),
+      radial-gradient(140% 120% at 100% 50%, #000 54%, transparent 76%);
+    mask-composite: intersect;
+    transform: translateY(-50%);
+    transition:
+      opacity 200ms ease,
+      filter 200ms ease;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 48%),
+      radial-gradient(140% 120% at 100% 50%, #000 54%, transparent 76%);
+    -webkit-mask-composite: source-in;
+  }
+
+  .post-link.cover-style-mask:hover .thumb-wrap {
+    filter: saturate(0.9) contrast(0.98);
+    opacity: 0.9;
+  }
+
   .thumb-wrap img {
     display: block;
     width: 100%;
@@ -398,6 +571,10 @@ function getPageHref(pageNumber: number) {
     opacity: 0.92;
   }
 
+  .post-link.cover-style-mask .thumb-wrap img {
+    opacity: 1;
+  }
+
   :root[data-theme='dark'] .thumb-wrap {
     background: transparent;
     filter: none;
@@ -406,6 +583,14 @@ function getPageHref(pageNumber: number) {
   :root[data-theme='dark'] .thumb-wrap img {
     opacity: 1;
     mix-blend-mode: normal;
+  }
+
+  :root[data-theme='dark'] .post-link.cover-style-mask .thumb-wrap {
+    opacity: 0.62;
+  }
+
+  :root[data-theme='dark'] .post-link.cover-style-mask:hover .thumb-wrap {
+    opacity: 0.82;
   }
 
   .post-item:first-child .post-link {
@@ -486,8 +671,11 @@ function getPageHref(pageNumber: number) {
   @media (max-width: 720px) {
     .post-link,
     .post-item:first-child .post-link {
+      display: flex;
+      flex-direction: column;
       grid-template-columns: 1fr;
       gap: 18px;
+      height: auto;
       padding: 22px 0;
     }
 
@@ -498,17 +686,54 @@ function getPageHref(pageNumber: number) {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 0 calc(100% - 20px));
     }
 
+    .post-link.cover-style-mask {
+      overflow: visible;
+    }
+
+    .post-link.cover-style-mask .post-copy {
+      order: 1;
+      width: auto;
+    }
+
+    .post-link.cover-style-mask .thumb-wrap {
+      position: relative;
+      inset: auto;
+      top: auto;
+      width: 100%;
+      height: auto;
+      max-height: 256px;
+      margin-bottom: 0;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px 14px 0 0;
+      clip-path: inset(0 round 14px 14px 0 0);
+      opacity: 0.78;
+      order: -1;
+      transform: none;
+      mask-image:
+        linear-gradient(to bottom, #000 62%, transparent),
+        radial-gradient(120% 120% at 50% 0, #000 58%, transparent 82%);
+      mask-composite: intersect;
+      -webkit-mask-image:
+        linear-gradient(to bottom, #000 62%, transparent),
+        radial-gradient(120% 120% at 50% 0, #000 58%, transparent 82%);
+      -webkit-mask-composite: source-in;
+    }
+
     .title,
     .post-item:first-child .title {
-      display: block;
+      display: grid;
+      grid-template-columns: 2.6ch minmax(0, 1fr);
       min-width: 0;
       max-width: 100%;
+      gap: 8px;
+      align-items: baseline;
       font-size: 1.45rem;
       line-height: 1.22;
     }
 
     .title-link {
       display: block;
+      min-width: 0;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -516,6 +741,7 @@ function getPageHref(pageNumber: number) {
     }
 
     .post-pin {
+      grid-column: 2;
       margin-top: 7px;
     }
 

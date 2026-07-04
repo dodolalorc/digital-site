@@ -74,6 +74,7 @@ const collapseStyleSchema = z.enum([
   'collapsible-end',
   'collapsible-auto',
 ]);
+const blogCoverImageStyleSchema = z.enum(['card', 'mask']);
 
 const defaultCodeConfig = {
   lightTheme: 'catppuccin-latte',
@@ -92,6 +93,7 @@ const defaultMathConfig = {
 
 const defaultFontConfig = {
   en: 'Maple Mono',
+  code: 'Maple Mono',
   zh: 'ChillRoundM',
   file: '/fonts/ChillRoundM.ttf',
 };
@@ -176,6 +178,20 @@ const defaultPagesConfig = {
     kicker: 'Notebook archive',
     subtitle: 'Notes from the margins.',
     note: 'Field notes, drafts, and technical margins arranged for slow browsing.',
+    postsPerPage: 6,
+    coverImageStyle: 'card',
+    categories: {
+      title: 'Categories',
+      kicker: 'Browse notes',
+      subtitle: '',
+      note: 'A quiet index of recurring topics, gathered from article frontmatter.',
+    },
+    series: {
+      title: 'Series',
+      kicker: 'Reading paths',
+      subtitle: '',
+      note: 'Connected notes that can be followed in the order they were written.',
+    },
   },
   projects: {
     title: 'Projects',
@@ -197,6 +213,33 @@ const blogPageSchema = z.object({
   kicker: z.string().optional().default(defaultPagesConfig.blog.kicker),
   subtitle: z.string().optional().default(defaultPagesConfig.blog.subtitle),
   note: z.string().optional().default(defaultPagesConfig.blog.note),
+  postsPerPage: z
+    .number()
+    .int()
+    .positive()
+    .optional()
+    .default(defaultPagesConfig.blog.postsPerPage),
+  coverImageStyle: blogCoverImageStyleSchema
+    .optional()
+    .default(defaultPagesConfig.blog.coverImageStyle),
+  categories: z
+    .object({
+      title: z.string().optional().default(defaultPagesConfig.blog.categories.title),
+      kicker: z.string().optional().default(defaultPagesConfig.blog.categories.kicker),
+      subtitle: z.string().optional().default(defaultPagesConfig.blog.categories.subtitle),
+      note: z.string().optional().default(defaultPagesConfig.blog.categories.note),
+    })
+    .optional()
+    .default(defaultPagesConfig.blog.categories),
+  series: z
+    .object({
+      title: z.string().optional().default(defaultPagesConfig.blog.series.title),
+      kicker: z.string().optional().default(defaultPagesConfig.blog.series.kicker),
+      subtitle: z.string().optional().default(defaultPagesConfig.blog.series.subtitle),
+      note: z.string().optional().default(defaultPagesConfig.blog.series.note),
+    })
+    .optional()
+    .default(defaultPagesConfig.blog.series),
 });
 
 const projectsPageSchema = z.object({
@@ -237,6 +280,7 @@ const siteConfig = defineCollection({
     fonts: z
       .object({
         en: nonEmptyStringSchema(defaultFontConfig.en),
+        code: nonEmptyStringSchema(defaultFontConfig.code),
         zh: nonEmptyStringSchema(defaultFontConfig.zh),
         file: nonEmptyStringSchema(defaultFontConfig.file),
       })
@@ -333,14 +377,6 @@ const siteConfig = defineCollection({
         placeholder: 'Search notes...',
         maxResults: 6,
       }),
-    blog: z
-      .object({
-        postsPerPage: z.number().int().positive().optional().default(6),
-      })
-      .optional()
-      .default({
-        postsPerPage: 6,
-      }),
     pages: z
       .object({
         blog: blogPageSchema.optional().default(defaultPagesConfig.blog),
@@ -350,7 +386,6 @@ const siteConfig = defineCollection({
       .optional()
       .default(defaultPagesConfig),
     home: z.object({
-      layout: z.enum(['grid']),
       quote: z.object({
         text: z.array(z.string()).min(1),
         image: z.string(),

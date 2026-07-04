@@ -34,8 +34,9 @@ export async function getStaticPaths() {
   });
 }
 
-const { site, theme } = await getSiteConfig();
+const { site, theme, pages } = await getSiteConfig();
 const palette = theme.palette;
+const pageMeta = pages.blog;
 const { category, page } = Astro.props;
 ---
 
@@ -66,6 +67,7 @@ const { category, page } = Astro.props;
         headerKicker="Category"
         headerTitle={category.name}
         headerNote={`${category.count} ${category.count === 1 ? 'article' : 'articles'} in this topic.`}
+        coverImageStyle={pageMeta.coverImageStyle}
       />
     </main>
     <Footer />
