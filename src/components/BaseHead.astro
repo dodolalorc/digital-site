@@ -81,14 +81,20 @@ function createFontCss(fonts: {
   const zhSubsetFamily = toCssFontFamily(`${zhFontName} UI Subset`);
   const enFamily = toCssFontFamily(fonts.en);
   const codeFamily = toCssFontFamily(fonts.code);
+  const codeEnFontName = normalizeFontFamilyName(fonts.codeEn);
   const codeEnFamily = toCssFontFamily(fonts.codeEn);
   const fontFile = toCssString(resolveAssetUrl(fonts.file));
   const subsetUrl = getSubsetFontUrl(fonts.file);
   const subsetFile = toCssString(resolveAssetUrl(subsetUrl));
+  const monacoFontFace =
+    codeEnFontName === 'Monaco'
+      ? `@font-face{font-family:"Monaco";src:url(${toCssString(resolveAssetUrl('/fonts/Monaco.ttf'))}) format("truetype");font-style:normal;font-weight:400;font-display:swap;}`
+      : '';
 
   return `
 @font-face{font-family:${zhSubsetFamily};src:url(${subsetFile}) format("${getFontFormat(subsetUrl)}");font-style:normal;font-weight:400;font-display:swap;}
 @font-face{font-family:${zhFamily};src:url(${fontFile}) format("${getFontFormat(fonts.file)}");font-style:normal;font-weight:400;font-display:swap;}
+${monacoFontFace}
 html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-config-code-en:${codeEnFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
 `;
 }
