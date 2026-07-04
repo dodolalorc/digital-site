@@ -47,7 +47,7 @@ maxResults = 6
 [config.pages.blog]
 title = "技术与笔记"
 kicker = "Notebook archive"
-subtitle = "AI-native、前端工程、算法旧文和开发杂记。"
+subtitle = "旧文和开发杂记。"
 note = "从 ACM 题解到前端工程，从工具链折腾到 AI workflow，把学习和实践留下来。"
 postsPerPage = 6
 # date-fns 使用的日期格式模板
@@ -72,14 +72,14 @@ note = "相互关联的文章会被串成阅读路径，适合系统补课。"
 [config.pages.projects]
 title = "项目"
 kicker = "Project shelf"
-subtitle = "AI-native workflow、前端小工具和站点系统。"
+subtitle = "玩具项目集合"
 note = "记录一些能跑起来、能复用、也能继续长大的实践。"
 
 [config.pages.vibe]
-title = "vibe"
+title = "DD空间"
 kicker = ""
 subtitle = "生活、旅行、动画和一些没那么正式的片段。"
-note = "不一定完整成文，但它们也是这个数字空间的一部分。"
+note = "类似于朋友圈或QQ空间的地方"
 showTrail = true
 
 [config.comments.giscus]
@@ -113,7 +113,7 @@ comment = true
 [config.profile]
 name = "dodola"
 handle = "@dodolalorc"
-role = "AI Native Developer"
+role = "一只写代码的🐖"
 company = "@ByteDance"
 location = "Shenzhen, China"
 email = "dodolalorc@gmail.com"
@@ -123,19 +123,19 @@ meta = "2002 / INTJ-A / Frontend & AI Products"
 avatar = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
 [[config.topNav.links]]
-label = "Home"
+label = "主页"
 href = "/"
 
 [[config.topNav.links]]
-label = "Blog"
+label = "文章"
 href = "/blog"
 
 [[config.topNav.links]]
-label = "Projects"
+label = "项目"
 module = "projects"
 
 [[config.topNav.links]]
-label = "Vibe"
+label = "空间"
 module = "vibe"
 
 [[config.topNav.links]]
