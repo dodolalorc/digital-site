@@ -14,6 +14,15 @@ showTrail = true
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
 palette = "green-soft"
 
+[config.fonts]
+# 英文与代码感 UI 字体
+en = "Maple Mono"
+# 模板内可直接选择：ChillRoundM、LXGW WenKai
+# 中文阅读字体
+zh = "ChillRoundM"
+# 中文完整字体文件
+file = "/fonts/ChillRoundM.ttf"
+
 [config.code]
 lightTheme = "catppuccin-latte"
 darkTheme = "catppuccin-macchiato"

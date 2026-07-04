@@ -18,12 +18,78 @@ const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
 const { title, description, image = FallbackImage } = Astro.props;
 const imageUrl = typeof image === 'string' ? image : image.src;
-const { site } = await getSiteConfig();
+const { site, fonts } = await getSiteConfig();
+const fontVariablesCss = createFontCss(fonts);
+
+function normalizeFontFamilyName(fontFamily: string) {
+  return fontFamily
+    .replace(/[\u0000-\u001f\u007f]/g, ' ')
+    .trim()
+    .replace(/^['"]|['"]$/g, '');
+}
+
+function toCssFontFamily(fontFamily: string) {
+  const normalized = normalizeFontFamilyName(fontFamily);
+
+  return `"${normalized.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
+function toCssString(value: string) {
+  const normalized = value.replace(/[\u0000-\u001f\u007f]/g, '').trim();
+
+  return `"${normalized.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
+}
+
+function resolveAssetUrl(url: string) {
+  if (/^(?:https?:)?\/\//i.test(url) || url.startsWith('data:')) return url;
+
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const assetUrl = url.startsWith('/') ? url : `/${url}`;
+
+  return `${baseUrl}${assetUrl}`;
+}
+
+function getFontFormat(url: string) {
+  const extension = url.split('?')[0]?.split('#')[0]?.split('.').pop()?.toLowerCase();
+
+  if (extension === 'woff2') return 'woff2';
+  if (extension === 'woff') return 'woff';
+  if (extension === 'otf') return 'opentype';
+
+  return 'truetype';
+}
+
+function getSubsetFontUrl(fontUrl: string) {
+  const queryIndex = fontUrl.search(/[?#]/);
+  const suffix = queryIndex === -1 ? '' : fontUrl.slice(queryIndex);
+  const path = queryIndex === -1 ? fontUrl : fontUrl.slice(0, queryIndex);
+  const extensionIndex = path.lastIndexOf('.');
+  const basePath = extensionIndex === -1 ? path : path.slice(0, extensionIndex);
+
+  return `${basePath}-ui-subset.woff2${suffix}`;
+}
+
+function createFontCss(fonts: { en: string; zh: string; file: string }) {
+  const zhFontName = normalizeFontFamilyName(fonts.zh);
+  const zhFamily = toCssFontFamily(zhFontName);
+  const zhSubsetFamily = toCssFontFamily(`${zhFontName} UI Subset`);
+  const enFamily = toCssFontFamily(fonts.en);
+  const fontFile = toCssString(resolveAssetUrl(fonts.file));
+  const subsetUrl = getSubsetFontUrl(fonts.file);
+  const subsetFile = toCssString(resolveAssetUrl(subsetUrl));
+
+  return `
+@font-face{font-family:${zhSubsetFamily};src:url(${subsetFile}) format("${getFontFormat(subsetUrl)}");font-style:normal;font-weight:400;font-display:swap;}
+@font-face{font-family:${zhFamily};src:url(${fontFile}) format("${getFontFormat(fonts.file)}");font-style:normal;font-weight:400;font-display:swap;}
+html:root{--font-config-en:${enFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
+`;
+}
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<style is:inline set:html={fontVariablesCss}></style>
 <ClientRouter />
 <script is:inline>
   (() => {

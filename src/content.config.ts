@@ -81,6 +81,18 @@ const defaultMathConfig = {
   render: z.infer<typeof mathRendererSchema>;
 };
 
+const defaultFontConfig = {
+  en: 'Maple Mono',
+  zh: 'ChillRoundM',
+  file: '/fonts/ChillRoundM.ttf',
+};
+
+const nonEmptyStringSchema = (fallback: string) =>
+  z.preprocess(
+    (value) => (typeof value === 'string' && value.trim() === '' ? undefined : value),
+    z.string().trim().min(1).optional().default(fallback),
+  );
+
 const defaultGiscusConfig = {
   repo: '',
   repo_id: '',
@@ -167,6 +179,14 @@ const siteConfig = defineCollection({
       .default({
         palette: 'green-soft',
       }),
+    fonts: z
+      .object({
+        en: nonEmptyStringSchema(defaultFontConfig.en),
+        zh: nonEmptyStringSchema(defaultFontConfig.zh),
+        file: nonEmptyStringSchema(defaultFontConfig.file),
+      })
+      .optional()
+      .default(defaultFontConfig),
     code: z
       .object({
         lightTheme: z.string().optional().default(defaultCodeConfig.lightTheme),

@@ -1,11 +1,21 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { extname, join } from 'node:path';
+import { dirname, extname, join } from 'node:path';
+import { parse } from 'smol-toml';
+
+type FontConfig = {
+  en: string;
+  zh: string;
+  file: string;
+};
 
 const projectRoot = process.cwd();
 const uiCharsPath = join(projectRoot, 'scripts/fonts/ui-chars.txt');
-const outputFontPath = join(projectRoot, 'public/fonts/lxgw-ui-subset.woff2');
-const sourceFontPath = join(projectRoot, 'public/fonts/LXGWWenKai-Regular.ttf');
+const fontConfig = readFontConfig();
+const subsetFontUrl = getSubsetFontUrl(fontConfig.file);
+const outputFontPath = resolveProjectPath(subsetFontUrl);
+const sourceFontPath = resolveProjectPath(fontConfig.file);
+const subsetFontName = `${fontConfig.zh} UI Subset`;
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
 
@@ -27,6 +37,57 @@ const frontmatterExtensions = new Set(['.md', '.mdx']);
 const frontmatterKeys = new Set(['title', 'description', 'tags', 'categories', 'series']);
 const cjkPattern =
   /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\u3000-\u303f\uff00-\uffef]/u;
+
+function readFontConfig(): FontConfig {
+  const defaults: FontConfig = {
+    en: 'Maple Mono',
+    zh: 'ChillRoundM',
+    file: '/fonts/ChillRoundM.ttf',
+  };
+  const siteConfigPath = join(projectRoot, 'src/config/site.toml');
+
+  if (!existsSync(siteConfigPath)) return defaults;
+
+  const parsed = parse(readFileSync(siteConfigPath, 'utf8')) as {
+    config?: {
+      fonts?: Partial<Record<keyof FontConfig, unknown>>;
+    };
+  };
+  const fonts = parsed.config?.fonts ?? {};
+
+  return {
+    en: normalizeConfigString(fonts.en, defaults.en),
+    zh: normalizeConfigString(fonts.zh, defaults.zh),
+    file: normalizeConfigString(fonts.file, defaults.file),
+  };
+}
+
+function getSubsetFontUrl(fontUrl: string) {
+  const queryIndex = fontUrl.search(/[?#]/);
+  const suffix = queryIndex === -1 ? '' : fontUrl.slice(queryIndex);
+  const path = queryIndex === -1 ? fontUrl : fontUrl.slice(0, queryIndex);
+  const extensionIndex = path.lastIndexOf('.');
+  const basePath = extensionIndex === -1 ? path : path.slice(0, extensionIndex);
+
+  return `${basePath}-ui-subset.woff2${suffix}`;
+}
+
+function normalizeConfigString(value: unknown, fallback: string) {
+  return typeof value === 'string' && value.trim() ? value.trim() : fallback;
+}
+
+function resolveProjectPath(value: string) {
+  if (/^https?:\/\//i.test(value)) {
+    throw new Error(
+      `Font subsetting needs a local font file, but config.fonts.file received a remote URL: ${value}`,
+    );
+  }
+
+  const normalized = value.replace(/\\/g, '/').replace(/^\/+/, '');
+  const relativePath = normalized.startsWith('public/') ? normalized : `public/${normalized}`;
+
+  return join(projectRoot, relativePath);
+}
 
 function walkFiles(dir: string, extensions: Set<string>) {
   if (!existsSync(dir)) return [];
@@ -115,6 +176,45 @@ function runSubset() {
   );
 }
 
+function syncSubsetFontName() {
+  const script = `
+from fontTools.ttLib import TTFont
+import sys
+
+path = sys.argv[1]
+family = sys.argv[2]
+font = TTFont(path)
+name_table = font['name']
+
+for record in name_table.names:
+    if record.nameID == 1:
+        record.string = family.encode(record.getEncoding(), errors='replace')
+    elif record.nameID == 2:
+        record.string = 'Regular'.encode(record.getEncoding(), errors='replace')
+    elif record.nameID == 4:
+        record.string = f'{family} Regular'.encode(record.getEncoding(), errors='replace')
+    elif record.nameID == 6:
+        record.string = ''.join(part for part in f'{family}-Regular' if part.isalnum() or part == '-').encode(record.getEncoding(), errors='replace')
+
+font.save(path)
+`;
+  let result = spawnSync('python3', ['-c', script, outputFontPath, subsetFontName], {
+    stdio: 'inherit',
+  });
+
+  if (result.error || result.status !== 0) {
+    result = spawnSync('python', ['-c', script, outputFontPath, subsetFontName], {
+      stdio: 'inherit',
+    });
+  }
+
+  if (result.error || result.status !== 0) {
+    throw new Error(
+      `Generated subset font, but failed to sync its internal name to ${subsetFontName}. Ensure Python 3 and fonttools are installed. Error: ${result.error?.message ?? `status ${result.status}`}`,
+    );
+  }
+}
+
 const chars = new Set<string>();
 
 for (const dir of sourceDirs) {
@@ -145,16 +245,17 @@ const uiChars = [...chars].sort((a, b) => a.codePointAt(0)! - b.codePointAt(0)!)
 if (!uiChars) throw new Error('No CJK UI characters were found for font subsetting.');
 
 mkdirSync(join(projectRoot, 'scripts/fonts'), { recursive: true });
-mkdirSync(join(projectRoot, 'public/fonts'), { recursive: true });
+mkdirSync(dirname(outputFontPath), { recursive: true });
 writeFileSync(uiCharsPath, `${uiChars}\n`, 'utf8');
 
 if (!existsSync(sourceFontPath)) {
   throw new Error(
-    'LXGW WenKai source font not found. Place the full font at public/fonts/LXGWWenKai-Regular.ttf.',
+    `${fontConfig.zh} source font not found. Place the full font at ${sourceFontPath}, or update config.fonts.file in src/config/site.toml.`,
   );
 }
 
 runSubset();
+syncSubsetFontName();
 
 console.log(`Generated ${uiCharsPath} with ${uiChars.length} CJK UI characters.`);
-console.log(`Generated ${outputFontPath} from ${sourceFontPath}.`);
+console.log(`Generated ${subsetFontName} at ${outputFontPath} from ${sourceFontPath}.`);

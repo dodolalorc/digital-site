@@ -1,26 +1,6 @@
-@import '@fontsource/maple-mono/400.css';
-@import '@fontsource/maple-mono/500.css';
-@import '@fontsource/maple-mono/600.css';
-@import '@fontsource/maple-mono/700.css';
+@import './fonts.css';
 @import 'katex/dist/katex.min.css';
-
 @import './palettes.css';
-
-@font-face {
-  font-family: 'LXGW UI Subset';
-  src: url('/fonts/lxgw-ui-subset.woff2') format('woff2');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'LXGW WenKai Full';
-  src: url('/fonts/LXGWWenKai-Regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
 
 /*
   The CSS in this style tag is based off of Bear Blog's default CSS.
@@ -61,17 +41,23 @@
   --layout-page-bottom: 72px;
   --page-header-spacing: 54px;
   --page-header-spacing-mobile: 28px;
-  --font-cjk-system: 'Maple Mono', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-ui-cjk: 'LXGW UI Subset', var(--font-cjk-system);
+  --font-config-en: 'Maple Mono';
+  --font-config-zh: 'ChillRoundM';
+  --font-config-zh-subset: 'ChillRoundM UI Subset';
+  --font-cjk-system: var(--font-config-en), 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-ui-cjk: var(--font-config-zh-subset), var(--font-config-zh), var(--font-cjk-system);
   --font-serif-cn: var(--font-ui-cjk);
   --font-mono:
-    'Maple Mono', 'LXGW UI Subset', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    var(--font-config-en), var(--font-config-zh-subset), ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
   --font-body: var(--font-mono);
   --font-display: var(--font-mono);
   --font-note: var(--font-mono);
-  --font-article: 'Maple Mono', 'LXGW WenKai Full', var(--font-cjk-system);
-  --font-heading: 'Maple Mono', 'LXGW WenKai Full', var(--font-cjk-system);
-  --font-page-heading: 'Maple Mono', 'LXGW UI Subset', var(--font-cjk-system);
+  --font-article: var(--font-config-en), var(--font-config-zh), var(--font-cjk-system);
+  --font-heading: var(--font-config-en), var(--font-config-zh), var(--font-cjk-system);
+  --font-page-heading:
+    var(--font-config-en), var(--font-config-zh-subset), var(--font-config-zh),
+    var(--font-cjk-system);
   --font-meta: var(--font-mono);
   --font-code: var(--font-mono);
   --font-ui-label: var(--font-mono);

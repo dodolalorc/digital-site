@@ -1,27 +1,40 @@
-<script>
-  const FULL_FONT_URL = '/fonts/LXGWWenKai-Regular.ttf';
-  const FULL_FONT_TYPE = 'font/ttf';
+---
+import { getSiteConfig } from '../data/site';
+
+const { fonts } = await getSiteConfig();
+const fullFontType = getFontMimeType(fonts.file);
+const resolvedFullFontUrl = resolveAssetUrl(fonts.file);
+
+function resolveAssetUrl(url: string) {
+  if (/^(?:https?:)?\/\//i.test(url) || url.startsWith('data:')) return url;
+
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const assetUrl = url.startsWith('/') ? url : `/${url}`;
+
+  return `${baseUrl}${assetUrl}`;
+}
+
+function getFontMimeType(url: string) {
+  const extension = url.split('?')[0]?.split('#')[0]?.split('.').pop()?.toLowerCase();
+
+  if (extension === 'woff2') return 'font/woff2';
+  if (extension === 'woff') return 'font/woff';
+  if (extension === 'otf') return 'font/otf';
+
+  return 'font/ttf';
+}
+---
+
+<script define:vars={{ fullFontUrl: resolvedFullFontUrl, fullFontType }}>
+  const FULL_FONT_URL = fullFontUrl;
+  const FULL_FONT_TYPE = fullFontType;
   const WARMUP_ATTR = 'data-navfolio-full-font-warmup';
 
-  interface ConnectionLike {
-    saveData?: boolean;
-    effectiveType?: string;
-  }
-
-  interface NavigatorWithConnection extends Navigator {
-    connection?: ConnectionLike;
-    mozConnection?: ConnectionLike;
-    webkitConnection?: ConnectionLike;
-  }
-
+  /**
+   * @returns {{ saveData?: boolean, effectiveType?: string } | undefined}
+   */
   function getConnection() {
-    const connectionNavigator = navigator as NavigatorWithConnection;
-
-    return (
-      connectionNavigator.connection ||
-      connectionNavigator.mozConnection ||
-      connectionNavigator.webkitConnection
-    );
+    return navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   }
 
   function shouldSkipWarmup() {
@@ -60,7 +73,10 @@
     document.head.appendChild(link);
   }
 
-  function requestIdle(callback: () => void) {
+  /**
+   * @param {() => void} callback
+   */
+  function requestIdle(callback) {
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(callback, { timeout: 3000 });
       return;
@@ -72,7 +88,8 @@
   async function waitForCurrentPageFonts() {
     if (!document.fonts?.ready) return;
 
-    let timeoutId: ReturnType<typeof window.setTimeout> | undefined;
+    /** @type {ReturnType<typeof window.setTimeout> | undefined} */
+    let timeoutId;
     const timeoutPromise = new Promise((resolve) => {
       timeoutId = window.setTimeout(resolve, 2000);
     });
