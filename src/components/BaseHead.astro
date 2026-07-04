@@ -69,12 +69,19 @@ function getSubsetFontUrl(fontUrl: string) {
   return `${basePath}-ui-subset.woff2${suffix}`;
 }
 
-function createFontCss(fonts: { en: string; code: string; zh: string; file: string }) {
+function createFontCss(fonts: {
+  en: string;
+  code: string;
+  codeEn: string;
+  zh: string;
+  file: string;
+}) {
   const zhFontName = normalizeFontFamilyName(fonts.zh);
   const zhFamily = toCssFontFamily(zhFontName);
   const zhSubsetFamily = toCssFontFamily(`${zhFontName} UI Subset`);
   const enFamily = toCssFontFamily(fonts.en);
   const codeFamily = toCssFontFamily(fonts.code);
+  const codeEnFamily = toCssFontFamily(fonts.codeEn);
   const fontFile = toCssString(resolveAssetUrl(fonts.file));
   const subsetUrl = getSubsetFontUrl(fonts.file);
   const subsetFile = toCssString(resolveAssetUrl(subsetUrl));
@@ -82,7 +89,7 @@ function createFontCss(fonts: { en: string; code: string; zh: string; file: stri
   return `
 @font-face{font-family:${zhSubsetFamily};src:url(${subsetFile}) format("${getFontFormat(subsetUrl)}");font-style:normal;font-weight:400;font-display:swap;}
 @font-face{font-family:${zhFamily};src:url(${fontFile}) format("${getFontFormat(fonts.file)}");font-style:normal;font-weight:400;font-display:swap;}
-html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
+html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-config-code-en:${codeEnFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
 `;
 }
 ---

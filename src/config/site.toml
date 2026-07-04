@@ -16,6 +16,7 @@ palette = "green-soft"
 # 英文与代码感 UI 字体
 en = "Maple Mono"
 code = "Maple Mono"
+codeEn = "Monaco"
 # 模板内可直接选择：ChillRoundM、LXGW WenKai
 # 中文阅读字体
 zh = "ChillRoundM"
