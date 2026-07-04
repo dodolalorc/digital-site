@@ -172,12 +172,6 @@ startDate = ""
 dateArchiveBaseHref = ""
 
 [[config.home.navigation]]
-icon = "sparkle"
-title = "AI Native Notes"
-subtitle = "Products, workflows, and developer experience"
-href = "/blog"
-
-[[config.home.navigation]]
 icon = "pen"
 title = "技术博客"
 subtitle = "前端、工具链、算法和工程笔记"
