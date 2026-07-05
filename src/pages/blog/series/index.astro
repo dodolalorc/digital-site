@@ -18,7 +18,7 @@ const ui = getUiText(siteConfig);
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-palette={palette}>
+<html lang={ui.locale} data-palette={palette}>
   <head>
     <BaseHead title={`${pageMeta.title} | ${site.title}`} description={pageMeta.note} />
     <style>

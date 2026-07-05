@@ -220,9 +220,14 @@ export function normalizeUiLanguage(value: string | undefined): UiLanguage {
     en: 'en',
     'en-us': 'en',
     en_us: 'en',
+    zh: 'zh-CN',
     'zh-cn': 'zh-CN',
+    'zh-sg': 'zh-CN',
+    'zh-my': 'zh-CN',
     'zh-hans': 'zh-CN',
     zh_cn: 'zh-CN',
+    zh_sg: 'zh-CN',
+    zh_my: 'zh-CN',
     zh_hans: 'zh-CN',
     cn: 'zh-CN',
     'zh-tw': 'zh-TW',
@@ -244,4 +249,8 @@ export function getUiLanguage(config: SiteConfig): UiLanguage {
 
 export function getUiText(config: SiteConfig): UiText {
   return uiText[getUiLanguage(config)];
+}
+
+export function getHtmlLang(config: SiteConfig): UiText['locale'] {
+  return getUiText(config).locale;
 }

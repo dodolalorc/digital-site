@@ -7,10 +7,13 @@ import SmartImage from '../components/SmartImage.astro';
 import BlogTopNav from '../components/blog/BlogTopNav.astro';
 import ZoomableImage from '../components/mdx/ZoomableImage.astro';
 import { getSiteConfig } from '../data/site';
+import { getHtmlLang } from '../utils/ui-text';
 import { getVibeImageLayout } from '../utils/vibe-image-layout';
 
-const { site, theme, pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
+const htmlLang = getHtmlLang(siteConfig);
 const pageMeta = pages.vibe;
 const showTrail = pageMeta.showTrail;
 
@@ -30,7 +33,7 @@ const vibes = await Promise.all(
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-palette={palette}>
+<html lang={htmlLang} data-palette={palette}>
   <head>
     <BaseHead title={`${pageMeta.title} | ${site.title}`} description={pageMeta.subtitle} />
     <style>

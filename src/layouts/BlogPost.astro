@@ -6,15 +6,18 @@ import FormattedDate from '../components/FormattedDate.astro';
 import ScrollToTopButton from '../components/ScrollToTopButton.astro';
 import SmartImage from '../components/SmartImage.astro';
 import BlogTopNav from '../components/blog/BlogTopNav.astro';
-import { getThemePalette } from '../data/site';
+import { getSiteConfig } from '../data/site';
+import { getHtmlLang } from '../utils/ui-text';
 
 type Props = CollectionEntry<'blog'>['data'];
 
 const { title, description, date, heroImage } = Astro.props;
-const palette = await getThemePalette();
+const siteConfig = await getSiteConfig();
+const palette = siteConfig.theme.palette;
+const htmlLang = getHtmlLang(siteConfig);
 ---
 
-<html lang="zh-CN" data-palette={palette}>
+<html lang={htmlLang} data-palette={palette}>
   <head>
     <BaseHead title={title} description={description} />
     <style>

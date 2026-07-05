@@ -7,9 +7,12 @@ import BlogArchive from '../../components/blog/BlogArchive.astro';
 import GroupNav from '../../components/blog/GroupNav.astro';
 import { getSiteConfig } from '../../data/site';
 import { sortBlogPostsForArchive } from '../../utils/content-dates';
+import { getHtmlLang } from '../../utils/ui-text';
 
-const { site, theme, pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
+const htmlLang = getHtmlLang(siteConfig);
 const pageMeta = pages.blog;
 const posts = sortBlogPostsForArchive(await getCollection('blog', ({ data }) => !data.draft));
 const postsPerPage = pageMeta.postsPerPage;
@@ -28,7 +31,7 @@ const page = {
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-palette={palette}>
+<html lang={htmlLang} data-palette={palette}>
   <head>
     <BaseHead title={`${pageMeta.title} | ${site.title}`} description={pageMeta.subtitle} />
     <style>

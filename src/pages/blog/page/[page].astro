@@ -6,6 +6,7 @@ import BlogArchive from '../../../components/blog/BlogArchive.astro';
 import BlogTopNav from '../../../components/blog/BlogTopNav.astro';
 import { getSiteConfig } from '../../../data/site';
 import { sortBlogPostsForArchive } from '../../../utils/content-dates';
+import { getHtmlLang } from '../../../utils/ui-text';
 
 export async function getStaticPaths() {
   const { pages } = await getSiteConfig();
@@ -39,14 +40,16 @@ export async function getStaticPaths() {
   });
 }
 
-const { site, theme, pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
+const htmlLang = getHtmlLang(siteConfig);
 const pageMeta = pages.blog;
 const { page, postOffset } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="zh-CN" data-palette={palette}>
+<html lang={htmlLang} data-palette={palette}>
   <head>
     <BaseHead
       title={`${pageMeta.title} | Page ${page.currentPage} | ${site.title}`}
