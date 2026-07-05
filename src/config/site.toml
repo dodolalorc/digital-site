@@ -1,6 +1,6 @@
 [config.site]
 title = "dodola"
-description = "记录和分享我的开发者旅程，关注 AI-native 产品、前端工程、开发者体验和个人工作流。"
+description = "记录和分享我的开发者旅程"
 pageTitle = "dodola | Digital Space"
 pageDescription = "dodola 的个人数字空间：技术文章、开发笔记、AI-native workflow 与生活碎片。"
 url = "https://dodolalorc.cn"
@@ -78,8 +78,8 @@ note = "记录一些能跑起来、能复用、也能继续长大的实践。"
 [config.pages.vibe]
 title = "DD空间"
 kicker = ""
-subtitle = "生活、旅行、动画和一些没那么正式的片段。"
-note = "类似于朋友圈或QQ空间的地方"
+subtitle = "生活、旅行和一些没那么正式的片段。"
+note = "类似于朋友圈/QQ空间的地方"
 showTrail = true
 
 [config.comments.giscus]
@@ -139,7 +139,7 @@ label = "空间"
 module = "vibe"
 
 [[config.topNav.links]]
-label = "About"
+label = "关于我"
 href = "/about"
 
 [config.home]
@@ -157,9 +157,10 @@ image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 title = "here is dodola"
 name = "dodola"
 body = [
-  "Hi, I'm dodola. 一个对 AI-native 产品、工作流和开发者体验保持好奇的开发者。",
-  "目前关注前端工程与 AI products，也在把 TypeScript / Vue / Rust / Python / Tauri / Obsidian 串进自己的工具链。",
-  "这里会收纳技术文章、算法旧文、项目记录、学习笔记和一些生活碎片。写作不一定很宏大，但会尽量诚实地记录每一次 build、debug 和重新开始。",
+  "Hi, 这里是哆哆啦，一只会写代码的局局",
+  "关注前端工程与 AI products，尝试做更多的好用的工具，希望成为更厉害的代码🐖",
+  "这里会收纳技术文章、算法旧文、项目记录、学习笔记和一些生活碎片。",
+  "以及，欢迎和我交换友链！",
 ]
 image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 
@@ -274,17 +275,17 @@ tooltip = "" # Empty tooltip hides this link item.
 copy = false
 
 [[config.home.doing]]
-text = "毕业与入职 ByteDance 前的工程能力整理：前端基础、产品意识和协作节奏。"
+text = "尝试构建完美的Work-Life Balance工作流"
 mark = "01"
 
 [[config.home.doing]]
-text = "搭建更实用的 AI-native workflow，把学习、写作、检索和开发流程连起来。"
+text = "喵语学习中"
 mark = "02"
 
 [[config.home.doing]]
-text = "继续补齐 TypeScript / Vue / Rust / Python / Tauri 相关项目和笔记。"
+text = "继续深耕计算机专业知识，拓展边界，提升水平，产出新文章"
 mark = "03"
 
 [[config.home.doing]]
-text = "整理 ACM/算法旧文，同时补充更偏开发实践的新文章。"
+text = "继续更新升级 astro-navfolio 主题"
 mark = "04"
