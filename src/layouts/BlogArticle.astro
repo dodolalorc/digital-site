@@ -13,9 +13,12 @@ import { resolveCommentsConfig } from '../utils/comments';
 import { sortByDateDesc } from '../utils/content-dates';
 import { getSeriesContext, slugifyGroupName } from '../utils/content-groups';
 import { buildTocTree, countTocItems } from '../utils/toc-tree';
+import { getUiText } from '../utils/ui-text';
 
-const { comments: rawComments } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { comments: rawComments } = siteConfig;
 const comments = resolveCommentsConfig(rawComments);
+const ui = getUiText(siteConfig);
 
 type SidebarConfig = {
   enable?: boolean;
@@ -88,7 +91,7 @@ const cjkChars =
   bodyText.match(/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu) ?? [];
 const wordCount = englishWords.length + cjkChars.length;
 const readingMinutes = Math.max(1, Math.ceil(englishWords.length / 220 + cjkChars.length / 500));
-const readingTime = `${readingMinutes} min read`;
+const readingTime = ui.article.readingTime(readingMinutes);
 const tags = post.data.tags ?? [];
 const tagLinks = tags.map((name) => ({
   name,
@@ -170,7 +173,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
           {
             hasToc && (
-              <section class="mobile-article-toc" aria-label="Article table of contents">
+              <section class="mobile-article-toc" aria-label={ui.toc.title}>
                 <TableOfContents items={tocItems} compact collapsible font={contentFont} />
               </section>
             )
@@ -185,10 +188,13 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
           {
             seriesContext && (seriesContext.prev || seriesContext.next) && (
-              <nav class="series-neighbor-nav" aria-label={`More in ${seriesContext.name}`}>
+              <nav
+                class="series-neighbor-nav"
+                aria-label={ui.article.moreInSeries(seriesContext.name)}
+              >
                 {seriesContext.prev ? (
                   <a href={`${basePath}/blog/${seriesContext.prev.id}/`}>
-                    <small>Previous in {seriesContext.name}</small>
+                    <small>{ui.article.previousInSeries(seriesContext.name)}</small>
                     <span>{seriesContext.prev.data.title}</span>
                   </a>
                 ) : (
@@ -196,7 +202,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
                 )}
                 {seriesContext.next ? (
                   <a href={`${basePath}/blog/${seriesContext.next.id}/`} class="next">
-                    <small>Next in {seriesContext.name}</small>
+                    <small>{ui.article.nextInSeries(seriesContext.name)}</small>
                     <span>{seriesContext.next.data.title}</span>
                   </a>
                 ) : (
@@ -212,7 +218,7 @@ const hasSidebar = shouldRenderSidebar && hasToc;
 
       {
         hasSidebar && (
-          <aside class="right-sidebar" aria-label="Reading tools">
+          <aside class="right-sidebar" aria-label={ui.article.readingTools}>
             <div class="right-sidebar-inner">
               {hasToc && <TableOfContents items={tocItems} font={contentFont} />}
             </div>

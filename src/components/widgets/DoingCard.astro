@@ -1,5 +1,7 @@
 ---
 import Icon from '../Icon.astro';
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
 
 interface DoingItem {
   text: string;
@@ -7,10 +9,11 @@ interface DoingItem {
 }
 
 const { items } = Astro.props as { items: DoingItem[] };
+const ui = getUiText(await getSiteConfig());
 ---
 
 <article class="glass-card doing-card">
-  <h2><Icon name="calendar" /> Recently</h2>
+  <h2><Icon name="calendar" /> {ui.doing.recently}</h2>
   <ul>
     {
       items.map((item) => (

@@ -4,7 +4,9 @@ import PageView from '../comments/PageView.astro';
 import FormattedDate from '../FormattedDate.astro';
 import Icon from '../Icon.astro';
 import MetadataItem from '../MetadataItem.astro';
+import { getSiteConfig } from '../../data/site';
 import { slugifyGroupName } from '../../utils/content-groups';
+import { getUiText } from '../../utils/ui-text';
 
 type TagLink = string | { name: string; slug: string };
 
@@ -43,7 +45,6 @@ const {
   pathname = Astro.url.pathname,
   showPageView = false,
 } = Astro.props;
-const wordCountLabel = `${wordCount.toLocaleString('en-US')} words`;
 const tagLinks = tags.map((tag) =>
   typeof tag === 'string' ? { name: tag, slug: slugifyGroupName(tag) } : tag,
 );
@@ -53,6 +54,8 @@ const hasSeries = series.length > 0;
 const hasGroups = hasCategories || hasSeries;
 const isArchiveHeader = variant === 'archive';
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ui = getUiText(await getSiteConfig());
+const wordCountLabel = ui.article.wordCount(wordCount);
 ---
 
 <header
@@ -69,7 +72,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
           <h1 class="archive-title" data-pagefind-meta="title">
             {title}
           </h1>
-          <div class="meta-line" aria-label="Article metadata">
+          <div class="meta-line" aria-label={ui.article.metadata}>
             {date && (
               <MetadataItem kind="date" separated={false}>
                 <FormattedDate date={date} />
@@ -91,11 +94,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
             )}
           </div>
           {hasGroups && (
-            <div class="group-meta-line" aria-label="Article groups">
+            <div class="group-meta-line" aria-label={ui.article.groups}>
               {hasCategories && (
                 <span class="group-meta-item">
                   <Icon name="folder" size={15} />
-                  <span class="group-label">Categories</span>
+                  <span class="group-label">{ui.groups.categories}</span>
                   <span class="group-list">
                     {categories.map((category) => (
                       <a class="group-link" href={`${basePath}/blog/categories/${category.slug}/`}>
@@ -108,7 +111,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
               {hasSeries && (
                 <span class="group-meta-item">
                   <Icon name="layers" size={15} />
-                  <span class="group-label">Series</span>
+                  <span class="group-label">{ui.groups.series}</span>
                   <span class="group-list">
                     {series.map((item) => (
                       <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>
@@ -133,7 +136,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
       <>
         <h1 data-pagefind-meta="title">{title}</h1>
 
-        <div class="meta-line" aria-label="Article metadata">
+        <div class="meta-line" aria-label={ui.article.metadata}>
           {date && (
             <MetadataItem kind="date" separated={false}>
               <FormattedDate date={date} />
@@ -155,11 +158,11 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
           )}
         </div>
         {hasGroups && (
-          <div class="group-meta-line" aria-label="Article groups">
+          <div class="group-meta-line" aria-label={ui.article.groups}>
             {hasCategories && (
               <span class="group-meta-item">
                 <Icon name="folder" size={15} />
-                <span class="group-label">Categories</span>
+                <span class="group-label">{ui.groups.categories}</span>
                 <span class="group-list">
                   {categories.map((category) => (
                     <a class="group-link" href={`${basePath}/blog/categories/${category.slug}/`}>
@@ -172,7 +175,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
             {hasSeries && (
               <span class="group-meta-item">
                 <Icon name="layers" size={15} />
-                <span class="group-label">Series</span>
+                <span class="group-label">{ui.groups.series}</span>
                 <span class="group-list">
                   {series.map((item) => (
                     <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>

@@ -15,10 +15,22 @@ import expressiveCode from 'astro-expressive-code';
 
 import rehypeResponsiveTables from './src/utils/rehype-responsive-tables';
 
+/**
+ * @param {unknown} value
+ * @returns {value is Record<string, unknown>}
+ */
+const isRecord = (value) => typeof value === 'object' && value !== null && !Array.isArray(value);
+
 const siteToml = parse(fs.readFileSync(new URL('./src/config/site.toml', import.meta.url), 'utf8'));
-const configuredSiteUrl = siteToml.config?.site?.url;
-const configuredMathRenderer = siteToml.config?.math?.render;
+const configToml = isRecord(siteToml.config) ? siteToml.config : {};
+const siteConfig = isRecord(configToml.site) ? configToml.site : {};
+const mathConfig = isRecord(configToml.math) ? configToml.math : {};
+const configuredSiteUrl = siteConfig.url;
+const configuredMathRenderer = mathConfig.render;
 const mathRenderer = configuredMathRenderer === 'mathjax' ? 'mathjax' : 'katex';
+/**
+ * @param {unknown} value
+ */
 const normalizeSiteUrl = (value) => {
   if (typeof value !== 'string') return undefined;
 

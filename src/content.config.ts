@@ -276,10 +276,12 @@ const siteConfig = defineCollection({
     theme: z
       .object({
         palette: paletteSchema.optional().default('green-soft'),
+        lang: z.string().optional().default('en'),
       })
       .optional()
       .default({
         palette: 'green-soft',
+        lang: 'en',
       }),
     fonts: z
       .object({
@@ -356,12 +358,9 @@ const siteConfig = defineCollection({
       name: z.string(),
       handle: z.string(),
       role: z.string(),
-      company: z.string(),
-      location: z.string(),
       email: z.email(),
       website: z.url(),
       github: z.url(),
-      meta: z.string(),
       avatar: z.string(),
     }),
     topNav: z.object({
@@ -392,13 +391,11 @@ const siteConfig = defineCollection({
     home: z.object({
       quote: z.object({
         text: z.array(z.string()).min(1),
-        image: z.string(),
       }),
       intro: z.object({
         title: z.string(),
         name: z.string(),
         body: z.array(z.string()).min(1),
-        image: z.string(),
       }),
       latest: z
         .object({

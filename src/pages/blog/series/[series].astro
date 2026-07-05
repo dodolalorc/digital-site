@@ -8,6 +8,7 @@ import FormattedDate from '../../../components/FormattedDate.astro';
 import SeriesProgress from '../../../components/blog/SeriesProgress.astro';
 import { getSiteConfig } from '../../../data/site';
 import { getAllSeries, getPostsBySeries } from '../../../utils/content-groups';
+import { getUiText } from '../../../utils/ui-text';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -21,10 +22,12 @@ export async function getStaticPaths() {
   }));
 }
 
-const { site, theme } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme } = siteConfig;
 const palette = theme.palette;
 const { series, posts } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const ui = getUiText(siteConfig);
 ---
 
 <!doctype html>
@@ -114,19 +117,16 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
   <body>
     <BlogTopNav />
     <main data-pagefind-body>
-      <BackLink href="/blog/series/" label="Back" />
+      <BackLink href="/blog/series/" label={ui.groups.back} />
       <header class="archive-hero archive-header-shared page-header-spacing">
         <div class="archive-header-main series-detail-header">
           <div>
-            <p class="archive-kicker">Series</p>
+            <p class="archive-kicker">{ui.groups.series}</p>
             <h1 class="archive-title">{series.name}</h1>
           </div>
           <SeriesProgress current={posts.length} total={posts.length} />
         </div>
-        <p class="archive-note">
-          {posts.length}
-          {posts.length === 1 ? 'article' : 'articles'} in reading order.
-        </p>
+        <p class="archive-note">{ui.groups.seriesNote(posts.length)}</p>
       </header>
 
       <ol class="series-stack">

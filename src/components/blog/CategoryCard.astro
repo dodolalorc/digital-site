@@ -1,4 +1,7 @@
 ---
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
+
 interface Props {
   name: string;
   slug: string;
@@ -8,13 +11,13 @@ interface Props {
 const { name, slug, count } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = `${basePath}/blog/categories/${slug}/`;
-const articleLabel = count === 1 ? 'article' : 'articles';
+const ui = getUiText(await getSiteConfig());
 ---
 
 <a class="category-card" href={href}>
-  <span class="category-label">Category</span>
+  <span class="category-label">{ui.groups.category}</span>
   <strong>{name}</strong>
-  <span>{count} {articleLabel}</span>
+  <span>{ui.groups.articleCount(count)}</span>
 </a>
 
 <style>

@@ -8,6 +8,7 @@ import BlogTopNav from '../../components/blog/BlogTopNav.astro';
 import { getSiteConfig } from '../../data/site';
 import { sortBlogPostsForArchive } from '../../utils/content-dates';
 import { getAllTags } from '../../utils/content-groups';
+import { getUiText } from '../../utils/ui-text';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -34,10 +35,12 @@ export async function getStaticPaths() {
   });
 }
 
-const { site, theme, pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
 const pageMeta = pages.blog;
 const { tag, page } = Astro.props;
+const ui = getUiText(siteConfig);
 ---
 
 <!doctype html>
@@ -61,12 +64,12 @@ const { tag, page } = Astro.props;
   <body>
     <BlogTopNav />
     <main data-pagefind-body>
-      <BackLink href="/blog/" label="Back" />
+      <BackLink href="/blog/" label={ui.groups.back} />
       <BlogArchive
         page={page}
-        headerKicker="Tag"
+        headerKicker={ui.groups.tag}
         headerTitle={tag.name}
-        headerNote={`${tag.count} ${tag.count === 1 ? 'article' : 'articles'} with this tag.`}
+        headerNote={ui.groups.tagNote(tag.count)}
         coverImageStyle={pageMeta.coverImageStyle}
       />
     </main>

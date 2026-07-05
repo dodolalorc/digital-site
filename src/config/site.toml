@@ -11,6 +11,8 @@ footerNote = "Released as an open-source starter."
 # 可用色盘：
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
 palette = "green-soft"
+# 原生 UI 语言。可用值：en、zh-CN、zh-TW。未知值会回退到 en。
+lang = "en"
 
 [config.fonts]
 # 英文与代码感 UI 字体
@@ -114,12 +116,9 @@ comment = true
 name = "navfolio"
 handle = "@navfolio"
 role = "A Cat Developer"
-company = "Independent Studio"
-location = "Remote"
 email = "hello@navfolio.site"
 website = "https://astro.navfolio.site/"
 github = "https://github.com/dodolalorc/astro-navfolio"
-meta = "Open-source maintainer"
 avatar = "/images/logo.png"
 
 [[config.topNav.links]]
@@ -150,7 +149,6 @@ text = [
   "Showcase your story,",
   "and keep everything in one place.",
 ]
-image = "/images/logo-with-name.png"
 
 [config.home.intro]
 title = "here is navfolio"
@@ -163,7 +161,6 @@ body = [
   "Navfolio 专注于轻量级组织、流畅的阅读体验，以及对开发者友好的美学设计。",
   "它不像一份简历，更像是一个属于你自己的个人操作系统——承载想法、项目、笔记与网络足迹。",
 ]
-image = "/images/logo-cat.png"
 
 [config.home.latest]
 count = 1
@@ -212,7 +209,7 @@ copy = false
 [[config.home.links]]
 label = "X"
 icon = "x"
-tooltip = "" # Empty tooltip hides this link item.
+tooltip = "" # 留空会隐藏这个链接项。
 copy = false
 
 [[config.home.links]]

@@ -68,15 +68,15 @@ function getResultPath(url: string) {
   }
 }
 
-function getResultKind(url: string) {
+function getResultKind(root: HTMLElement, url: string) {
   const path = getResultPath(url);
 
-  if (/^\/blog\/[^/]+\/?$/.test(path)) return 'Blog note';
-  if (path.startsWith('/blog')) return 'Blog index';
-  if (path.startsWith('/vibe')) return 'Vibe';
-  if (path.startsWith('/projects')) return 'Project';
+  if (/^\/blog\/[^/]+\/?$/.test(path)) return root.dataset.searchKindBlogNote || 'Blog note';
+  if (path.startsWith('/blog')) return root.dataset.searchKindBlogIndex || 'Blog index';
+  if (path.startsWith('/vibe')) return root.dataset.searchKindVibe || 'Vibe';
+  if (path.startsWith('/projects')) return root.dataset.searchKindProject || 'Project';
 
-  return 'Page';
+  return root.dataset.searchKindPage || 'Page';
 }
 
 function getResultTitle(result: Awaited<ReturnType<PagefindResult['data']>>) {
@@ -159,10 +159,10 @@ function renderResults(root: HTMLElement, results: Awaited<ReturnType<PagefindRe
     title.className = 'site-search-result-title';
     title.textContent = getResultTitle(result);
     meta.className = 'site-search-result-meta';
-    meta.textContent = `${getResultKind(result.url)} - ${getResultPath(result.url)}`;
+    meta.textContent = `${getResultKind(root, result.url)} - ${getResultPath(result.url)}`;
     match.className = 'site-search-result-match';
     matchLabel.className = 'site-search-result-match-label';
-    matchLabel.textContent = 'Matched passage';
+    matchLabel.textContent = root.dataset.searchMatchLabel || 'Matched passage';
     excerpt.className = 'site-search-result-excerpt';
     excerpt.innerHTML = result.excerpt;
 

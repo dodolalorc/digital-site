@@ -19,7 +19,14 @@ const subsetFontName = `${fontConfig.zh} UI Subset`;
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
 
-const sourceDirs = ['src/pages', 'src/components', 'src/layouts', 'src/config'];
+const sourceDirs = [
+  'src/pages',
+  'src/components',
+  'src/layouts',
+  'src/config',
+  'src/utils',
+  'src/i18n',
+];
 const contentFrontmatterDirs = [
   `${contentRoot}/blog`,
   `${contentRoot}/projects`,

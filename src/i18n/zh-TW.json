@@ -1,0 +1,84 @@
+{
+  "locale": "zh-TW",
+  "doing": {
+    "recently": "最近"
+  },
+  "heatmap": {
+    "totalPosts": "總文章",
+    "activeDays": "活躍天數",
+    "dayStreak": "連續天數",
+    "latest": "最新",
+    "latestPublishedPosts": "最新發布文章",
+    "openLatestPost": "開啟最新文章：{title}",
+    "less": "少",
+    "more": "多",
+    "weekdays": ["週一", "週三", "週五"],
+    "writingSince": "自 {date} 起的寫作活動",
+    "recentWeeks": "最近 {weeks} 週寫作活動",
+    "upcoming": "未來",
+    "postCount": "{count} 篇文章"
+  },
+  "groups": {
+    "categories": "分類",
+    "series": "系列",
+    "category": "分類",
+    "tag": "標籤",
+    "back": "返回",
+    "browseByTopic": "按主題瀏覽",
+    "followConnectedNotes": "閱讀連續筆記",
+    "blogBrowsingGroups": "部落格瀏覽分組",
+    "emptyCategories": "還沒有新增分類。",
+    "emptySeries": "還沒有新增系列。",
+    "articleCount": "{count} 篇文章",
+    "categoryNote": "這個主題下有 {count} 篇文章。",
+    "seriesNote": "按閱讀順序排列，共 {count} 篇文章。",
+    "tagNote": "帶有這個標籤的文章共 {count} 篇。",
+    "publishedCount": "已發布 {count} 篇",
+    "publishedArticles": "已發布 {count} 篇文章",
+    "viewMore": "查看更多 {count} 篇"
+  },
+  "article": {
+    "metadata": "文章中繼資訊",
+    "groups": "文章分組",
+    "readingTools": "閱讀工具",
+    "wordCount": "{count} 字",
+    "readingTime": "{minutes} 分鐘閱讀",
+    "moreInSeries": "{name} 系列更多文章",
+    "previousInSeries": "{name} 上一篇",
+    "nextInSeries": "{name} 下一篇",
+    "pinned": "置頂",
+    "moreFromSite": "{siteTitle} 的更多文章"
+  },
+  "toc": {
+    "title": "目錄",
+    "open": "開啟目錄",
+    "close": "關閉目錄",
+    "expand": "展開目錄",
+    "collapse": "收合目錄",
+    "showAll": "顯示全部",
+    "collapseButton": "收合"
+  },
+  "pagination": {
+    "blog": "部落格分頁",
+    "previous": "上一頁",
+    "next": "下一頁",
+    "page": "第 {current} 頁，共 {total} 頁"
+  },
+  "search": {
+    "title": "搜尋",
+    "trigger": "搜尋站點",
+    "close": "關閉搜尋",
+    "idle": "輸入關鍵字開始搜尋。",
+    "loading": "搜尋中...",
+    "empty": "沒有找到筆記。",
+    "unavailable": "搜尋索引尚不可用。請先執行生產建置。",
+    "resultKinds": {
+      "blogNote": "部落格文章",
+      "blogIndex": "部落格索引",
+      "vibe": "Vibe",
+      "project": "專案",
+      "page": "頁面"
+    },
+    "matchedPassage": "匹配段落"
+  }
+}

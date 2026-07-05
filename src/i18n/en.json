@@ -1,0 +1,102 @@
+{
+  "locale": "en",
+  "doing": {
+    "recently": "Recently"
+  },
+  "heatmap": {
+    "totalPosts": "Total posts",
+    "activeDays": "Active days",
+    "dayStreak": "Day streak",
+    "latest": "Latest",
+    "latestPublishedPosts": "Latest published posts",
+    "openLatestPost": "Open latest post: {title}",
+    "less": "Less",
+    "more": "More",
+    "weekdays": ["Mon", "Wed", "Fri"],
+    "writingSince": "Writing activity since {date}",
+    "recentWeeks": "Recent {weeks} weeks writing activity",
+    "upcoming": "upcoming",
+    "postCount": {
+      "one": "{count} post",
+      "other": "{count} posts"
+    }
+  },
+  "groups": {
+    "categories": "Categories",
+    "series": "Series",
+    "category": "Category",
+    "tag": "Tag",
+    "back": "Back",
+    "browseByTopic": "Browse by topic",
+    "followConnectedNotes": "Follow connected notes",
+    "blogBrowsingGroups": "Blog browsing groups",
+    "emptyCategories": "No categories have been added yet.",
+    "emptySeries": "No series have been added yet.",
+    "articleCount": {
+      "one": "{count} article",
+      "other": "{count} articles"
+    },
+    "categoryNote": {
+      "one": "{count} article in this topic.",
+      "other": "{count} articles in this topic."
+    },
+    "seriesNote": {
+      "one": "{count} article in reading order.",
+      "other": "{count} articles in reading order."
+    },
+    "tagNote": {
+      "one": "{count} article with this tag.",
+      "other": "{count} articles with this tag."
+    },
+    "publishedCount": "{count} published",
+    "publishedArticles": {
+      "one": "{count} published article",
+      "other": "{count} published articles"
+    },
+    "viewMore": "View {count} more"
+  },
+  "article": {
+    "metadata": "Article metadata",
+    "groups": "Article groups",
+    "readingTools": "Reading tools",
+    "wordCount": "{count} words",
+    "readingTime": "{minutes} min read",
+    "moreInSeries": "More in {name}",
+    "previousInSeries": "Previous in {name}",
+    "nextInSeries": "Next in {name}",
+    "pinned": "Pinned",
+    "moreFromSite": "More from {siteTitle}"
+  },
+  "toc": {
+    "title": "Table of contents",
+    "open": "Open table of contents",
+    "close": "Close table of contents",
+    "expand": "Expand table of contents",
+    "collapse": "Collapse table of contents",
+    "showAll": "Show all",
+    "collapseButton": "Collapse"
+  },
+  "pagination": {
+    "blog": "Blog pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {current} of {total}"
+  },
+  "search": {
+    "title": "Search",
+    "trigger": "Search site",
+    "close": "Close search",
+    "idle": "Start typing to search.",
+    "loading": "Searching...",
+    "empty": "No notes found.",
+    "unavailable": "Search index is not available yet. Run a production build first.",
+    "resultKinds": {
+      "blogNote": "Blog note",
+      "blogIndex": "Blog index",
+      "vibe": "Vibe",
+      "project": "Project",
+      "page": "Page"
+    },
+    "matchedPassage": "Matched passage"
+  }
+}

@@ -84,6 +84,7 @@ const { links } = Astro.props as { links: ConnectLink[] };
   .connect-list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-end;
     gap: 8px;
   }
 
@@ -216,7 +217,6 @@ const { links } = Astro.props as { links: ConnectLink[] };
 
     .connect-list {
       gap: 7px;
-      justify-content: center;
     }
   }
 </style>

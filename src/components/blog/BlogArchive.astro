@@ -4,8 +4,10 @@ import { ChevronsRight } from 'lucide-astro';
 import FormattedDate from '../FormattedDate.astro';
 import MetadataItem from '../MetadataItem.astro';
 import SmartImage from '../SmartImage.astro';
+import { getSiteConfig } from '../../data/site';
 import { slugifyGroupName } from '../../utils/content-groups';
 import { isStickyEntry } from '../../utils/content-dates';
+import { getUiText } from '../../utils/ui-text';
 
 type BlogPost = CollectionEntry<'blog'>;
 type CoverImageStyle = 'card' | 'mask';
@@ -49,6 +51,7 @@ const resolvedHeaderSubtitle = headerSubtitle ?? headerNote ?? defaultHeaderSubt
 const resolvedHeaderNote = headerSubtitle !== undefined ? headerNote : undefined;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const hasPagination = page.lastPage > 1;
+const ui = getUiText(await getSiteConfig());
 
 function withBase(href: string) {
   if (href === '/') {
@@ -99,7 +102,7 @@ function getPageHref(pageNumber: number) {
                   <a class="title-link" href={withBase(`/blog/${post.id}/`)}>
                     {post.data.title}
                   </a>
-                  {isStickyEntry(post) && <span class="post-pin">Pinned</span>}
+                  {isStickyEntry(post) && <span class="post-pin">{ui.article.pinned}</span>}
                 </h2>
                 <div class="date">
                   <MetadataItem kind="date" separated={false}>
@@ -107,7 +110,7 @@ function getPageHref(pageNumber: number) {
                   </MetadataItem>
                   {post.data.categories.length > 0 && (
                     <MetadataItem kind="categories" class="post-groups">
-                      <span class="meta-label">Categories</span>
+                      <span class="meta-label">{ui.groups.categories}</span>
                       {post.data.categories.map((category) => (
                         <a
                           class="post-group"
@@ -120,7 +123,7 @@ function getPageHref(pageNumber: number) {
                   )}
                   {post.data.series.length > 0 && (
                     <MetadataItem kind="series" class="post-groups">
-                      <span class="meta-label">Series</span>
+                      <span class="meta-label">{ui.groups.series}</span>
                       {post.data.series.map((series) => (
                         <a
                           class="post-group"
@@ -161,15 +164,18 @@ function getPageHref(pageNumber: number) {
 </section>
 {
   hasPagination && (
-    <nav class="archive-pagination" aria-label="Blog pagination">
+    <nav class="archive-pagination" aria-label={ui.pagination.blog}>
       <a
         class:list={['pagination-link', { disabled: !page.url.prev }]}
         href={page.url.prev ? withBase(page.url.prev) : undefined}
         aria-disabled={!page.url.prev}
       >
-        Previous
+        {ui.pagination.previous}
       </a>
-      <div class="pagination-pages" aria-label={`Page ${page.currentPage} of ${page.lastPage}`}>
+      <div
+        class="pagination-pages"
+        aria-label={ui.pagination.page(page.currentPage, page.lastPage)}
+      >
         {Array.from({ length: page.lastPage }, (_, index) => {
           const pageNumber = index + 1;
           const isCurrent = pageNumber === page.currentPage;
@@ -190,7 +196,7 @@ function getPageHref(pageNumber: number) {
         href={page.url.next ? withBase(page.url.next) : undefined}
         aria-disabled={!page.url.next}
       >
-        Next
+        {ui.pagination.next}
       </a>
     </nav>
   )

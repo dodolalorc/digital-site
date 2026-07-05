@@ -1,4 +1,7 @@
 ---
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
+
 interface Props {
   current: number;
   total: number;
@@ -7,10 +10,11 @@ interface Props {
 const { current, total } = Astro.props;
 const safeTotal = Math.max(1, total);
 const percent = Math.round((current / safeTotal) * 100);
+const ui = getUiText(await getSiteConfig());
 ---
 
-<span class="series-progress" aria-label={`${current} published articles`}>
-  <span class="series-progress-copy">{current} published</span>
+<span class="series-progress" aria-label={ui.groups.publishedArticles(current)}>
+  <span class="series-progress-copy">{ui.groups.publishedCount(current)}</span>
   <span class="series-progress-track" aria-hidden="true">
     <span style={`width: ${percent}%`}></span>
   </span>

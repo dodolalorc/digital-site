@@ -1,6 +1,8 @@
 ---
 import TocTree from './TocTree.astro';
+import { getSiteConfig } from '../../data/site';
 import { countTocItems, type TocItem } from '../../utils/toc-tree';
+import { getUiText } from '../../utils/ui-text';
 
 interface Props {
   items: TocItem[];
@@ -15,19 +17,24 @@ const hasItems = items.length > 0;
 const canCollapse = collapsible && countTocItems(items) > 3;
 const listId = collapsible ? 'mobile-article-toc-list' : undefined;
 const treeIdPrefix = collapsible ? 'article-toc' : 'sidebar-toc';
+const ui = getUiText(await getSiteConfig());
 ---
 
 {
   hasItems && (
     <nav
       class:list={['toc-card', 'blog-card', { compact, collapsible, 'can-collapse': canCollapse }]}
-      aria-label="Table of contents"
+      aria-label={ui.toc.title}
       data-toc-root
       data-font={font}
       data-mobile-toc={collapsible ? '' : undefined}
       data-expanded={collapsible ? 'false' : undefined}
+      data-expand-aria-label={ui.toc.expand}
+      data-collapse-aria-label={ui.toc.collapse}
+      data-expand-label={ui.toc.showAll}
+      data-collapse-label={ui.toc.collapseButton}
     >
-      <h2>Table of contents</h2>
+      <h2>{ui.toc.title}</h2>
       <div id={listId} class="toc-list-wrap" data-toc-scroll>
         <TocTree items={items} idPrefix={treeIdPrefix} />
       </div>
@@ -35,12 +42,12 @@ const treeIdPrefix = collapsible ? 'article-toc' : 'sidebar-toc';
         <button
           class="toc-expand"
           type="button"
-          aria-label="Expand table of contents"
+          aria-label={ui.toc.expand}
           aria-expanded="false"
           aria-controls={listId}
           data-toc-expand
         >
-          <span data-expand-label>Show all</span>
+          <span data-expand-label>{ui.toc.showAll}</span>
           <i aria-hidden="true" />
         </button>
       )}
@@ -71,10 +78,14 @@ const treeIdPrefix = collapsible ? 'article-toc' : 'sidebar-toc';
         button.setAttribute('aria-expanded', String(nextExpanded));
         button.setAttribute(
           'aria-label',
-          nextExpanded ? 'Collapse table of contents' : 'Expand table of contents',
+          nextExpanded
+            ? (toc.dataset.collapseAriaLabel ?? 'Collapse table of contents')
+            : (toc.dataset.expandAriaLabel ?? 'Expand table of contents'),
         );
         if (label) {
-          label.textContent = nextExpanded ? 'Collapse' : 'Show all';
+          label.textContent = nextExpanded
+            ? (toc.dataset.collapseLabel ?? 'Collapse')
+            : (toc.dataset.expandLabel ?? 'Show all');
         }
       });
     }

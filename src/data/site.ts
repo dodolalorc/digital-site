@@ -16,18 +16,12 @@ export async function getThemePalette() {
   return theme.palette;
 }
 
-export async function getCodeConfig() {
-  const { code } = await getSiteConfig();
-
-  return code;
-}
-
 export type SiteConfig = Awaited<ReturnType<typeof getSiteConfig>>;
 export type ThemePalette = SiteConfig['theme']['palette'];
 export type SiteProfile = SiteConfig['profile'];
+export type SiteTheme = SiteConfig['theme'];
 export type SiteLink = SiteConfig['topNav']['links'][number];
 export type SiteSearch = SiteConfig['search'];
-export type SiteCode = SiteConfig['code'];
 export type SiteMath = SiteConfig['math'];
 export type SiteFonts = SiteConfig['fonts'];
 export type SitePages = SiteConfig['pages'];

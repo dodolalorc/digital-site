@@ -1,12 +1,14 @@
 ---
 import { Search, X } from 'lucide-astro';
-import type { SiteSearch as SiteSearchConfig } from '../../data/site';
+import { getSiteConfig, type SiteSearch as SiteSearchConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
 
 interface Props {
   search: SiteSearchConfig;
 }
 
 const { search } = Astro.props;
+const ui = getUiText(await getSiteConfig());
 const shortcutLabel = search.shortcut === 'mod+k' ? 'Ctrl K / Cmd K' : search.shortcut;
 ---
 
@@ -14,19 +16,25 @@ const shortcutLabel = search.shortcut === 'mod+k' ? 'Ctrl K / Cmd K' : search.sh
   class="site-search"
   data-site-search-root
   data-search-max-results={search.maxResults}
-  data-search-idle-label="Start typing to search."
-  data-search-loading-label="Searching..."
-  data-search-empty-label="No notes found."
-  data-search-unavailable-label="Search index is not available yet. Run a production build first."
+  data-search-idle-label={ui.search.idle}
+  data-search-loading-label={ui.search.loading}
+  data-search-empty-label={ui.search.empty}
+  data-search-unavailable-label={ui.search.unavailable}
+  data-search-kind-blog-note={ui.search.resultKinds.blogNote}
+  data-search-kind-blog-index={ui.search.resultKinds.blogIndex}
+  data-search-kind-vibe={ui.search.resultKinds.vibe}
+  data-search-kind-project={ui.search.resultKinds.project}
+  data-search-kind-page={ui.search.resultKinds.page}
+  data-search-match-label={ui.search.matchedPassage}
   data-pagefind-ignore
 >
   <button
     class="site-search-trigger"
     type="button"
-    aria-label="Search site"
+    aria-label={ui.search.trigger}
     aria-expanded="false"
     aria-controls="site-search-dialog"
-    title={`Search (${shortcutLabel})`}
+    title={`${ui.search.title} (${shortcutLabel})`}
     data-site-search-trigger
   >
     <Search size={17} stroke-width={2} />
@@ -43,14 +51,14 @@ const shortcutLabel = search.shortcut === 'mod+k' ? 'Ctrl K / Cmd K' : search.sh
     >
       <header class="site-search-head">
         <div>
-          <p id="site-search-title">Search</p>
+          <p id="site-search-title">{ui.search.title}</p>
           <span>{shortcutLabel}</span>
         </div>
         <button
           class="site-search-close"
           type="button"
-          aria-label="Close search"
-          title="Close search"
+          aria-label={ui.search.close}
+          title={ui.search.close}
           data-site-search-close
         >
           <X size={17} stroke-width={2} />
@@ -68,7 +76,7 @@ const shortcutLabel = search.shortcut === 'mod+k' ? 'Ctrl K / Cmd K' : search.sh
         />
       </label>
 
-      <p class="site-search-status" data-site-search-status>Start typing to search.</p>
+      <p class="site-search-status" data-site-search-status>{ui.search.idle}</p>
       <ol class="site-search-results" data-site-search-results></ol>
     </section>
   </div>

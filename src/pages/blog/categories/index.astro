@@ -7,11 +7,14 @@ import BlogTopNav from '../../../components/blog/BlogTopNav.astro';
 import CategoryCard from '../../../components/blog/CategoryCard.astro';
 import { getSiteConfig } from '../../../data/site';
 import { getAllCategories } from '../../../utils/content-groups';
+import { getUiText } from '../../../utils/ui-text';
 
-const { site, theme, pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
 const pageMeta = pages.blog.categories;
 const categories = getAllCategories(await getCollection('blog', ({ data }) => !data.draft));
+const ui = getUiText(siteConfig);
 ---
 
 <!doctype html>
@@ -60,7 +63,7 @@ const categories = getAllCategories(await getCollection('blog', ({ data }) => !d
   <body>
     <BlogTopNav />
     <main data-pagefind-body>
-      <BackLink href="/blog/" label="Back" />
+      <BackLink href="/blog/" label={ui.groups.back} />
       <header class="archive-hero archive-header-shared page-header-spacing">
         <div class="archive-header-main">
           <p class="archive-kicker">{pageMeta.kicker}</p>
@@ -74,13 +77,13 @@ const categories = getAllCategories(await getCollection('blog', ({ data }) => !d
 
       {
         categories.length > 0 ? (
-          <section class="category-grid" aria-label="Blog categories">
+          <section class="category-grid" aria-label={ui.groups.categories}>
             {categories.map((category) => (
               <CategoryCard name={category.name} slug={category.slug} count={category.count} />
             ))}
           </section>
         ) : (
-          <p class="empty-note">No categories have been added yet.</p>
+          <p class="empty-note">{ui.groups.emptyCategories}</p>
         )
       }
     </main>

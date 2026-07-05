@@ -1,0 +1,84 @@
+{
+  "locale": "zh-CN",
+  "doing": {
+    "recently": "最近"
+  },
+  "heatmap": {
+    "totalPosts": "总文章",
+    "activeDays": "活跃天数",
+    "dayStreak": "连续天数",
+    "latest": "最新",
+    "latestPublishedPosts": "最新发布文章",
+    "openLatestPost": "打开最新文章：{title}",
+    "less": "少",
+    "more": "多",
+    "weekdays": ["周一", "周三", "周五"],
+    "writingSince": "自 {date} 起的写作活动",
+    "recentWeeks": "最近 {weeks} 周写作活动",
+    "upcoming": "未来",
+    "postCount": "{count} 篇文章"
+  },
+  "groups": {
+    "categories": "分类",
+    "series": "系列",
+    "category": "分类",
+    "tag": "标签",
+    "back": "返回",
+    "browseByTopic": "按主题浏览",
+    "followConnectedNotes": "阅读连续笔记",
+    "blogBrowsingGroups": "博客浏览分组",
+    "emptyCategories": "还没有添加分类。",
+    "emptySeries": "还没有添加系列。",
+    "articleCount": "{count} 篇文章",
+    "categoryNote": "这个主题下有 {count} 篇文章。",
+    "seriesNote": "按阅读顺序排列，共 {count} 篇文章。",
+    "tagNote": "带有这个标签的文章共 {count} 篇。",
+    "publishedCount": "已发布 {count} 篇",
+    "publishedArticles": "已发布 {count} 篇文章",
+    "viewMore": "查看更多 {count} 篇"
+  },
+  "article": {
+    "metadata": "文章元信息",
+    "groups": "文章分组",
+    "readingTools": "阅读工具",
+    "wordCount": "{count} 字",
+    "readingTime": "{minutes} 分钟阅读",
+    "moreInSeries": "{name} 系列更多文章",
+    "previousInSeries": "{name} 上一篇",
+    "nextInSeries": "{name} 下一篇",
+    "pinned": "置顶",
+    "moreFromSite": "{siteTitle} 的更多文章"
+  },
+  "toc": {
+    "title": "目录",
+    "open": "打开目录",
+    "close": "关闭目录",
+    "expand": "展开目录",
+    "collapse": "收起目录",
+    "showAll": "显示全部",
+    "collapseButton": "收起"
+  },
+  "pagination": {
+    "blog": "博客分页",
+    "previous": "上一页",
+    "next": "下一页",
+    "page": "第 {current} 页，共 {total} 页"
+  },
+  "search": {
+    "title": "搜索",
+    "trigger": "搜索站点",
+    "close": "关闭搜索",
+    "idle": "输入关键词开始搜索。",
+    "loading": "搜索中...",
+    "empty": "没有找到笔记。",
+    "unavailable": "搜索索引还不可用。请先运行生产构建。",
+    "resultKinds": {
+      "blogNote": "博客文章",
+      "blogIndex": "博客索引",
+      "vibe": "Vibe",
+      "project": "项目",
+      "page": "页面"
+    },
+    "matchedPassage": "匹配段落"
+  }
+}

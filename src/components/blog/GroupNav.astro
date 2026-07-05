@@ -1,27 +1,30 @@
 ---
 import { getCollection } from 'astro:content';
+import { getSiteConfig } from '../../data/site';
 import { getAllCategories, getAllSeries } from '../../utils/content-groups';
+import { getUiText } from '../../utils/ui-text';
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const posts = await getCollection('blog');
 const categoryCount = getAllCategories(posts).length;
 const seriesCount = getAllSeries(posts).length;
+const ui = getUiText(await getSiteConfig());
 ---
 
-<nav class="group-nav" aria-label="Blog browsing groups">
+<nav class="group-nav" aria-label={ui.groups.blogBrowsingGroups}>
   <a href={`${basePath}/blog/categories/`}>
     <span>
-      Categories
+      {ui.groups.categories}
       <b>{categoryCount}</b>
     </span>
-    <small>Browse by topic</small>
+    <small>{ui.groups.browseByTopic}</small>
   </a>
   <a href={`${basePath}/blog/series/`}>
     <span>
-      Series
+      {ui.groups.series}
       <b>{seriesCount}</b>
     </span>
-    <small>Follow connected notes</small>
+    <small>{ui.groups.followConnectedNotes}</small>
   </a>
 </nav>
 

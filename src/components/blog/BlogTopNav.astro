@@ -3,6 +3,7 @@ import { Github, ListTree, Menu, Moon, Sun } from 'lucide-astro';
 import SiteSearch from './SiteSearch.astro';
 import TocTree from './TocTree.astro';
 import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
 import type { TocItem } from '../../utils/toc-tree';
 
 interface Props {
@@ -11,7 +12,9 @@ interface Props {
 }
 
 const { showTocIcon = false, tocItems = [] } = Astro.props;
-const { site, topNav, search } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { site, topNav, search } = siteConfig;
+const ui = getUiText(siteConfig);
 const links = topNav.links;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPathname =
@@ -58,7 +61,12 @@ const brandRouteLabel = activeRoute?.[1];
 const shouldShowTocAction = showTocIcon && tocItems.length > 0;
 ---
 
-<header class="blog-top-nav" data-pagefind-ignore>
+<header
+  class="blog-top-nav"
+  data-pagefind-ignore
+  data-toc-open-label={ui.toc.open}
+  data-toc-close-label={ui.toc.close}
+>
   <button
     class="mobile-menu-toggle"
     type="button"
@@ -143,10 +151,10 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
         <button
           class="toc-action"
           type="button"
-          aria-label="Open table of contents"
+          aria-label={ui.toc.open}
           aria-expanded="false"
           aria-controls="mobile-toc-menu"
-          title="Table of contents"
+          title={ui.toc.title}
           data-mobile-toc-trigger
         >
           <ListTree size={17} stroke-width={2} />
@@ -160,12 +168,12 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
       <nav
         class="mobile-toc-panel"
         id="mobile-toc-menu"
-        aria-label="Article table of contents"
+        aria-label={ui.toc.title}
         data-nav-toc-menu
         data-toc-root
         data-toc-scroll
       >
-        <p>Table of contents</p>
+        <p>{ui.toc.title}</p>
         <TocTree items={tocItems} idPrefix="nav-toc" navLink />
       </nav>
     )
@@ -257,12 +265,12 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
             return;
           }
 
+          const tocOpenLabel = header.dataset.tocOpenLabel ?? 'Open table of contents';
+          const tocCloseLabel = header.dataset.tocCloseLabel ?? 'Close table of contents';
+
           header.dataset.mobileTocOpen = open ? 'true' : 'false';
           tocTrigger.setAttribute('aria-expanded', String(open));
-          tocTrigger.setAttribute(
-            'aria-label',
-            open ? 'Close table of contents' : 'Open table of contents',
-          );
+          tocTrigger.setAttribute('aria-label', open ? tocCloseLabel : tocOpenLabel);
         };
 
         toggle.addEventListener('click', () => {

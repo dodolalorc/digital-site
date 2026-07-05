@@ -2,6 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../FormattedDate.astro';
 import SmartImage from '../SmartImage.astro';
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
@@ -10,6 +12,8 @@ interface Props {
 
 const { posts, class: className } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteConfig = await getSiteConfig();
+const ui = getUiText(siteConfig);
 
 function withBase(href: string) {
   if (href === '/') {
@@ -21,7 +25,7 @@ function withBase(href: string) {
 ---
 
 <aside class:list={['related-posts', 'blog-card', className]}>
-  <h2>More from navfolio</h2>
+  <h2>{ui.article.moreFromSite(siteConfig.site.title)}</h2>
   <div class="related-list">
     {
       posts.map((post) => (

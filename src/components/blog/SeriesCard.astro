@@ -2,6 +2,8 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../FormattedDate.astro';
 import SeriesProgress from './SeriesProgress.astro';
+import { getSiteConfig } from '../../data/site';
+import { getUiText } from '../../utils/ui-text';
 
 interface Props {
   name: string;
@@ -12,12 +14,13 @@ interface Props {
 const { name, slug, posts } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = `${basePath}/blog/series/${slug}/`;
+const ui = getUiText(await getSiteConfig());
 ---
 
 <article class="series-card">
   <div class="series-heading">
     <div>
-      <p>Series</p>
+      <p>{ui.groups.series}</p>
       <h2><a href={href}>{name}</a></h2>
     </div>
     <SeriesProgress current={posts.length} total={posts.length} />
@@ -41,7 +44,7 @@ const href = `${basePath}/blog/series/${slug}/`;
   {
     posts.length > 4 && (
       <a class="series-more" href={href}>
-        View {posts.length - 4} more
+        {ui.groups.viewMore(posts.length - 4)}
       </a>
     )
   }
