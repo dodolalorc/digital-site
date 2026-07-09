@@ -1,0 +1,25 @@
+bun.lock
+  s_213c9de5c229d9::t_87bb62e6366f4f 18
+package.json
+  s_213c9de5c229d9::t_4c4fbdb84a40d1 36
+src/utils/toc-hash.ts
+  s_213c9de5c229d9::t_38ab6c05d0dc86 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "39b6fced1a9cc2a805af3e344953a475b3878564",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
