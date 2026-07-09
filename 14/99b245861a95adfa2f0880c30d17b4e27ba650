@@ -1,0 +1,33 @@
+astro.config.mjs
+  s_213c9de5c229d9::t_e6523f7904b7c0 17,73
+bun.lock
+  s_213c9de5c229d9::t_9f9a138ba81865 20,42-43,92-93,114-115,208-211,278-279,440-501,508-509,528-529,550-551,642-643,660-731,734-735,744-745,770-771,786-787,898-899,944-945,950-951,960-961,1008-1011,1044-1045,1064-1065,1108-1109,1248-1249,1266-1269,1356-1357,1362-1363,1366-1367,1370-1371,1426-1427,1456-1457,1506-1507,1584-1591,1614-1615,1712-1715
+package.json
+  s_213c9de5c229d9::t_08ea4f1175dfb2 38
+src/docs
+  s_213c9de5c229d9::t_f1b54bce7e7dc0 1
+src/layouts/BlogArticle.astro
+  s_213c9de5c229d9::t_2cf14cfca02752 10,232,489-517
+src/layouts/BlogPost.astro
+  s_213c9de5c229d9::t_79ad29364102fa 9,84-108,139
+src/utils/remark-mermaid.ts
+  s_213c9de5c229d9::t_de07c223273d29 1-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1499b245861a95adfa2f0880c30d17b4e27ba650",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
