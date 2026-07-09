@@ -40,7 +40,7 @@ function visit(node?: MdastNode) {
     };
     delete node.lang;
     delete node.value;
-    delete node.children;
+    node.children = [];
     return;
   }
 

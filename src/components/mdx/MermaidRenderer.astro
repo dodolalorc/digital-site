@@ -2,7 +2,8 @@
   const selector = '[data-mermaid-diagram] .mermaid';
   const sources = new WeakMap();
   let mermaidModule;
-  let renderVersion = 0;
+  let renderInProgress = false;
+  let renderPending = false;
 
   const getTheme = () =>
     document.documentElement.classList.contains('dark') ||
@@ -20,27 +21,34 @@
     });
 
   const renderMermaid = async () => {
-    const nodes = prepareNodes();
-    if (!nodes.length) return;
+    if (renderInProgress) {
+      renderPending = true;
+      return;
+    }
 
-    mermaidModule ??= (await import('mermaid')).default;
-
-    const currentVersion = ++renderVersion;
-    mermaidModule.initialize({
-      startOnLoad: false,
-      securityLevel: 'strict',
-      theme: getTheme(),
-      fontFamily: getComputedStyle(document.documentElement)
-        .getPropertyValue('--font-article')
-        .trim(),
-    });
-
+    renderInProgress = true;
     try {
-      await mermaidModule.run({ nodes });
+      do {
+        renderPending = false;
+        const nodes = prepareNodes();
+        if (!nodes.length) break;
+
+        mermaidModule ??= (await import('mermaid')).default;
+        mermaidModule.initialize({
+          startOnLoad: false,
+          securityLevel: 'strict',
+          theme: getTheme(),
+          fontFamily: getComputedStyle(document.documentElement)
+            .getPropertyValue('--font-article')
+            .trim(),
+        });
+
+        await mermaidModule.run({ nodes });
+      } while (renderPending);
     } catch (error) {
-      if (currentVersion === renderVersion) {
-        console.error('Unable to render Mermaid diagram.', error);
-      }
+      console.error('Unable to render Mermaid diagram.', error);
+    } finally {
+      renderInProgress = false;
     }
   };
 
