@@ -1,5 +1,11 @@
 # Package Boundary Notes
 
+Target organization: https://github.com/navfolio
+
+The current repository is the RFC staging area. Long-term official packages
+should live in focused repositories under the `navfolio` organization after
+their boundaries are accepted.
+
 ## Boundary Rules
 
 - Core must not import theme components.
@@ -16,7 +22,13 @@
 ```text
 create-navfolio
   -> @navfolio/core
+  -> @navfolio/theme-default
+  -> official plugin defaults
+
+@navfolio/core
   -> @navfolio/types
+  -> @navfolio/utils
+  -> astro
 
 @navfolio/plugin-*
   -> @navfolio/types
@@ -26,7 +38,26 @@ create-navfolio
 @navfolio/theme-default
   -> @navfolio/types
   -> official plugin data contracts
+
+@navfolio/types
+  -> type-only public dependencies
 ```
+
+## Target Repository Names
+
+- `navfolio/core` for `@navfolio/core`
+- `navfolio/types` for `@navfolio/types`
+- `navfolio/utils` for `@navfolio/utils`
+- `navfolio/theme-default` for `@navfolio/theme-default`
+- `navfolio/plugin-blog` for `@navfolio/plugin-blog`
+- `navfolio/plugin-vibe` for `@navfolio/plugin-vibe`
+- `navfolio/plugin-projects` for `@navfolio/plugin-projects`
+- `navfolio/plugin-search` for `@navfolio/plugin-search`
+- `navfolio/plugin-comments` for `@navfolio/plugin-comments`
+- `navfolio/plugin-mdx` for `@navfolio/plugin-mdx`
+- `navfolio/plugin-math` for `@navfolio/plugin-math`
+- `navfolio/create-navfolio` for `create-navfolio`
+- `navfolio/docs` for documentation, already known to exist
 
 ## Anti-patterns To Avoid
 

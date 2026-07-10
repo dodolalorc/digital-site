@@ -34,6 +34,9 @@ Deliverables:
 
 Deliverables:
 
+- First-stage delivery plan in `.agents/plans/phase-one-deliverables.md`.
+- Target `navfolio/*` repository map in
+  `.agents/context/navfolio-org-repositories.md`.
 - `@navfolio/types` package with plugin and config interfaces.
 - `@navfolio/core` package skeleton exposing an Astro integration factory.
 - `@navfolio/utils` package skeleton for shared helpers.
@@ -44,7 +47,7 @@ Deliverables:
 Decision checkpoints:
 
 - Confirm whether the current repository becomes a monorepo during the RFC or
-  remains a staging repo before packages move to `navfolio/*`.
+  remains a staging repo before packages move to the `navfolio` organization.
 - Confirm whether user config is loaded through Astro `integrations` only or
   through a Navfolio `plugins` array that compiles to Astro integrations.
 

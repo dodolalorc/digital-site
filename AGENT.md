@@ -8,9 +8,11 @@ coding work should use `.agents/` as the coordination directory.
 1. Read `.agents/README.md`.
 2. Read `.agents/context/issue-68-summary.md`.
 3. Read `.agents/context/quartz-reference.md`.
-4. Read `.agents/skills/super-power-skill.md` for skill routing.
-5. Pick the workflow in `.agents/workflows/` that matches the task.
-6. Update `.agents/plans/` when architecture assumptions change.
+4. Read `.agents/context/navfolio-org-repositories.md`.
+5. Read `.agents/plans/phase-one-deliverables.md`.
+6. Read `.agents/skills/super-power-skill.md` for skill routing.
+7. Pick the workflow in `.agents/workflows/` that matches the task.
+8. Update `.agents/plans/` when architecture assumptions change.
 
 ## Current Branch Intent
 
@@ -28,6 +30,11 @@ The target architecture follows issue #68:
 
 Quartz is the reference collaboration model: a central product repository plus
 focused community/official package repositories.
+
+The user owns the `navfolio` GitHub organization. Future official repositories
+for `@navfolio/core`, `@navfolio/types`, `@navfolio/utils`,
+`@navfolio/theme-default`, official plugins, and `create-navfolio` should be
+created there after their Phase 1 boundaries are accepted.
 
 ## Guardrails
 

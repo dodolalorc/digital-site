@@ -24,6 +24,15 @@ work without rediscovering the architecture intent.
 - Treat `AGENT.md` at the repository root as the entry point for future agents.
 - Keep English identifiers for package names and commands, but use Chinese prose
   when describing Navfolio product intent and RFC decisions.
+- Treat https://github.com/navfolio as the future home for official packages
+  once Phase 1 boundaries are accepted.
+
+## Phase 1 Memory
+
+- `plans/phase-one-deliverables.md`: first-stage sequence and acceptance
+  criteria for the RFC refactor.
+- `context/navfolio-org-repositories.md`: target GitHub organization and
+  repository layout for `@navfolio/*` packages.
 
 ## Useful Skills
 
