@@ -1,0 +1,49 @@
+.agents/README.md
+  s_213c9de5c229d9::t_9b8a5c747a56c6 1-25
+.agents/checklists/rfc-refactor-readiness.md
+  s_213c9de5c229d9::t_4da1b7f6153cef 1-18
+.agents/context/issue-68-summary.md
+  s_213c9de5c229d9::t_99e9dda24490dc 1-72
+.agents/context/quartz-reference.md
+  s_213c9de5c229d9::t_3fe79a1474ef03 1-48
+.agents/plans/package-boundaries.md
+  s_213c9de5c229d9::t_9ba67427045dde 1-37
+.agents/plans/rfc-refactor.md
+  s_213c9de5c229d9::t_9490402cf2e5ca 1-96
+.agents/skills/architecture-rfc.md
+  s_213c9de5c229d9::t_594ff31bf1830a 1-18
+.agents/skills/package-extraction.md
+  s_213c9de5c229d9::t_ad2e8dce9b3fea 1-20
+.agents/skills/plugin-contract-review.md
+  s_213c9de5c229d9::t_750b1fd6530ad5 1-20
+.agents/templates/package-proposal.md
+  s_213c9de5c229d9::t_cb74ce2b2e4792 1-31
+.agents/templates/rfc-proposal.md
+  s_213c9de5c229d9::t_5bd37e1f45d934 1-33
+.agents/workflows/package-extraction-workflow.md
+  s_213c9de5c229d9::t_9d6fe580d6baef 1-22
+.agents/workflows/release-and-ecosystem-workflow.md
+  s_213c9de5c229d9::t_935dd3be19f797 1-24
+.agents/workflows/rfc-change-workflow.md
+  s_213c9de5c229d9::t_2a278af9b99c39 1-39
+AGENT.md
+  s_213c9de5c229d9::t_a33c624e9820a6 1-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b90228309c8f3d45c653aae225931a4a6965aeda",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
