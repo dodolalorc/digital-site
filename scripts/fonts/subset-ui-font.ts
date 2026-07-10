@@ -187,7 +187,7 @@ function runSubset() {
   }
 
   throw new Error(
-    'Unable to run fonttools. Install it with `python -m pip install --user fonttools brotli`, or make `pyftsubset` available on PATH.',
+    'Unable to run fonttools. Install it in a virtual environment with `python -m venv .venv && .venv/bin/python -m pip install fonttools brotli`, then add `.venv/bin` to PATH or make `pyftsubset` available on PATH.',
   );
 }
 
