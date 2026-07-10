@@ -1,0 +1,23 @@
+src/utils/toc-hash.ts
+  s_213c9de5c229d9::t_8835b1d47e8a09 7,47
+src/utils/toc-spy.ts
+  s_213c9de5c229d9::t_6a9af39ed98fee 10,41,99,113,117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f8720b5565502683837868d41d37f1b4bf0542fe",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
