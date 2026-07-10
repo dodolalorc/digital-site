@@ -1,0 +1,25 @@
+.gitmodules
+  s_213c9de5c229d9::t_120b3f3db60eec 3
+scripts/fonts/subset-ui-font.ts
+  s_213c9de5c229d9::t_3c640673c887d6 190
+vercel.json
+  s_213c9de5c229d9::t_53a27958ff6993 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "618933efd9727b547b20cdba88cc5d6a4e4b0ce3",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
