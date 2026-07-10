@@ -1,0 +1,39 @@
+.agents/README.md
+  s_213c9de5c229d9::t_dc3a7554fd16e5 12-13,27-38
+.agents/context/skill-research.md
+  s_3fd0192941eb9c::t_ab5f5b1ea15c65 1-67
+.agents/skills/grill-me.md
+  s_3fd0192941eb9c::t_0efe2215bcd721 1-40
+.agents/skills/grill-with-docs.md
+  s_3fd0192941eb9c::t_4d45fcf8af09f3 1-51
+.agents/skills/super-power-skill.md
+  s_3fd0192941eb9c::t_73dc3681f1c63c 1-49
+AGENT.md
+  s_213c9de5c229d9::t_afd173dad17dd9 11-13,39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e90955accabb8c14ac6dd9701a4f72694694bb34",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    },
+    "s_3fd0192941eb9c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4649-7f4d-7c73-93be-22b461445fe7",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
