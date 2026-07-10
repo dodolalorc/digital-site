@@ -1,0 +1,31 @@
+.agents/README.md
+  s_213c9de5c229d9::t_47f0e767b6ee17 27-35
+.agents/context/navfolio-org-repositories.md
+  s_213c9de5c229d9::t_769f5735d0d794 1-82
+.agents/plans/package-boundaries.md
+  s_213c9de5c229d9::t_e8dfc9837dd396 3-8,25-28,30-31,41-43,46-61
+.agents/plans/phase-one-deliverables.md
+  s_213c9de5c229d9::t_9bf16abacd749a 1-139
+.agents/plans/rfc-refactor.md
+  s_213c9de5c229d9::t_1f26c4559e53cd 37-39,50
+AGENT.md
+  s_213c9de5c229d9::t_b3d0f7a1e57594 11-15,34-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1ee998cfb0c9003d6bd1d8d84ea808e4b29dbefa",
+  "prompts": {},
+  "sessions": {
+    "s_213c9de5c229d9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f4648-c4cd-7fa2-8438-b23b214677fc",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
