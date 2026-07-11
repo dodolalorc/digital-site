@@ -1,6 +1,6 @@
 ---
 title: "Git 配置管理指南：多项目多身份实践"
-description: ""
+description: "Git 多项目多身份配置指南，整理配置层级、条件包含、路径匹配规则和常见排查方法。"
 date: "2026-07-02T06:17:01.289Z"
 draft: false
 sticky: false
