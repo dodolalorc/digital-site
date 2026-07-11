@@ -20,7 +20,6 @@ const { items, level = 1, path = '', idPrefix = 'toc', navLink = false } = Astro
       const normalizedHref = normalizeHash(item.href) || item.href;
       const branchKey = path ? `${path}-${index + 1}` : `${index + 1}`;
       const branchId = `${idPrefix}-${branchKey}-children`;
-      const numberLabel = branchKey.replace(/-/g, '.');
       const hasChildren = item.children.length > 0;
 
       return (
@@ -49,7 +48,6 @@ const { items, level = 1, path = '', idPrefix = 'toc', navLink = false } = Astro
               data-toc-link
               data-toc-hash={normalizedHref}
             >
-              <span>{numberLabel}</span>
               {item.label}
             </a>
           </div>
@@ -156,9 +154,7 @@ const { items, level = 1, path = '', idPrefix = 'toc', navLink = false } = Astro
 
   .toc-card .toc-tree a,
   .mobile-toc-panel .toc-tree a {
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 8px;
+    display: flex;
     align-items: center;
     min-width: 0;
     min-height: 36px;
@@ -177,14 +173,6 @@ const { items, level = 1, path = '', idPrefix = 'toc', navLink = false } = Astro
 
   .toc-card[data-font='article'] .toc-tree a {
     font-family: var(--font-article);
-  }
-
-  .toc-card .toc-tree a > span,
-  .mobile-toc-panel .toc-tree a > span {
-    color: var(--paper-ink-faint);
-    font-family: var(--font-ui-label);
-    font-size: 0.7rem;
-    font-weight: 700;
   }
 
   .toc-card .toc-tree a[data-state='past'],
@@ -238,7 +226,6 @@ const { items, level = 1, path = '', idPrefix = 'toc', navLink = false } = Astro
 
     .toc-card .toc-tree a,
     .mobile-toc-panel .toc-tree a {
-      grid-template-columns: 24px minmax(0, 1fr);
       min-height: 38px;
       padding: 8px;
       font-size: 0.82rem;
