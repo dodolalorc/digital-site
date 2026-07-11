@@ -305,6 +305,10 @@ function getPageHref(pageNumber: number) {
     width: min(64%, 720px);
   }
 
+  .post-link.without-thumb .post-copy {
+    width: 100%;
+  }
+
   .post-copy {
     position: relative;
     z-index: 1;
@@ -520,10 +524,16 @@ function getPageHref(pageNumber: number) {
   }
 
   .post-excerpt {
+    display: -webkit-box;
+    max-height: calc(1.78em * 2);
+    overflow: hidden;
     margin: 0;
     color: var(--paper-ink-soft);
     font-size: 0.98rem;
     line-height: 1.78;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .thumb-wrap {
