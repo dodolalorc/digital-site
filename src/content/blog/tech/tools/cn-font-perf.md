@@ -1,6 +1,6 @@
 ---
 title: 中文字体加载优化：在博客里混合使用字体子集和完整字体
-description: ""
+description: "中文字体加载优化记录，介绍在博客中为 UI 使用字体子集、正文保留稳定字体的混合方案。"
 date: 2026-05-25T02:28:58+08:00
 draft: false
 heroImage: https://dodola-images-1324351636.cos.ap-guangzhou.myqcloud.com/a215e12a9c7b8e5f21f3d1311a1da6b7.png
