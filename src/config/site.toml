@@ -11,6 +11,8 @@ footerNote = "© 2026 dodola. Built with Astro Navfolio."
 # 可用色盘：
 # green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
 palette = "green-vivid"
+# 原生 UI 语言。可用值：en、zh-CN、zh-TW。未知值会回退到 en。
+lang = "zh-CN"
 
 [config.fonts]
 # 英文与代码感 UI 字体
@@ -41,7 +43,7 @@ show_on_posts = true
 [config.search]
 enabled = true
 shortcut = "mod+k"
-placeholder = "Search notes..."
+placeholder = "搜索文章..."
 maxResults = 6
 
 [config.pages.blog]
@@ -158,7 +160,7 @@ title = "here is dodola"
 name = "dodola"
 body = [
   "Hi, 这里是哆哆啦，一只会写代码的局局",
-  "关注前端工程与 AI products，尝试做更多的好用的工具，希望成为更厉害的代码🐖",
+  "关注前端工程与 AI products，尝试做更多好用的工具，希望成为更厉害的代码🐖",
   "这里会收纳技术文章、算法旧文、项目记录、学习笔记和一些生活碎片。",
   "以及，欢迎和我交换友链！",
 ]
@@ -206,12 +208,6 @@ copy = false
 label = "Blog"
 icon = "book"
 tooltip = "/blog"
-copy = false
-
-[[config.home.links]]
-label = "X"
-icon = "x"
-tooltip = "" # 留空会隐藏这个链接项。
 copy = false
 
 [[config.home.links]]
@@ -275,7 +271,7 @@ tooltip = "" # Empty tooltip hides this link item.
 copy = false
 
 [[config.home.doing]]
-text = "尝试构建完美的Work-Life Balance工作流"
+text = "尝试构建完美的 Work-Life Balance 工作流"
 mark = "01"
 
 [[config.home.doing]]
