@@ -30,11 +30,11 @@ sidebar:
 
 #### 数据范围
 
-$t(1≤t≤1000)$
+$t(1\leq t\leq 1000)$
 
-$n(2≤n≤50)$​
+$n(2\leq n\leq 50)$​
 
-$a_i(a_i∈\{1,0\})$
+$a_i(a_i\in \{1,0\})$
 
 ## 思路
 
@@ -77,13 +77,13 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤3\times 10^4)$
+$t(1\leq t\leq 3\times 10^4)$
 
-$n,k(1≤n≤3\times 10^5,1\le k\le 2\times 10^9)$​
+$n,k(1\leq n\leq 3\times 10^5,1\le k\le 2\times 10^9)$​
 
 $a_i(1\le a_i\le 10^9)$
 
-$x_i(-n\le x_1\lt x_2\lt\dots\lt x_n\le n;x_i≠0)$
+$x_i(-n\le x_1\lt x_2\lt\dots\lt x_n\le n;x_i\ne 0)$
 
 ## 思路
 
@@ -143,14 +143,14 @@ void solve() {
 给一个数组$a$，每次截取一段$[l,r]$的子数组$b$，判断该数组是否可以变化成一个数组$c$，满足：
 
 1. $\sum_{i=1}^m b_i=\sum_{i=1}^m c_i$
-2. 任意$i∈[l,r]$，都满足$b_i≠c_i$
+2. 任意$i\in [l,r]$，都满足$b_i\ne c_i$
 3. 任意$c_i\gt 0$​
 
 #### 数据范围
 
-$t(1≤t≤10^4)$
+$t(1\leq t\leq 10^4)$
 
-$n,q(1≤n,q≤3\times 10^5)$​
+$n,q(1\leq n,q\leq 3\times 10^5)$​
 
 $a_i(1\le a_i\le 10^9)$
 

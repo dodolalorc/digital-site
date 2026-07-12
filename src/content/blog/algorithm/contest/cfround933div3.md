@@ -28,9 +28,9 @@ sidebar:
 
 #### 数据范围
 
-$t(1≤t≤100)$
+$t(1\leq t\leq 100)$
 
-$n,m(1≤n,m≤100)$
+$n,m(1\leq n,m\leq 100)$
 
 $k(1\le k\le 2000)$
 
@@ -79,9 +79,9 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤10^4)$
+$t(1\leq t\leq 10^4)$
 
-$n(3≤n≤2\times 10^5)$​
+$n(3\leq n\leq 2\times 10^5)$​
 
 $a_i(0\leq a_i\le 10^9)$
 
@@ -125,9 +125,9 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤10^4)$
+$t(1\leq t\leq 10^4)$
 
-$n(1≤n≤10^6)$​
+$n(1\leq n\leq 10^6)$​
 
 ## 思路
 
@@ -170,9 +170,9 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤10^4)$
+$t(1\leq t\leq 10^4)$
 
-$n,m(1≤n≤1000,1\le m\le 1000)$
+$n,m(1\leq n\leq 1000,1\le m\le 1000)$
 
 $x(1\le x\le n)$​
 
@@ -235,9 +235,9 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤1000)$
+$t(1\leq t\leq 1000)$
 
-$n,k(1≤k\le n≤100)$​
+$n,k(1\leq k\le n\leq 100)$​
 
 $m(3\le m\le 2\times 10^5)$
 
