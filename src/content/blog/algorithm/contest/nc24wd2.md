@@ -31,9 +31,9 @@ sidebar:
 
 #### 数据范围
 
-$n(1≤n≤100)$
+$n(1\leq n\leq 100)$
 
-$a_i,b_i,c_i(a_i∈\{100,150,200\};b_i,ci∈\{29,30,31,32,34,36,38,40,45\})$
+$a_i,b_i,c_i(a_i\in \{100,150,200\};b_i,ci\in \{29,30,31,32,34,36,38,40,45\})$
 
 ### 思路
 
@@ -82,9 +82,9 @@ void solve() {
 
 #### 数据范围
 
-$n, m, k (1≤n,m≤300;1≤k≤n⋅m)$
+$n, m, k (1\leq n,m\leq 300;1\leq k\leq n\cdot m)$
 
-$x_i, y_i (1≤xi≤n; 1≤yi≤m)$
+$x_i, y_i (1\leq xi\leq n; 1\leq yi\leq m)$
 
 ### 思路
 
@@ -181,8 +181,8 @@ void solve() {
 $$
 w_{u,v}=
 \begin{cases}
-0& \text{u=v}\\
-|a_u+a_v|+|a_u-a_v|& \text{u ≠ v}
+0& u=v\\
+|a_u+a_v|+|a_u-a_v|& u \ne v
 \end{cases}
 $$
 
@@ -241,8 +241,8 @@ void solve() {
 $$
 w_{u,v}=
 \begin{cases}
-0& \text{u=v}\\
-|a_u+a_v|-|a_u-a_v|& \text{u ≠ v}
+0& u=v\\
+|a_u+a_v|-|a_u-a_v|& u \ne v
 \end{cases}
 $$
 

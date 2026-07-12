@@ -33,9 +33,9 @@ sidebar:
 
 #### 数据范围
 
-$t(1≤t≤500)$
+$t(1\leq t\leq 500)$
 
-$n(2≤n≤10^9)$​
+$n(2\leq n\leq 10^9)$​
 
 $s(1\le |s|\le 100)$
 
@@ -72,9 +72,9 @@ $MEX$：不属于该数组的最小非负整数。
 
 #### 数据范围
 
-$t(1≤t≤10^4)$
+$t(1\leq t\leq 10^4)$
 
-$n(2≤n≤10^5)$​
+$n(2\leq n\leq 10^5)$​
 
 $a_i(0\le a_i\lt n)$
 
@@ -170,9 +170,9 @@ void solve() {
 
 #### 数据范围
 
-$t(1≤t≤2\times 10^4)$
+$t(1\leq t\leq 2\times 10^4)$
 
-$n(1≤n≤3\times 10^5)$​
+$n(1\leq n\leq 3\times 10^5)$​
 
 $c(1\le c\le 10^9)$
 
