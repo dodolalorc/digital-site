@@ -1,6 +1,8 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import navfolioConfig from '../navfolio.config';
+import { isPageModuleEnabled } from './plugins/config';
 
 type CollectionSchemaFactory = Extract<
   Parameters<typeof defineCollection>[0]['schema'],
@@ -54,6 +56,8 @@ const blogArticleSchema = (context: Parameters<CollectionSchemaFactory>[0]) =>
 
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentBase = contentSource === 'docs' ? './src/docs' : './src/content';
+const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
+const vibeModuleEnabled = isPageModuleEnabled(navfolioConfig, 'vibe');
 
 const commentProviderSchema = z.enum(['giscus', 'utterances', 'waline', 'none']);
 const mathRendererSchema = z.enum(['katex', 'mathjax']);
@@ -461,4 +465,10 @@ const vibe = defineCollection({
     }),
 });
 
-export const collections = { about, blog, projects, vibe, siteConfig };
+export const collections = {
+  about,
+  blog,
+  siteConfig,
+  ...(projectsModuleEnabled ? { projects } : {}),
+  ...(vibeModuleEnabled ? { vibe } : {}),
+};

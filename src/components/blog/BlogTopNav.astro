@@ -2,7 +2,7 @@
 import { Github, ListTree, Menu, Moon, Sun } from 'lucide-astro';
 import SiteSearch from './SiteSearch.astro';
 import TocTree from './TocTree.astro';
-import { getSiteConfig } from '../../data/site';
+import { getRouteLabels, getSiteConfig, getTopNavLinks } from '../../data/site';
 import { getUiText } from '../../utils/ui-text';
 import type { TocItem } from '../../utils/toc-tree';
 
@@ -13,9 +13,9 @@ interface Props {
 
 const { showTocIcon = false, tocItems = [] } = Astro.props;
 const siteConfig = await getSiteConfig();
-const { site, topNav, search } = siteConfig;
+const { site, search } = siteConfig;
 const ui = getUiText(siteConfig);
-const links = topNav.links;
+const links = await getTopNavLinks();
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPathname =
   basePath && Astro.url.pathname.startsWith(basePath)
@@ -47,13 +47,7 @@ function isActive(href: string) {
   return currentPath === normalizedHref || currentPath.startsWith(`${normalizedHref}/`);
 }
 
-const routeLabels: Record<string, string> = {
-  '/blog': 'blog',
-  '/projects': 'projects',
-  '/vibe': 'vibe',
-  '/archive': 'archive',
-  '/about': 'about',
-};
+const routeLabels = getRouteLabels();
 const activeRoute = Object.entries(routeLabels).find(
   ([route]) => currentPath === route || currentPath.startsWith(`${route}/`),
 );

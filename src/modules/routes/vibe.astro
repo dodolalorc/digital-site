@@ -1,14 +1,14 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import SmartImage from '../components/SmartImage.astro';
-import BlogTopNav from '../components/blog/BlogTopNav.astro';
-import ZoomableImage from '../components/mdx/ZoomableImage.astro';
-import { getSiteConfig } from '../data/site';
-import { getHtmlLang } from '../utils/ui-text';
-import { getVibeImageLayout } from '../utils/vibe-image-layout';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import SmartImage from '../../components/SmartImage.astro';
+import BlogTopNav from '../../components/blog/BlogTopNav.astro';
+import ZoomableImage from '../../components/mdx/ZoomableImage.astro';
+import { getSiteConfig } from '../../data/site';
+import { getHtmlLang } from '../../utils/ui-text';
+import { getVibeImageLayout } from '../../utils/vibe-image-layout';
 
 const siteConfig = await getSiteConfig();
 const { site, theme, pages } = siteConfig;
@@ -59,8 +59,8 @@ const vibes = await Promise.all(
         background: currentColor;
         color: color-mix(in srgb, var(--paper-accent) 64%, var(--paper-ink-faint));
         content: '';
-        -webkit-mask: url('../assets/icons/flight.svg') center / contain no-repeat;
-        mask: url('../assets/icons/flight.svg') center / contain no-repeat;
+        -webkit-mask: url('../../assets/icons/flight.svg') center / contain no-repeat;
+        mask: url('../../assets/icons/flight.svg') center / contain no-repeat;
         opacity: 0.34;
         pointer-events: none;
         transform: rotate(-9deg);
@@ -663,7 +663,7 @@ const vibes = await Promise.all(
     <Footer />
     {
       showTrail && (
-        <script>import {mountVibeThread} from '../utils/vibe-thread'; mountVibeThread();</script>
+        <script>import {mountVibeThread} from '../../utils/vibe-thread'; mountVibeThread();</script>
       )
     }
     <script>

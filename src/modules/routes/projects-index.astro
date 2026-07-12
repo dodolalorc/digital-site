@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import BlogArticle from '../../layouts/BlogArticle.astro';
 import { getSiteConfig } from '../../data/site';
+import navfolioConfig from '../../../navfolio.config';
+import { getPageModuleRoute } from '../../plugins/config';
 import { sortByDateDesc } from '../../utils/content-dates';
 
 const { pages } = await getSiteConfig();
@@ -28,6 +30,7 @@ const projectIndexPage = {
 };
 
 const relatedProjects = projects;
+const projectsRoute = getPageModuleRoute(navfolioConfig, 'projects');
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -55,7 +58,7 @@ function withBase(href: string) {
     relatedProjects.length > 0 ? (
       <section class="project-grid" aria-label="Projects">
         {relatedProjects.map((project) => (
-          <a class="project-card" href={withBase(`/projects/${project.id}/`)}>
+          <a class="project-card" href={withBase(`${projectsRoute}/${project.id}/`)}>
             <span class="project-meta">
               <FormattedDate date={project.data.date} />
             </span>

@@ -70,11 +70,17 @@ function getResultPath(url: string) {
 
 function getResultKind(root: HTMLElement, url: string) {
   const path = getResultPath(url);
+  const vibeRoute = root.dataset.searchRouteVibe || '/vibe';
+  const projectsRoute = root.dataset.searchRouteProjects || '/projects';
 
   if (/^\/blog\/[^/]+\/?$/.test(path)) return root.dataset.searchKindBlogNote || 'Blog note';
   if (path.startsWith('/blog')) return root.dataset.searchKindBlogIndex || 'Blog index';
-  if (path.startsWith('/vibe')) return root.dataset.searchKindVibe || 'Vibe';
-  if (path.startsWith('/projects')) return root.dataset.searchKindProject || 'Project';
+  if (path === vibeRoute || path.startsWith(`${vibeRoute}/`)) {
+    return root.dataset.searchKindVibe || 'Vibe';
+  }
+  if (path === projectsRoute || path.startsWith(`${projectsRoute}/`)) {
+    return root.dataset.searchKindProject || 'Project';
+  }
 
   return root.dataset.searchKindPage || 'Page';
 }

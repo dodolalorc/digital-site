@@ -1,4 +1,5 @@
 import type { defineConfig } from 'astro/config';
+import type { NavfolioPageModule } from '../modules/types';
 
 type AstroUserConfig = Parameters<typeof defineConfig>[0];
 type AstroMarkdownConfig = NonNullable<AstroUserConfig['markdown']>;
@@ -24,4 +25,5 @@ export interface NavfolioPlugin {
 
 export interface NavfolioConfig {
   plugins?: NavfolioPlugin[];
+  modules?: NavfolioPageModule[];
 }

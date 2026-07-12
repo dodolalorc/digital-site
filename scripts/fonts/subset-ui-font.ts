@@ -2,6 +2,8 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join } from 'node:path';
 import { parse } from 'smol-toml';
+import navfolioConfig from '../../navfolio.config';
+import { isPageModuleEnabled } from '../../src/plugins/config';
 
 type FontConfig = {
   en: string;
@@ -18,6 +20,8 @@ const sourceFontPath = resolveProjectPath(fontConfig.file);
 const subsetFontName = `${fontConfig.zh} UI Subset`;
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
+const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
+const vibeModuleEnabled = isPageModuleEnabled(navfolioConfig, 'vibe');
 
 const sourceDirs = [
   'src/pages',
@@ -27,17 +31,24 @@ const sourceDirs = [
   'src/utils',
   'src/i18n',
 ];
+const sourceFiles = [
+  ...(projectsModuleEnabled
+    ? ['src/modules/routes/projects-index.astro', 'src/modules/routes/project-detail.astro']
+    : []),
+  ...(vibeModuleEnabled ? ['src/modules/routes/vibe.astro'] : []),
+];
 const contentFrontmatterDirs = [
   `${contentRoot}/blog`,
-  `${contentRoot}/projects`,
-  `${contentRoot}/vibe`,
+  ...(projectsModuleEnabled ? [`${contentRoot}/projects`] : []),
+  ...(vibeModuleEnabled ? [`${contentRoot}/vibe`] : []),
 ];
-const lightweightContentDirs = [`${contentRoot}/vibe`];
+const lightweightContentDirs = [...(vibeModuleEnabled ? [`${contentRoot}/vibe`] : [])];
 const lightweightContentFiles = [
   `${contentRoot}/about.mdx`,
   `${contentRoot}/about.md`,
-  `${contentRoot}/projects/index.mdx`,
-  `${contentRoot}/projects/index.md`,
+  ...(projectsModuleEnabled
+    ? [`${contentRoot}/projects/index.mdx`, `${contentRoot}/projects/index.md`]
+    : []),
 ];
 const sourceExtensions = new Set(['.astro', '.ts', '.js', '.mjs', '.cjs', '.json', '.toml']);
 const frontmatterExtensions = new Set(['.md', '.mdx']);
@@ -236,6 +247,11 @@ for (const dir of sourceDirs) {
   for (const file of walkFiles(join(projectRoot, dir), sourceExtensions)) {
     collectCjk(chars, readFileSync(file, 'utf8'));
   }
+}
+
+for (const file of sourceFiles) {
+  const path = join(projectRoot, file);
+  if (existsSync(path)) collectCjk(chars, readFileSync(path, 'utf8'));
 }
 
 for (const dir of contentFrontmatterDirs) {

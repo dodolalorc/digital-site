@@ -1,7 +1,9 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import navfolioConfig from '../navfolio.config';
+import { isPageModuleEnabled } from '../src/plugins/config';
 
-type ContentType = 'blog' | 'vibe';
+type ContentType = 'blog' | 'project' | 'vibe';
 type Extension = 'md' | 'mdx';
 
 type ContentTypeConfig = {
@@ -21,6 +23,14 @@ const CONTENT_TYPES = {
     fileName: (slug) => slug,
     bodyTemplate: createBlogBody,
     frontmatterTemplate: createBlogFrontmatter,
+  },
+  project: {
+    collectionName: 'project',
+    directory: 'src/content/projects',
+    defaultExtension: 'mdx',
+    fileName: (slug) => slug,
+    bodyTemplate: createProjectBody,
+    frontmatterTemplate: createProjectFrontmatter,
   },
   vibe: {
     collectionName: 'vibe',
@@ -43,6 +53,11 @@ if (!isSupportedContentType(contentTypeArg)) {
 
 if (filenameArg === undefined) {
   printMissingFilename();
+  process.exit(1);
+}
+
+if (!isContentTypeEnabled(contentTypeArg)) {
+  printDisabledContentType(contentTypeArg);
   process.exit(1);
 }
 
@@ -78,7 +93,14 @@ console.log(`Created new ${config.collectionName} file:`);
 console.log(relativePath);
 
 function isSupportedContentType(value: string | undefined): value is ContentType {
-  return value === 'blog' || value === 'vibe';
+  return value === 'blog' || value === 'project' || value === 'vibe';
+}
+
+function isContentTypeEnabled(value: ContentType): boolean {
+  if (value === 'project') return isPageModuleEnabled(navfolioConfig, 'projects');
+  if (value === 'vibe') return isPageModuleEnabled(navfolioConfig, 'vibe');
+
+  return true;
 }
 
 function normalizeFilename(value: string): string {
@@ -145,6 +167,24 @@ size: md
 ---`;
 }
 
+function createProjectFrontmatter(title: string, isoDate: string): string {
+  return `---
+title: "${escapeYamlString(title)}"
+description: ""
+date: "${isoDate}"
+draft: true
+showHeroImage: false
+tags: []
+categories: []
+series: []
+comments: true
+sidebar:
+  enable: false
+  toc: true
+  relatedPosts: false
+---`;
+}
+
 function createBlogBody(title: string): string {
   return `# ${title}
 
@@ -153,6 +193,12 @@ Start writing here.`;
 
 function createVibeBody(): string {
   return 'A small note from today.';
+}
+
+function createProjectBody(title: string): string {
+  return `# ${title}
+
+Describe the project, the decisions behind it, and useful links.`;
 }
 
 function escapeYamlString(value: string): string {
@@ -164,6 +210,7 @@ function printMissingFilename(): void {
 
 Examples:
 bun run post:new my-first-post
+bun run project:new my-tool
 bun run vibe:new today-cloud`);
 }
 
@@ -172,5 +219,10 @@ function printUnsupportedContentType(contentType: string | undefined): void {
 
 Supported types:
 - blog
+- project
 - vibe`);
+}
+
+function printDisabledContentType(contentType: ContentType): void {
+  console.error(`The ${contentType} content module is disabled in navfolio.config.ts.`);
 }
