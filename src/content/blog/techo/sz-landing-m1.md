@@ -1,5 +1,5 @@
 ---
-title: 打工妹 Landing 实况记录
+title: 厂妹深圳 Landing 实况记录
 description: ""
 date: 2026-07-12T11:18:44.531Z
 draft: true
@@ -10,7 +10,6 @@ tags: []
 categories:
   - 生活杂记
 series:
-  - ip保卫战失败2.0
 comments: true
 sidebar:
   enable: true
