@@ -84,6 +84,21 @@ export function isPageModuleEnabled(
   return getResolvedPageModule(config, moduleId) !== undefined;
 }
 
+export function getResolvedPageModuleScaffolds(config: NavfolioConfig) {
+  return getResolvedPageModules(config).flatMap((module) => {
+    if (!module.scaffold) return [];
+
+    return [
+      {
+        moduleId: module.id,
+        ...module.scaffold,
+        collection: module.scaffold.collection,
+        defaultExtension: module.scaffold.defaultExtension ?? 'md',
+      },
+    ];
+  });
+}
+
 function createPageModuleRoutesIntegration(
   config: NavfolioConfig,
 ): NonNullable<Required<NavfolioAstroPluginConfig>['integrations']>[number] {

@@ -7,6 +7,7 @@ import {
   normalizeModuleRoute,
 } from '../plugins/config';
 import type { NavfolioPageModuleId } from '../modules';
+import type { NavfolioConfig } from '../plugins/types';
 
 export async function getSiteConfig() {
   const entry = await getEntry('siteConfig', 'config');
@@ -24,10 +25,22 @@ export async function getThemePalette() {
   return theme.palette;
 }
 
-const defaultModuleRoutes: Record<NavfolioPageModuleId, string> = {
+const defaultModuleRoutes: Record<string, string> = {
   projects: '/projects',
   vibe: '/vibe',
 };
+
+interface TopNavLinkConfig {
+  label: string;
+  href?: string;
+  module?: string;
+  disabled?: boolean;
+}
+
+export interface ResolvedTopNavLink {
+  label: string;
+  href: string;
+}
 
 function linkMatchesModule(href: string, moduleId: NavfolioPageModuleId, moduleRoute: string) {
   if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) {
@@ -41,22 +54,55 @@ function linkMatchesModule(href: string, moduleId: NavfolioPageModuleId, moduleR
 
 export async function getTopNavLinks() {
   const { topNav } = await getSiteConfig();
-  const configuredModules = getConfiguredPageModules(navfolioConfig);
+  return resolveTopNavLinks(topNav.links, navfolioConfig);
+}
 
-  return topNav.links.flatMap((link) => {
+export function resolveTopNavLinks(
+  links: TopNavLinkConfig[],
+  config: NavfolioConfig,
+): ResolvedTopNavLink[] {
+  const configuredModules = getConfiguredPageModules(config);
+
+  return links.flatMap((link) => {
+    if (link.disabled) return [];
+
+    if (link.module) {
+      const resolvedModule = getResolvedPageModule(config, link.module);
+
+      if (!resolvedModule) return [];
+
+      return [
+        {
+          label: link.label || resolvedModule.nav.label,
+          href: resolvedModule.route,
+        },
+      ];
+    }
+
+    const href = link.href;
+
+    if (!href) return [];
+
     const matchedModule = configuredModules.find((module) =>
-      linkMatchesModule(link.href, module.id, normalizeModuleRoute(module.route)),
+      linkMatchesModule(href, module.id, normalizeModuleRoute(module.route)),
     );
 
-    if (!matchedModule) return [link];
+    if (!matchedModule) {
+      return [
+        {
+          label: link.label,
+          href,
+        },
+      ];
+    }
 
-    const resolvedModule = getResolvedPageModule(navfolioConfig, matchedModule.id);
+    const resolvedModule = getResolvedPageModule(config, matchedModule.id);
 
     if (!resolvedModule) return [];
 
     return [
       {
-        ...link,
+        label: link.label,
         href: resolvedModule.route,
       },
     ];

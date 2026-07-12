@@ -157,10 +157,17 @@ const defaultCommentsConfig = {
 
 const linkSchema = z.object({
   label: z.string(),
-  href: z.string(),
+  href: z.string().optional(),
+  module: z.string().optional(),
   icon: z.string().optional(),
   disabled: z.boolean().optional().default(false),
 });
+
+const topNavLinkSchema = linkSchema
+  .omit({ icon: true })
+  .refine((link) => Boolean(link.href || link.module), {
+    message: 'Top nav links must define either href or module.',
+  });
 
 const navigationItemSchema = z.object({
   icon: z.string(),
@@ -368,7 +375,7 @@ const siteConfig = defineCollection({
       avatar: z.string(),
     }),
     topNav: z.object({
-      links: z.array(linkSchema.omit({ icon: true })),
+      links: z.array(topNavLinkSchema),
     }),
     search: z
       .object({

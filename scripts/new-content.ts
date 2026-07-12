@@ -1,63 +1,57 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import navfolioConfig from '../navfolio.config';
-import { isPageModuleEnabled } from '../src/plugins/config';
+import { getConfiguredPageModules, getResolvedPageModuleScaffolds } from '../src/plugins/config';
+import type {
+  NavfolioContentExtension,
+  NavfolioPageModuleScaffold,
+  NavfolioScaffoldTemplateContext,
+} from '../src/modules';
 
-type ContentType = 'blog' | 'project' | 'vibe';
-type Extension = 'md' | 'mdx';
+type ScaffoldTemplate = NonNullable<NavfolioPageModuleScaffold['template']>;
 
-type ContentTypeConfig = {
-  collectionName: ContentType;
+interface ContentScaffold {
+  command: string;
+  collection: string;
   directory: string;
-  defaultExtension: Extension;
-  fileName: (slug: string, now: Date) => string;
-  bodyTemplate: (title: string) => string;
-  frontmatterTemplate: (title: string, isoDate: string) => string;
-};
+  defaultExtension: NavfolioContentExtension;
+  fileName?: (slug: string, now: Date) => string;
+  template: ScaffoldTemplate;
+  frontmatter?: (context: NavfolioScaffoldTemplateContext) => string;
+  body?: (context: NavfolioScaffoldTemplateContext) => string;
+}
 
-const CONTENT_TYPES = {
-  blog: {
-    collectionName: 'blog',
+const coreScaffolds = [
+  {
+    command: 'blog',
+    collection: 'blog',
     directory: 'src/content/blog',
     defaultExtension: 'md',
-    fileName: (slug) => slug,
-    bodyTemplate: createBlogBody,
-    frontmatterTemplate: createBlogFrontmatter,
+    template: 'article',
   },
-  project: {
-    collectionName: 'project',
-    directory: 'src/content/projects',
-    defaultExtension: 'mdx',
-    fileName: (slug) => slug,
-    bodyTemplate: createProjectBody,
-    frontmatterTemplate: createProjectFrontmatter,
-  },
-  vibe: {
-    collectionName: 'vibe',
-    directory: 'src/content/vibe',
-    defaultExtension: 'md',
-    fileName: (slug, now) => `${formatDatePrefix(now)}-${slug}`,
-    bodyTemplate: createVibeBody,
-    frontmatterTemplate: createVibeFrontmatter,
-  },
-} satisfies Record<ContentType, ContentTypeConfig>;
+] satisfies ContentScaffold[];
 
 const args = process.argv.slice(2);
-const contentTypeArg = args[0];
-const filenameArg = args.find((arg, index) => index > 0 && arg !== '--mdx');
+const commandArg = args[0];
+const filenameArg = args.find((arg, index) => index > 0 && arg !== '--mdx' && arg !== '--md');
 
-if (!isSupportedContentType(contentTypeArg)) {
-  printUnsupportedContentType(contentTypeArg);
+const scaffolds = getContentScaffolds();
+const scaffold = scaffolds.find((item) => item.command === commandArg);
+
+if (!scaffold) {
+  const disabledScaffold = getDisabledModuleScaffold(commandArg);
+
+  if (disabledScaffold) {
+    printDisabledContentType(disabledScaffold.command);
+  } else {
+    printUnsupportedContentType(commandArg, scaffolds);
+  }
+
   process.exit(1);
 }
 
 if (filenameArg === undefined) {
-  printMissingFilename();
-  process.exit(1);
-}
-
-if (!isContentTypeEnabled(contentTypeArg)) {
-  printDisabledContentType(contentTypeArg);
+  printMissingFilename(scaffolds);
   process.exit(1);
 }
 
@@ -70,11 +64,16 @@ if (!slug) {
 
 const now = new Date();
 const isoDate = now.toISOString();
-const config = CONTENT_TYPES[contentTypeArg];
-const extension: Extension = args.includes('--mdx') ? 'mdx' : config.defaultExtension;
+const extension = resolveExtension(args, scaffold.defaultExtension);
 const title = createTitle(slug);
-const baseName = config.fileName(slug, now);
-const relativePath = path.join(config.directory, `${baseName}.${extension}`);
+const templateContext = {
+  title,
+  slug,
+  isoDate,
+  now,
+} satisfies NavfolioScaffoldTemplateContext;
+const baseName = scaffold.fileName?.(slug, now) ?? slug;
+const relativePath = path.join(scaffold.directory, `${baseName}.${extension}`);
 const targetPath = path.resolve(relativePath);
 
 if (existsSync(targetPath)) {
@@ -85,22 +84,58 @@ if (existsSync(targetPath)) {
 mkdirSync(path.dirname(targetPath), { recursive: true });
 writeFileSync(
   targetPath,
-  `${config.frontmatterTemplate(title, isoDate)}\n\n${config.bodyTemplate(title)}\n`,
+  `${createFrontmatter(scaffold, templateContext)}\n\n${createBody(scaffold, templateContext)}\n`,
   'utf8',
 );
 
-console.log(`Created new ${config.collectionName} file:`);
+console.log(`Created new ${scaffold.collection} file:`);
 console.log(relativePath);
 
-function isSupportedContentType(value: string | undefined): value is ContentType {
-  return value === 'blog' || value === 'project' || value === 'vibe';
+function getContentScaffolds(): ContentScaffold[] {
+  const moduleScaffolds = getResolvedPageModuleScaffolds(navfolioConfig).map((scaffold) => ({
+    command: scaffold.command,
+    collection: scaffold.collection,
+    directory: scaffold.directory,
+    defaultExtension: scaffold.defaultExtension,
+    fileName: scaffold.fileName,
+    template: scaffold.template ?? 'article',
+    frontmatter: scaffold.frontmatter,
+    body: scaffold.body,
+  }));
+
+  return rejectDuplicateCommands([...coreScaffolds, ...moduleScaffolds]);
 }
 
-function isContentTypeEnabled(value: ContentType): boolean {
-  if (value === 'project') return isPageModuleEnabled(navfolioConfig, 'projects');
-  if (value === 'vibe') return isPageModuleEnabled(navfolioConfig, 'vibe');
+function rejectDuplicateCommands(scaffolds: ContentScaffold[]): ContentScaffold[] {
+  const commandOwners = new Set<string>();
 
-  return true;
+  for (const scaffold of scaffolds) {
+    if (commandOwners.has(scaffold.command)) {
+      throw new Error(`Duplicate content scaffold command "${scaffold.command}".`);
+    }
+
+    commandOwners.add(scaffold.command);
+  }
+
+  return scaffolds;
+}
+
+function getDisabledModuleScaffold(command: string | undefined) {
+  if (!command) return undefined;
+
+  return getConfiguredPageModules(navfolioConfig).find(
+    (module) => module.enabled === false && module.scaffold?.command === command,
+  )?.scaffold;
+}
+
+function resolveExtension(
+  args: string[],
+  defaultExtension: NavfolioContentExtension,
+): NavfolioContentExtension {
+  if (args.includes('--mdx')) return 'mdx';
+  if (args.includes('--md')) return 'md';
+
+  return defaultExtension;
 }
 
 function normalizeFilename(value: string): string {
@@ -128,11 +163,30 @@ function createTitle(slug: string): string {
     .join(' ');
 }
 
-function formatDatePrefix(date: Date): string {
-  return date.toISOString().slice(0, 10);
+function createFrontmatter(
+  scaffold: ContentScaffold,
+  context: NavfolioScaffoldTemplateContext,
+): string {
+  if (scaffold.frontmatter) return scaffold.frontmatter(context);
+
+  if (scaffold.template === 'vibe') return createVibeFrontmatter(context.title, context.isoDate);
+  if (scaffold.template === 'project') {
+    return createProjectFrontmatter(context.title, context.isoDate);
+  }
+
+  return createArticleFrontmatter(context.title, context.isoDate);
 }
 
-function createBlogFrontmatter(title: string, isoDate: string): string {
+function createBody(scaffold: ContentScaffold, context: NavfolioScaffoldTemplateContext): string {
+  if (scaffold.body) return scaffold.body(context);
+
+  if (scaffold.template === 'vibe') return createVibeBody();
+  if (scaffold.template === 'project') return createProjectBody(context.title);
+
+  return createArticleBody(context.title);
+}
+
+function createArticleFrontmatter(title: string, isoDate: string): string {
   return `---
 title: "${escapeYamlString(title)}"
 description: ""
@@ -185,7 +239,7 @@ sidebar:
 ---`;
 }
 
-function createBlogBody(title: string): string {
+function createArticleBody(title: string): string {
   return `# ${title}
 
 Start writing here.`;
@@ -205,24 +259,23 @@ function escapeYamlString(value: string): string {
   return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
 
-function printMissingFilename(): void {
+function printMissingFilename(scaffolds: ContentScaffold[]): void {
   console.error(`Please provide a filename.
 
 Examples:
-bun run post:new my-first-post
-bun run project:new my-tool
-bun run vibe:new today-cloud`);
+${scaffolds.map((scaffold) => `bun scripts/new-content.ts ${scaffold.command} my-slug`).join('\n')}`);
 }
 
-function printUnsupportedContentType(contentType: string | undefined): void {
-  console.error(`Unsupported content type: ${contentType ?? ''}
+function printUnsupportedContentType(
+  command: string | undefined,
+  scaffolds: ContentScaffold[],
+): void {
+  console.error(`Unsupported content scaffold command: ${command ?? ''}
 
-Supported types:
-- blog
-- project
-- vibe`);
+Supported commands:
+${scaffolds.map((scaffold) => `- ${scaffold.command}`).join('\n')}`);
 }
 
-function printDisabledContentType(contentType: ContentType): void {
-  console.error(`The ${contentType} content module is disabled in navfolio.config.ts.`);
+function printDisabledContentType(command: string): void {
+  console.error(`The ${command} content module is disabled in navfolio.config.ts.`);
 }

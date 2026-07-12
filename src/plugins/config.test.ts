@@ -4,6 +4,7 @@ import {
   defineNavfolioConfig,
   getAstroPluginConfig,
   getPageModuleRoute,
+  getResolvedPageModuleScaffolds,
   getResolvedPageModules,
   isPageModuleEnabled,
   normalizeModuleRoute,
@@ -89,5 +90,22 @@ describe('navfolio plugin config', () => {
     });
 
     expect(() => getResolvedPageModules(config)).toThrow('Duplicate Navfolio page module route');
+  });
+
+  test('resolves scaffold metadata from enabled page modules', () => {
+    const config = defineNavfolioConfig({
+      modules: [projectsModule(), vibeModule({ enabled: false })],
+    });
+
+    expect(getResolvedPageModuleScaffolds(config)).toEqual([
+      {
+        moduleId: 'projects',
+        command: 'project',
+        collection: 'projects',
+        directory: 'src/content/projects',
+        defaultExtension: 'mdx',
+        template: 'project',
+      },
+    ]);
   });
 });

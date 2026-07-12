@@ -15,6 +15,7 @@
     "docs:preview": "NAVFOLIO_CONTENT_SOURCE=docs astro preview",
     "docs:sync": "git submodule update --init --recursive",
     "astro": "astro",
+    "content:new": "bun scripts/new-content.ts",
     "post:new": "bun scripts/new-content.ts blog",
     "project:new": "bun scripts/new-content.ts project",
     "vibe:new": "bun scripts/new-content.ts vibe",

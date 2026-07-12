@@ -14,7 +14,10 @@ export function projectsModule(options: NavfolioPageModuleOptions = {}): Navfoli
     collections: ['projects'],
     scaffold: {
       command: 'project',
+      collection: 'projects',
       directory: 'src/content/projects',
+      defaultExtension: 'mdx',
+      template: 'project',
     },
   };
 }

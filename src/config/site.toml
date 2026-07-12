@@ -131,11 +131,11 @@ href = "/blog"
 
 [[config.topNav.links]]
 label = "Projects"
-href = "/projects"
+module = "projects"
 
 [[config.topNav.links]]
 label = "Vibe"
-href = "/vibe"
+module = "vibe"
 
 [[config.topNav.links]]
 label = "About"

@@ -1,4 +1,15 @@
-export type NavfolioPageModuleId = 'projects' | 'vibe';
+export type NavfolioPageModuleId = string;
+
+export type NavfolioPageModuleBuiltinId = 'projects' | 'vibe';
+
+export type NavfolioContentExtension = 'md' | 'mdx';
+
+export interface NavfolioScaffoldTemplateContext {
+  title: string;
+  slug: string;
+  isoDate: string;
+  now: Date;
+}
 
 export interface NavfolioPageModuleNav {
   label: string;
@@ -7,7 +18,13 @@ export interface NavfolioPageModuleNav {
 
 export interface NavfolioPageModuleScaffold {
   command: string;
+  collection: string;
   directory: string;
+  defaultExtension?: NavfolioContentExtension;
+  fileName?: (slug: string, now: Date) => string;
+  template?: 'article' | 'project' | 'vibe';
+  frontmatter?: (context: NavfolioScaffoldTemplateContext) => string;
+  body?: (context: NavfolioScaffoldTemplateContext) => string;
 }
 
 export interface NavfolioPageModule {

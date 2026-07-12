@@ -14,7 +14,11 @@ export function vibeModule(options: NavfolioPageModuleOptions = {}): NavfolioPag
     collections: ['vibe'],
     scaffold: {
       command: 'vibe',
+      collection: 'vibe',
       directory: 'src/content/vibe',
+      defaultExtension: 'md',
+      fileName: (slug, now) => `${now.toISOString().slice(0, 10)}-${slug}`,
+      template: 'vibe',
     },
   };
 }
