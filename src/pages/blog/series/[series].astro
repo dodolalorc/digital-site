@@ -23,8 +23,9 @@ export async function getStaticPaths() {
 }
 
 const siteConfig = await getSiteConfig();
-const { site, theme } = siteConfig;
+const { site, theme, pages } = siteConfig;
 const palette = theme.palette;
+const pageMeta = pages.blog;
 const { series, posts } = Astro.props;
 const ui = getUiText(siteConfig);
 ---
@@ -67,7 +68,7 @@ const ui = getUiText(siteConfig);
         <p class="archive-note">{ui.groups.seriesNote(posts.length)}</p>
       </header>
 
-      <BlogPostList posts={posts} listTag="ol" />
+      <BlogPostList posts={posts} coverImageStyle={pageMeta.coverImageStyle} listTag="ol" />
     </main>
     <Footer />
   </body>
