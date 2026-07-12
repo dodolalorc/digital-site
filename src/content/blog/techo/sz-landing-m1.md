@@ -9,7 +9,7 @@ showHeroImage: false
 tags: []
 categories:
   - 生活杂记
-series:
+series: []
 comments: true
 sidebar:
   enable: true
