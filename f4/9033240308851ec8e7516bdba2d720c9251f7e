@@ -1,0 +1,25 @@
+src/utils/group-nav.ts
+  s_a20969fb0e1a62::t_37d9e49840d1d0 36-37,39-42
+src/utils/pagination.test.ts
+  s_a20969fb0e1a62::t_11b9ac82436b5e 22-25
+src/utils/pagination.ts
+  s_a20969fb0e1a62::t_f9bbafed91a60b 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f49033240308851ec8e7516bdba2d720c9251f7e",
+  "prompts": {},
+  "sessions": {
+    "s_a20969fb0e1a62": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f59a0-f650-71f0-a3e0-9400dfe8a29e",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
