@@ -1,15 +1,19 @@
 import { describe, expect, test } from 'bun:test';
 
-import { normalizeFriendLinkItems, resolveFriendLinkItems } from './friend-links';
+import {
+  normalizeFriendLinkItems,
+  resolveFriendLinkItems,
+  resolveFriendLinkItemsSafely,
+} from './friend-links';
 
 describe('friend link data helpers', () => {
   test('normalizes display fields without changing the source shape', () => {
     const [item] = normalizeFriendLinkItems([
       {
         name: '  Astro  ',
-        url: 'https://astro.build/',
+        url: '  https://astro.build/  ',
         bio: '  Static site framework  ',
-        avatar: null,
+        avatar: '  https://astro.build/icon.svg  ',
         backgroundImage: '  https://example.com/bg.jpg  ',
       },
     ]);
@@ -17,6 +21,7 @@ describe('friend link data helpers', () => {
     expect(item).toMatchObject({
       name: 'Astro',
       url: 'https://astro.build/',
+      avatar: 'https://astro.build/icon.svg',
       summary: 'Static site framework',
       backgroundImageUrl: 'https://example.com/bg.jpg',
       hasBackgroundImage: true,
@@ -97,5 +102,52 @@ describe('friend link data helpers', () => {
     await expect(load()).rejects.toThrow(
       'Unable to load friend links from https://example.com/friends.json: 404 Not Found',
     );
+  });
+
+  test('reports remote fetch failures with the source URL', async () => {
+    const load = () =>
+      resolveFriendLinkItems(
+        {
+          src: 'https://example.com/friends.json',
+        },
+        async () => {
+          throw new Error('network unavailable');
+        },
+      );
+
+    await expect(load()).rejects.toThrow(
+      'Failed to fetch friend links from https://example.com/friends.json: network unavailable',
+    );
+  });
+
+  test('reports malformed remote JSON with the source URL', async () => {
+    const load = () =>
+      resolveFriendLinkItems(
+        {
+          src: 'https://example.com/friends.json',
+        },
+        async () => new Response('not json'),
+      );
+
+    await expect(load()).rejects.toThrow(
+      'Failed to parse friend links JSON from https://example.com/friends.json',
+    );
+  });
+
+  test('safely resolves to an empty list when remote data cannot be loaded', async () => {
+    const errors: unknown[] = [];
+    const items = await resolveFriendLinkItemsSafely(
+      {
+        src: 'https://example.com/friends.json',
+      },
+      async () => {
+        throw new Error('network unavailable');
+      },
+      (error) => errors.push(error),
+    );
+
+    expect(items).toEqual([]);
+    expect(errors).toHaveLength(1);
+    expect(errors[0]).toBeInstanceOf(Error);
   });
 });

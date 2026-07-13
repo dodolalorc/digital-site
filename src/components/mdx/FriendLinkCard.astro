@@ -1,7 +1,7 @@
 ---
 import {
   normalizeFriendLinkItems,
-  resolveFriendLinkItems,
+  resolveFriendLinkItemsSafely,
   type FriendLinkItem,
 } from './friend-links';
 
@@ -10,7 +10,7 @@ interface Props {
   src?: string;
 }
 
-const items = await resolveFriendLinkItems(Astro.props);
+const items = await resolveFriendLinkItemsSafely(Astro.props);
 const normalizedItems = normalizeFriendLinkItems(items);
 ---
 
