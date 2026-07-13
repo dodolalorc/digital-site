@@ -1,17 +1,116 @@
 ---
-import {
-  normalizeFriendLinkItems,
-  resolveFriendLinkItemsSafely,
-  type FriendLinkItem,
-} from './friend-links';
-
 interface Props {
   items?: FriendLinkItem[];
   src?: string;
 }
 
-const items = await resolveFriendLinkItemsSafely(Astro.props);
-const normalizedItems = normalizeFriendLinkItems(items);
+interface FriendLinkItem {
+  name: string;
+  url: string;
+  bio?: string;
+  avatar?: string | null;
+  backgroundImage?: string | null;
+}
+
+interface NormalizedFriendLinkItem extends FriendLinkItem {
+  summary: string;
+  backgroundImageUrl: string;
+  hasBackgroundImage: boolean;
+  fallbackInitial: string;
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const isOptionalStringOrNull = (value: unknown) =>
+  value === undefined || value === null || typeof value === 'string';
+
+const isFriendLinkItem = (value: unknown): value is FriendLinkItem => {
+  if (!isRecord(value)) return false;
+
+  return (
+    typeof value.name === 'string' &&
+    typeof value.url === 'string' &&
+    isOptionalStringOrNull(value.bio) &&
+    isOptionalStringOrNull(value.avatar) &&
+    isOptionalStringOrNull(value.backgroundImage)
+  );
+};
+
+const parseFriendLinkJson = (text: string, sourceLabel: string): FriendLinkItem[] => {
+  let data: unknown;
+
+  try {
+    data = JSON.parse(text);
+  } catch {
+    try {
+      data = JSON.parse(text.replace(/,\s*([}\]])/g, '$1'));
+    } catch (error) {
+      throw new Error(
+        `Failed to parse friend links JSON from ${sourceLabel}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+  }
+
+  if (!Array.isArray(data)) {
+    throw new Error(`Friend link JSON from ${sourceLabel} must be an array`);
+  }
+
+  data.forEach((item, index) => {
+    if (!isFriendLinkItem(item)) {
+      throw new Error(`Friend link JSON from ${sourceLabel} has an invalid item at index ${index}`);
+    }
+  });
+
+  return data;
+};
+
+const resolveFriendLinkItems = async ({ items, src }: Props): Promise<FriendLinkItem[]> => {
+  if (items) return items;
+
+  const sourceUrl = src?.trim();
+  if (!sourceUrl) return [];
+
+  try {
+    const response = await fetch(sourceUrl);
+
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+
+    return parseFriendLinkJson(await response.text(), sourceUrl);
+  } catch (error) {
+    console.error(
+      `Failed to resolve friend link items from ${sourceUrl}:`,
+      error instanceof Error ? error.message : error,
+    );
+    return [];
+  }
+};
+
+const normalizeFriendLinkItems = (items: FriendLinkItem[]): NormalizedFriendLinkItem[] =>
+  items.map((item) => {
+    const name = item.name.trim();
+    const url = item.url.trim();
+    const avatar = item.avatar?.trim() || null;
+    const summary = item.bio?.trim() ?? '';
+    const backgroundImageUrl = item.backgroundImage?.trim() ?? '';
+
+    return {
+      ...item,
+      name,
+      url,
+      avatar,
+      summary,
+      backgroundImageUrl,
+      hasBackgroundImage: backgroundImageUrl.length > 0,
+      fallbackInitial: (name.charAt(0) || '?').toUpperCase(),
+    };
+  });
+
+const normalizedItems = normalizeFriendLinkItems(await resolveFriendLinkItems(Astro.props));
 ---
 
 <div class="friend-link-list">
