@@ -5,14 +5,16 @@ interface Props {
 }
 
 interface FriendLinkItem {
-  name: string;
-  url: string;
+  name?: string;
+  url?: string;
   bio?: string;
   avatar?: string | null;
   backgroundImage?: string | null;
 }
 
-interface NormalizedFriendLinkItem extends FriendLinkItem {
+interface NormalizedFriendLinkItem extends Omit<FriendLinkItem, 'name' | 'url'> {
+  name: string;
+  url: string;
   summary: string;
   backgroundImageUrl: string;
   hasBackgroundImage: boolean;
@@ -42,16 +44,12 @@ const parseFriendLinkJson = (text: string, sourceLabel: string): FriendLinkItem[
 
   try {
     data = JSON.parse(text);
-  } catch {
-    try {
-      data = JSON.parse(text.replace(/,\s*([}\]])/g, '$1'));
-    } catch (error) {
-      throw new Error(
-        `Failed to parse friend links JSON from ${sourceLabel}: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      );
-    }
+  } catch (error) {
+    throw new Error(
+      `Failed to parse friend links JSON from ${sourceLabel}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
   }
 
   if (!Array.isArray(data)) {
@@ -90,13 +88,15 @@ const resolveFriendLinkItems = async ({ items, src }: Props): Promise<FriendLink
   }
 };
 
+const trimString = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+
 const normalizeFriendLinkItems = (items: FriendLinkItem[]): NormalizedFriendLinkItem[] =>
   items.map((item) => {
-    const name = item.name.trim();
-    const url = item.url.trim();
-    const avatar = item.avatar?.trim() || null;
-    const summary = item.bio?.trim() ?? '';
-    const backgroundImageUrl = item.backgroundImage?.trim() ?? '';
+    const name = trimString(item.name);
+    const url = trimString(item.url);
+    const avatar = trimString(item.avatar) || null;
+    const summary = trimString(item.bio);
+    const backgroundImageUrl = trimString(item.backgroundImage);
 
     return {
       ...item,
