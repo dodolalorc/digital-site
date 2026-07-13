@@ -1,0 +1,21 @@
+src/components/mdx/FriendLinkCard.astro
+  s_1a759635de1c22::t_1a54b8fbaf2a5e 7-113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f58899acb9d3d7633e94b762a63183bf2885408f",
+  "prompts": {},
+  "sessions": {
+    "s_1a759635de1c22": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f5ad6-4c92-7df3-8123-082109ab3b72",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
