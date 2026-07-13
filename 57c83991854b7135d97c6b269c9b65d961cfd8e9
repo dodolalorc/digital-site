@@ -1,0 +1,25 @@
+src/components/mdx/FriendLinkCard.astro
+  s_10e806ab8a813d::t_eb8b12b6a7a94b 2-7,13
+src/components/mdx/friend-links.test.ts
+  s_10e806ab8a813d::t_b74c365d11c305 1-203
+src/components/mdx/friend-links.ts
+  s_10e806ab8a813d::t_7ae11b8d8f15e4 1-132
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "57c83991854b7135d97c6b269c9b65d961cfd8e9",
+  "prompts": {},
+  "sessions": {
+    "s_10e806ab8a813d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f5ae2-755f-7792-80cd-a73209cd8467",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
