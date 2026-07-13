@@ -35,11 +35,6 @@ collapseStyle = "collapsible-auto"
 [config.math]
 render = "katex" # "katex" | "mathjax"
 
-[config.comments]
-enabled = false
-provider = "none"
-show_on_posts = true
-
 [config.search]
 enabled = true
 shortcut = "mod+k"
@@ -88,6 +83,11 @@ showTrail = true
 title = "书影音"
 subtitle = "读过、看过、听过的作品，以及一点当时的感受。"
 note = "一页浏览书、电影、剧集、专辑与播客。"
+
+[config.comments]
+enabled = true
+provider = "giscus"
+show_on_posts = true
 
 [config.comments.giscus]
 repo = "dodolalorc/dodolalorc.github.io"
