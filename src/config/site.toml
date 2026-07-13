@@ -115,7 +115,7 @@ comment = true
 [config.profile]
 name = "dodola"
 handle = "@dodolalorc"
-role = "一只写代码的🐖"
+role = "一只写代码的🐽"
 company = "@ByteDance"
 location = "Shenzhen, China"
 email = "dodolalorc@gmail.com"
@@ -159,8 +159,8 @@ image = "https://avatars.githubusercontent.com/u/114007020?v=4"
 title = "here is dodola"
 name = "dodola"
 body = [
-  "Hi, 这里是哆哆啦，一只会写代码的局局",
-  "关注前端工程与 AI products，尝试做更多好用的工具，希望成为更厉害的代码🐖",
+  "Hi, 这里是哆哆啦，一只会写代码的🐽🐽",
+  "关注前端工程与 AI products，尝试做一些好用的工具，好AI凭借力，送我上青云",
   "这里会收纳技术文章、算法旧文、项目记录、学习笔记和一些生活碎片。",
   "以及，欢迎和我交换友链！",
 ]
@@ -237,13 +237,13 @@ copy = false
 [[config.home.links]]
 label = "WeChat"
 icon = "wechat"
-tooltip = "" # Empty tooltip hides this link item.
+tooltip = "dodolalorc" # Empty tooltip hides this link item.
 copy = true
 
 [[config.home.links]]
 label = "QQ"
 icon = "qq"
-tooltip = "" # Empty tooltip hides this link item.
+tooltip = "2407445307" # Empty tooltip hides this link item.
 copy = true
 
 [[config.home.links]]
@@ -271,17 +271,17 @@ tooltip = "" # Empty tooltip hides this link item.
 copy = false
 
 [[config.home.doing]]
-text = "尝试构建完美的 Work-Life Balance 工作流"
+text = "尝试构建完美的 INTJer's Work-Life Balance 工作流"
 mark = "01"
 
 [[config.home.doing]]
-text = "喵语学习中"
+text = "为了照顾小咪所以学习喵语中（咪，你的诉求到底什么）"
 mark = "02"
 
 [[config.home.doing]]
-text = "继续深耕计算机专业知识，拓展边界，提升水平，产出新文章"
+text = "继续深耕各类技能吧，拓展边界，产出新文章"
 mark = "03"
 
 [[config.home.doing]]
-text = "继续更新升级 astro-navfolio 主题"
+text = "继续更新升级 astro-navfolio 主题（求求star🌟）"
 mark = "04"
