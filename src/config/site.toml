@@ -35,11 +35,6 @@ collapseStyle = "collapsible-auto"
 [config.math]
 render = "katex" # "katex" | "mathjax"
 
-[config.comments]
-enabled = false
-provider = "none"
-show_on_posts = true
-
 [config.search]
 enabled = true
 shortcut = "mod+k"
@@ -83,6 +78,11 @@ kicker = ""
 subtitle = "生活、旅行和一些没那么正式的片段。"
 note = "类似于朋友圈/QQ空间的地方"
 showTrail = true
+
+[config.comments]
+enabled = true
+provider = "giscus"
+show_on_posts = true
 
 [config.comments.giscus]
 repo = "dodolalorc/dodolalorc.github.io"
