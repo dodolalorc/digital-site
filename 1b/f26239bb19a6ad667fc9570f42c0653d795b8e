@@ -1,0 +1,21 @@
+docs/superpowers/specs/2026-07-13-about-comments-design.md
+  s_af1a2a81e41425::t_3cf568d84f0510 1-28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1bf26239bb19a6ad667fc9570f42c0653d795b8e",
+  "prompts": {},
+  "sessions": {
+    "s_af1a2a81e41425": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f5a85-921b-7ec1-a593-4cba390a6622",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
