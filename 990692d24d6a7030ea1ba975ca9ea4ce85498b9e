@@ -1,0 +1,35 @@
+docs/superpowers/plans/2026-07-13-about-comments.md
+  s_af1a2a81e41425::t_136574f7650c28 1-127
+src/layouts/BlogArticle.astro
+  s_af1a2a81e41425::t_f2a2df9093bd95 13,87,218-222
+src/utils/comments.test.ts
+  s_af1a2a81e41425::t_5c83a69548fd3d 1-14
+src/utils/comments.ts
+  s_fb2f2313590ae4::t_1066147228d1e8 8-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "990692d24d6a7030ea1ba975ca9ea4ce85498b9e",
+  "prompts": {},
+  "sessions": {
+    "s_af1a2a81e41425": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f5a85-921b-7ec1-a593-4cba390a6622",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    },
+    "s_fb2f2313590ae4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f5a8a-6304-7d12-bcc2-afe058077969",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
