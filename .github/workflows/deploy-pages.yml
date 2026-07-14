@@ -41,12 +41,12 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      # - name: Sync friend circle
-      #   uses: navfolio/friend-circle-sync@main
-      #   with:
-      #     input: input https://raw.githubusercontent.com/dodolalorc/dodolalorc/main/friendlinks.json
-      #     output: public/friend-circle.json
-      #     max-posts-per-feed: '12'
+      - name: Sync friend circle
+        uses: navfolio/friend-circle-sync@main
+        with:
+          input: https://raw.githubusercontent.com/dodolalorc/dodolalorc/main/friendlinks.json
+          output: public/friend-circle.json
+          max-posts-per-feed: '12'
 
       - name: Build site
         env:
