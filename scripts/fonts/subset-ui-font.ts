@@ -173,19 +173,17 @@ function collectFriendCircleChars(chars: Set<string>) {
 
   try {
     const data: unknown = JSON.parse(readFileSync(friendCirclePath, 'utf8'));
-    if (!Array.isArray(data)) return;
-
-    for (const item of data) {
-      if (!item || typeof item !== 'object') continue;
-      const post = item as Record<string, unknown>;
-      if (typeof post.title === 'string') collectCjk(chars, post.title);
-      if (typeof post.author === 'string') collectCjk(chars, post.author);
-      if (Array.isArray(post.tags)) {
-        for (const tag of post.tags) {
-          if (typeof tag === 'string') collectCjk(chars, tag);
-        }
+    const collectStrings = (value: unknown): void => {
+      if (typeof value === 'string') {
+        collectCjk(chars, value);
+      } else if (Array.isArray(value)) {
+        for (const item of value) collectStrings(item);
+      } else if (value && typeof value === 'object') {
+        for (const nestedValue of Object.values(value)) collectStrings(nestedValue);
       }
-    }
+    };
+
+    collectStrings(data);
   } catch (error) {
     console.warn(`Unable to collect friend-circle characters from ${friendCirclePath}:`, error);
   }
