@@ -11,6 +11,7 @@
         "@expressive-code/plugin-collapsible-sections": "^0.44.0",
         "@expressive-code/plugin-line-numbers": "^0.44.0",
         "@fontsource/maple-mono": "^5.2.6",
+        "@navfolio/mdx-components": "github:navfolio/mdx-components#0857ec2",
         "@navfolio/pages": "github:navfolio/pages",
         "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
         "@tailwindcss/vite": "^4.3.2",
@@ -278,6 +279,8 @@
     "@mermaid-js/parser": ["@mermaid-js/parser@1.2.0", "https://registry.npmmirror.com/@mermaid-js/parser/-/parser-1.2.0.tgz", { "dependencies": { "@chevrotain/types": "~11.1.2" } }, "sha512-oYPyv8A4As1yH5Bx+04iQEQxXuIQDe0GKCNSRgao6z8AM9jixXIfP0vsppRLvGf+nKIOb9/LdpWA4YuJiVvESA=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.6", "https://registry.npmmirror.com/@napi-rs/wasm-runtime/-/wasm-runtime-1.1.6.tgz", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1" } }, "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg=="],
+
+    "@navfolio/mdx-components": ["@navfolio/mdx-components@github:navfolio/mdx-components#0857ec2", { "dependencies": { "fast-xml-parser": "^5.3.3" }, "peerDependencies": { "astro": "^5.0.0 || ^6.0.0 || ^7.0.0", "lucide-astro": "^0.556.0", "mermaid": "^11.0.0" } }, "navfolio-mdx-components-0857ec2", "sha512-kNh6gmYbHY7aDTVHmlsFGbngb50sC7fkEnnP5pyjYS+6dI8TGZYnZKcfHkbKuC7psXcSFILn7RzrNoD9Grl9tg=="],
 
     "@navfolio/page-projects": ["@navfolio/page-projects@github:navfolio/page-projects#0ad9922", {}, "navfolio-page-projects-0ad9922", "sha512-8snIFwpGh/RTXsoAut03rSjEhB4BlZ1GzIcsenAE6zk9qJkynhv6aL1viiAtOTUoJ9E1PZ0smaMFRIaqeJfqwA=="],
 

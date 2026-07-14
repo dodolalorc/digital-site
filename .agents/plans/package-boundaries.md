@@ -12,6 +12,9 @@ their boundaries are accepted.
 - Types must not import Astro runtime values unless they are type-only imports.
 - Plugins may depend on `@navfolio/types` and `@navfolio/utils`.
 - Plugins should expose an Astro Integration and any user-facing schema helpers.
+- `@navfolio/mdx-components` is not a plugin: it is an optional component
+  package imported explicitly by MDX authors. It may use theme CSS variables,
+  but must not import files from a consumer's `src/` directory.
 - Theme may depend on plugin data contracts, but feature plugins should not
   depend on theme internals.
 - Shared build tools belong in package templates or workspace scripts, not in
@@ -55,6 +58,8 @@ create-navfolio
 - `navfolio/plugin-search` for `@navfolio/plugin-search`
 - `navfolio/plugin-comments` for `@navfolio/plugin-comments`
 - `navfolio/plugin-mdx` for `@navfolio/plugin-mdx`
+- `navfolio/mdx-components` for `@navfolio/mdx-components`
+- `navfolio/friend-circle-sync` for `@navfolio/friend-circle-sync`
 - `navfolio/plugin-math` for `@navfolio/plugin-math`
 - `navfolio/create-navfolio` for `create-navfolio`
 - `navfolio/docs` for documentation, already known to exist
@@ -66,3 +71,6 @@ create-navfolio
 - Letting plugin packages import Astro pages from the default theme.
 - Publishing package APIs before migration examples prove them.
 - Creating plugin hooks that duplicate Astro lifecycle hooks without a reason.
+- Putting MDX authoring components into the Markdown rendering plugin.
+- Making a theme component responsible for RSS crawling, cache policy, or CI
+  orchestration. Those responsibilities belong to `friend-circle-sync`.

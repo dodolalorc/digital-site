@@ -28,3 +28,4 @@ AGENTS.md
 # generated font files
 scripts/fonts/ui-chars.txt
 public/fonts/*-subset.woff2
+public/friend-circle.json

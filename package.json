@@ -31,6 +31,7 @@
     "@expressive-code/plugin-collapsible-sections": "^0.44.0",
     "@expressive-code/plugin-line-numbers": "^0.44.0",
     "@fontsource/maple-mono": "^5.2.6",
+    "@navfolio/mdx-components": "github:navfolio/mdx-components#0857ec2",
     "@navfolio/pages": "github:navfolio/pages",
     "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
     "@tailwindcss/vite": "^4.3.2",
