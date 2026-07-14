@@ -41,31 +41,17 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Ensure docs submodule is available
-        run: git submodule update --init --recursive --remote
-
       - name: Sync friend circle
-        if: ${{ vars.NAVFOLIO_FRIEND_CIRCLE_ENABLED == 'true' && vars.NAVFOLIO_FRIEND_LINKS_SRC != '' }}
         uses: navfolio/friend-circle-sync@main
         with:
-          input: ${{ vars.NAVFOLIO_FRIEND_LINKS_SRC }}
+          input:
           output: public/friend-circle.json
           max-posts-per-feed: '12'
-          name-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_NAME_FIELD || 'name' }}
-          url-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_URL_FIELD || 'url' }}
-          avatar-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_AVATAR_FIELD || 'avatar' }}
-          rss-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_RSS_FIELD || 'rss' }}
 
       - name: Build site
         env:
           SITE_URL: https://dodolalorc.cn
           SITE_BASE: /
-          NAVFOLIO_COMMENTS_ENABLED: ${{ vars.NAVFOLIO_COMMENTS_ENABLED }}
-          NAVFOLIO_COMMENTS_PROVIDER: ${{ vars.NAVFOLIO_COMMENTS_PROVIDER }}
-          NAVFOLIO_GISCUS_REPO: ${{ vars.NAVFOLIO_GISCUS_REPO }}
-          NAVFOLIO_GISCUS_REPO_ID: ${{ vars.NAVFOLIO_GISCUS_REPO_ID }}
-          NAVFOLIO_GISCUS_CATEGORY: ${{ vars.NAVFOLIO_GISCUS_CATEGORY }}
-          NAVFOLIO_GISCUS_CATEGORY_ID: ${{ vars.NAVFOLIO_GISCUS_CATEGORY_ID }}
         run: bun run build
 
       - name: Add CNAME
