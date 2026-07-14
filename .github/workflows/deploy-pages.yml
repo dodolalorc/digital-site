@@ -41,16 +41,17 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Sync friend circle
+        uses: navfolio/friend-circle-sync@main
+        with:
+          input:
+          output: public/friend-circle.json
+          max-posts-per-feed: '12'
+
       - name: Build site
         env:
           SITE_URL: https://dodolalorc.cn
           SITE_BASE: /
-          NAVFOLIO_COMMENTS_ENABLED: ${{ vars.NAVFOLIO_COMMENTS_ENABLED }}
-          NAVFOLIO_COMMENTS_PROVIDER: ${{ vars.NAVFOLIO_COMMENTS_PROVIDER }}
-          NAVFOLIO_GISCUS_REPO: ${{ vars.NAVFOLIO_GISCUS_REPO }}
-          NAVFOLIO_GISCUS_REPO_ID: ${{ vars.NAVFOLIO_GISCUS_REPO_ID }}
-          NAVFOLIO_GISCUS_CATEGORY: ${{ vars.NAVFOLIO_GISCUS_CATEGORY }}
-          NAVFOLIO_GISCUS_CATEGORY_ID: ${{ vars.NAVFOLIO_GISCUS_CATEGORY_ID }}
         run: bun run build
 
       - name: Add CNAME
