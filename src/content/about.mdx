@@ -16,6 +16,8 @@ sidebar:
 ---
 
 import FriendLinkCard from '@navfolio/mdx-components/FriendLinkCard.astro';
+import FriendCircle from '@navfolio/mdx-components/FriendCircle.astro';
+
 
 欢迎来到 dodola 的博客！本博客从大二时期开始更新，你可以在这里看到大量的旧文章（主要是ACMer时期的算法题解内容），和一些新的文章（主要是关于开发的内容）。
 
@@ -41,9 +43,13 @@ import FriendLinkCard from '@navfolio/mdx-components/FriendLinkCard.astro';
   "url": "https://dodolalorc.cn/",
   "avatar": "https://avatars.githubusercontent.com/u/114007020?v=4",
   "bio": "要是人生能像星露谷就好了。✨",
+  "rss": "https://dodolalorc.cn/rss.xml"
 }
 ```
 
 <FriendLinkCard
   src="https://raw.githubusercontent.com/dodolalorc/dodolalorc/main/friendlinks.json"
+  shuffle={true}
 />
+
+<FriendCircle feedSrc="/friend-circle.json" limit={10} />
