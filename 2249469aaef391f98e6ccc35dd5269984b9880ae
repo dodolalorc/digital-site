@@ -1,0 +1,21 @@
+src/pages/rss.xml.js
+  s_a515d5a0c6ceeb::t_e2cb75d925dac7 18-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2249469aaef391f98e6ccc35dd5269984b9880ae",
+  "prompts": {},
+  "sessions": {
+    "s_a515d5a0c6ceeb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f642c-a4a4-7eb1-adba-6b8e0c5946c9",
+        "model": "unknown"
+      },
+      "human_author": "dodola <dodolalorc@gmail.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
