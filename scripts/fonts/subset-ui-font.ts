@@ -19,7 +19,15 @@ const subsetFontUrl = getSubsetFontUrl(fontConfig.file);
 const outputFontPath = resolveProjectPath(subsetFontUrl);
 const sourceFontPath = resolveProjectPath(fontConfig.file);
 const subsetFontName = `${fontConfig.zh} UI Subset`;
-const pythonCommands = [join(projectRoot, '.venv', 'bin', 'python'), 'python', 'python3'].filter(
+const isWindows = process.platform === 'win32';
+const venvBinDir = isWindows ? 'Scripts' : 'bin';
+const pythonExe = isWindows ? 'python.exe' : 'python';
+const pyftsubsetExe = isWindows ? 'pyftsubset.exe' : 'pyftsubset';
+const pythonCommands = [
+  join(projectRoot, '.venv', venvBinDir, pythonExe),
+  'python',
+  'python3',
+].filter(
   (command, index, commands) =>
     (index === 0 ? existsSync(command) : true) && commands.indexOf(command) === index,
 );
@@ -210,7 +218,7 @@ function runSubset() {
   ];
 
   const commands = [
-    { command: join(projectRoot, '.venv', 'bin', 'pyftsubset'), args },
+    { command: join(projectRoot, '.venv', venvBinDir, pyftsubsetExe), args },
     ...pythonCommands.map((command) => ({ command, args: ['-m', 'fontTools.subset', ...args] })),
   ];
 
