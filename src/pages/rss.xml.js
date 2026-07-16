@@ -16,9 +16,11 @@ export async function GET(context) {
       description: post.data.description,
       pubDate: post.data.date,
       categories: [
-        ...(post.data.categories ?? []),
-        ...(post.data.tags ?? []),
-        ...(post.data.series ?? []),
+        ...new Set([
+          ...(post.data.categories ?? []),
+          ...(post.data.tags ?? []),
+          ...(post.data.series ?? []),
+        ]),
       ],
       link: `/blog/${post.id}/`,
     })),
