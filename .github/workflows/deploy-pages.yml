@@ -47,6 +47,10 @@ jobs:
           input: https://raw.githubusercontent.com/dodolalorc/dodolalorc/main/friendlinks.json
           output: public/friend-circle.json
           max-posts-per-feed: '12'
+          name-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_NAME_FIELD || 'name' }}
+          url-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_URL_FIELD || 'url' }}
+          avatar-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_AVATAR_FIELD || 'avatar' }}
+          rss-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_RSS_FIELD || 'rss' }}
 
       - name: Build site
         env:
