@@ -19,6 +19,18 @@ const subsetFontUrl = getSubsetFontUrl(fontConfig.file);
 const outputFontPath = resolveProjectPath(subsetFontUrl);
 const sourceFontPath = resolveProjectPath(fontConfig.file);
 const subsetFontName = `${fontConfig.zh} UI Subset`;
+const isWindows = process.platform === 'win32';
+const venvBinDir = isWindows ? 'Scripts' : 'bin';
+const pythonExe = isWindows ? 'python.exe' : 'python';
+const pyftsubsetExe = isWindows ? 'pyftsubset.exe' : 'pyftsubset';
+const pythonCommands = [
+  join(projectRoot, '.venv', venvBinDir, pythonExe),
+  'python',
+  'python3',
+].filter(
+  (command, index, commands) =>
+    (index === 0 ? existsSync(command) : true) && commands.indexOf(command) === index,
+);
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
 const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
@@ -206,8 +218,8 @@ function runSubset() {
   ];
 
   const commands = [
-    { command: 'pyftsubset', args },
-    { command: 'python', args: ['-m', 'fontTools.subset', ...args] },
+    { command: join(projectRoot, '.venv', venvBinDir, pyftsubsetExe), args },
+    ...pythonCommands.map((command) => ({ command, args: ['-m', 'fontTools.subset', ...args] })),
   ];
 
   for (const { command, args: commandArgs } of commands) {
@@ -220,7 +232,7 @@ function runSubset() {
   }
 
   throw new Error(
-    'Unable to run fonttools. Install it in a virtual environment with `python -m venv .venv && .venv/bin/python -m pip install fonttools brotli`, then add `.venv/bin` to PATH or make `pyftsubset` available on PATH.',
+    'Unable to run fonttools. Install it in the project virtual environment with `python3 -m venv .venv && .venv/bin/python -m pip install fonttools brotli`.',
   );
 }
 
@@ -246,21 +258,17 @@ for record in name_table.names:
 
 font.save(path)
 `;
-  let result = spawnSync('python3', ['-c', script, outputFontPath, subsetFontName], {
-    stdio: 'inherit',
-  });
-
-  if (result.error || result.status !== 0) {
-    result = spawnSync('python', ['-c', script, outputFontPath, subsetFontName], {
+  let result;
+  for (const command of pythonCommands) {
+    result = spawnSync(command, ['-c', script, outputFontPath, subsetFontName], {
       stdio: 'inherit',
     });
+    if (result.status === 0) return;
   }
 
-  if (result.error || result.status !== 0) {
-    throw new Error(
-      `Generated subset font, but failed to sync its internal name to ${subsetFontName}. Ensure Python 3 and fonttools are installed. Error: ${result.error?.message ?? `status ${result.status}`}`,
-    );
-  }
+  throw new Error(
+    `Generated subset font, but failed to sync its internal name to ${subsetFontName}. Ensure Python 3 and fonttools are installed. Error: ${result?.error?.message ?? `status ${result?.status}`}`,
+  );
 }
 
 const chars = new Set<string>();
