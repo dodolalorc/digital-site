@@ -3,21 +3,21 @@
   "reviewLanguage": "zh-CN",
   "model": "deepseek-v4-flash",
   "baseUrl": "https://api.deepseek.com",
-  "temperature": 0.1,
+  "temperature": 0,
   "maxOutputTokens": 1800,
   "requestTimeoutMs": 90000,
   "maxRetries": 3,
-  "minSeverity": "low",
-  "minConfidence": 0.5,
-  "maxComments": 12,
-  "maxCommentsPerFile": 6,
-  "maxHunks": 60,
+  "minSeverity": "medium",
+  "minConfidence": 0.75,
+  "maxComments": 8,
+  "maxCommentsPerFile": 3,
+  "maxHunks": 50,
   "maxHunkLines": 140,
   "hunkContextLines": 4,
   "maxHunkChars": 9000,
   "maxPromptCharsPerRequest": 26000,
   "maxDiffCharsTotal": 90000,
-  "postNoIssuesComment": true,
+  "postNoIssuesComment": false,
   "includeSuggestionText": true,
   "ignorePatterns": [
     "**/node_modules/**",
@@ -44,6 +44,7 @@
     "API misuse",
     "high-impact performance problems",
     "missing validation for user-controlled input",
+    "cross-platform compatibility for local tooling and CI",
     "Astro lifecycle issues, especially duplicate event listeners after astro:page-load or view transitions",
     "DOM event listener cleanup and repeated initialization bugs",
     "client-side memory leaks caused by repeated page navigation"
@@ -53,6 +54,7 @@
     "subjective style preferences",
     "renaming suggestions unless there is a real bug",
     "comments that only say code is good",
-    "issues not visible from this diff"
+    "issues not visible from this diff",
+    "possible issues without a concrete failure path in the changed code"
   ]
 }
