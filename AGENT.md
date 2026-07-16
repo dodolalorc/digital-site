@@ -3,6 +3,12 @@
 This repository is preparing the Navfolio v1 refactor. Future AI coding work
 should use `.agents/` as the coordination directory.
 
+When this repository is opened from the Navfolio multi-repository workspace,
+also read `../AGENT.md` and `../.agents/README.md`. They define the dependency,
+documentation-submodule, delivery, and PR-review rules that apply across the
+official plugin and page repositories. These local instructions add the v1
+refactor-specific constraints below.
+
 ## Start Here
 
 1. Read `.agents/README.md`.
