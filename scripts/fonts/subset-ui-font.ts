@@ -225,7 +225,6 @@ function runSubset() {
 
   throw new Error(
     'Unable to run fonttools. Install it in the project virtual environment with `python3 -m venv .venv && .venv/bin/python -m pip install fonttools brotli`.',
-    'Unable to run fonttools. Install it in the project virtual environment with `python3 -m venv .venv && .venv/bin/python -m pip install fonttools brotli`.',
   );
 }
 
@@ -254,18 +253,11 @@ font.save(path)
   let result;
   for (const command of pythonCommands) {
     result = spawnSync(command, ['-c', script, outputFontPath, subsetFontName], {
-  let result;
-  for (const command of pythonCommands) {
-    result = spawnSync(command, ['-c', script, outputFontPath, subsetFontName], {
       stdio: 'inherit',
     });
     if (result.status === 0) return;
-    if (result.status === 0) return;
   }
 
-  throw new Error(
-    `Generated subset font, but failed to sync its internal name to ${subsetFontName}. Ensure Python 3 and fonttools are installed. Error: ${result?.error?.message ?? `status ${result?.status}`}`,
-  );
   throw new Error(
     `Generated subset font, but failed to sync its internal name to ${subsetFontName}. Ensure Python 3 and fonttools are installed. Error: ${result?.error?.message ?? `status ${result?.status}`}`,
   );
