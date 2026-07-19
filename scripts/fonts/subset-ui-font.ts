@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join } from 'node:path';
+import { dirname, extname, isAbsolute, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parse } from 'smol-toml';
 import navfolioConfig from '../../navfolio.config';
-import { isPageModuleEnabled } from '../../src/plugins/config';
+import { getResolvedPageModule, isPageModuleEnabled } from '../../src/plugins/config';
 
 type FontConfig = {
   en: string;
@@ -34,7 +35,10 @@ const pythonCommands = [
 const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 'content';
 const contentRoot = contentSource === 'docs' ? 'src/docs' : 'src/content';
 const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
-const vibeModuleEnabled = isPageModuleEnabled(navfolioConfig, 'vibe');
+const resolvedVibeModule = getResolvedPageModule(navfolioConfig, 'vibe');
+const vibeModuleEnabled = Boolean(resolvedVibeModule);
+const vibeRouteEntrypoint = resolvedVibeModule?.routes?.[0]?.entrypoint;
+const vibeRouteSourceFile = vibeRouteEntrypoint ? fileURLToPath(vibeRouteEntrypoint) : undefined;
 
 const sourceDirs = [
   'src/pages',
@@ -48,7 +52,7 @@ const sourceFiles = [
   ...(projectsModuleEnabled
     ? ['src/modules/routes/projects-index.astro', 'src/modules/routes/project-detail.astro']
     : []),
-  ...(vibeModuleEnabled ? ['node_modules/@navfolio/page-vibe/routes/vibe.astro'] : []),
+  ...(vibeRouteSourceFile ? [vibeRouteSourceFile] : []),
 ];
 const contentFrontmatterDirs = [
   `${contentRoot}/blog`,
@@ -280,7 +284,7 @@ for (const dir of sourceDirs) {
 }
 
 for (const file of sourceFiles) {
-  const path = join(projectRoot, file);
+  const path = isAbsolute(file) ? file : join(projectRoot, file);
   if (existsSync(path)) collectCjk(chars, readFileSync(path, 'utf8'));
 }
 

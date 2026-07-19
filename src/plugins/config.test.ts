@@ -84,7 +84,7 @@ describe('navfolio plugin config', () => {
 
     expect(getPageModuleRoute(config, 'projects')).toBe('/work');
     expect(getPageModuleRoute(config, 'vibe')).toBe('/space');
-    expect(getResolvedPageModules(config)[1].routes?.[0].entrypoint.pathname).toContain(
+    expect(getResolvedPageModules(config)[1].routes?.[0]?.entrypoint?.pathname).toContain(
       '/page-vibe/routes/vibe.astro',
     );
   });
