@@ -48,10 +48,10 @@ jobs:
           input: ${{ vars.NAVFOLIO_FRIEND_LINKS_SRC }}
           output: public/friend-circle.json
           max-posts-per-feed: '12'
-          name-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_NAME_FIELD || 'name' }}
-          url-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_URL_FIELD || 'url' }}
-          avatar-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_AVATAR_FIELD || 'avatar' }}
-          rss-field: ${{ vars.NAVFOLIO_FRIEND_LINKS_RSS_FIELD || 'rss' }}
+          name-field: name
+          url-field: url
+          avatar-field: avatar
+          rss-field: rss
 
       - name: Build site
         env:
