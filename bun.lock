@@ -12,6 +12,7 @@
         "@expressive-code/plugin-line-numbers": "^0.44.0",
         "@fontsource/maple-mono": "^5.2.6",
         "@navfolio/mdx-components": "github:navfolio/mdx-components#df1852c",
+        "@navfolio/page-vibe": "github:navfolio/page-vibe#8a3ad87",
         "@navfolio/pages": "github:navfolio/pages",
         "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
         "@tailwindcss/vite": "^4.3.2",
@@ -284,9 +285,9 @@
 
     "@navfolio/page-projects": ["@navfolio/page-projects@github:navfolio/page-projects#0ad9922", {}, "navfolio-page-projects-0ad9922", "sha512-8snIFwpGh/RTXsoAut03rSjEhB4BlZ1GzIcsenAE6zk9qJkynhv6aL1viiAtOTUoJ9E1PZ0smaMFRIaqeJfqwA=="],
 
-    "@navfolio/page-vibe": ["@navfolio/page-vibe@github:navfolio/page-vibe#c84ab71", {}, "navfolio-page-vibe-c84ab71", "sha512-JBkDWQequ1beuyvG7016URJB4b/463ursgHAtDP9Pa5oyqkG4YT7d/48PB6XVkcR/KscbT9rScWeygRvFyJ7Rw=="],
+    "@navfolio/page-vibe": ["@navfolio/page-vibe@github:navfolio/page-vibe#8a3ad87", { "peerDependencies": { "astro": ">=7.0.0" } }, "navfolio-page-vibe-8a3ad87", "sha512-4gWsnelF4aP482DWPV7a/8LxU/gArcRfFbsOi4JGrLwzPy34853QpVZAy+hBhuQZktGxiaUzXURRv8ep3MJKDQ=="],
 
-    "@navfolio/pages": ["@navfolio/pages@github:navfolio/pages#6481fcf", { "dependencies": { "@navfolio/page-projects": "github:navfolio/page-projects", "@navfolio/page-vibe": "github:navfolio/page-vibe" } }, "navfolio-pages-6481fcf", "sha512-olacw8FbvPgdzloO+uAFQPGug98VYFY0y3lT0zAlr44JnVfs3iT4sRS5/O0lx5FKYiNS5tnIwuGYeVcAXfkHWQ=="],
+    "@navfolio/pages": ["@navfolio/pages@github:navfolio/pages#d6b7cfd", { "dependencies": { "@navfolio/page-projects": "github:navfolio/page-projects" } }, "navfolio-pages-d6b7cfd", "sha512-phmmgY5OsBVR/YcfRqlbOzBrw2/3FIxZiB3ng8ebfb1z/b7lK79PsSpGqG9OVHFfOcSgXco6sv1urNRh9WZzHw=="],
 
     "@navfolio/plugin-callout": ["@navfolio/plugin-callout@github:navfolio/plugin-callout#9d6ecca", { "peerDependencies": { "astro": ">=7.0.0" } }, "navfolio-plugin-callout-9d6ecca", "sha512-stWzBXSUhK2mFFH+f/P1GcZ62Sp5JBUHpPKr5wbPzzmK0HMiVqTFhqZQtffSk94oXs4DAqJICRcmBz2Al+LQRg=="],
 

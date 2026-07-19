@@ -48,7 +48,7 @@ const sourceFiles = [
   ...(projectsModuleEnabled
     ? ['src/modules/routes/projects-index.astro', 'src/modules/routes/project-detail.astro']
     : []),
-  ...(vibeModuleEnabled ? ['src/modules/routes/vibe.astro'] : []),
+  ...(vibeModuleEnabled ? ['node_modules/@navfolio/page-vibe/routes/vibe.astro'] : []),
 ];
 const contentFrontmatterDirs = [
   `${contentRoot}/blog`,
