@@ -1,6 +1,5 @@
 {
   "buildCommand": "PATH=.venv/bin:$PATH bun run docs:build",
-  "ignoreCommand": "[ \"$VERCEL_GIT_COMMIT_REF\" = \"v1\" ] && exit 1 || exit 0",
   "installCommand": "python -m venv .venv && .venv/bin/python -m pip install fonttools brotli && bun install --frozen-lockfile && git submodule update --init --recursive --remote",
   "outputDirectory": "dist"
 }
