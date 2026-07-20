@@ -12,13 +12,27 @@ can be versioned, reviewed, and maintained independently.
 
 ## Current Known Repositories
 
-- `navfolio/docs`: documentation repository. This already exists and is used by
-  the current project as the documentation source.
+- `navfolio/astro-navfolio-docs`: documentation repository mounted at `src/docs`
+  and used by docs-mode builds.
+- `navfolio/pages`: page-module protocol, resolver, plugin marker, and default
+  Projects export. It does not install or re-export Vibe.
+- `navfolio/page-projects`: Projects descriptor and scaffold metadata. Its
+  current UI remains in the main host.
+- `navfolio/page-vibe`: optional Vibe module. It owns its injected Astro route,
+  page UI, browser interactions, and scaffold metadata; the main host supplies
+  shared theme components through `virtual:navfolio/page-runtime`.
+- `navfolio/page-template`: reference package for third-party page modules that
+  ship their own route entrypoints.
+- `navfolio/plugin-markdown`: Navfolio Markdown preset and pipeline composition.
+- `navfolio/plugin-callout`: focused Obsidian-style callout implementation used
+  by the Markdown preset.
 - `navfolio/mdx-components`: official Astro/MDX content component library. It
   now owns author-imported components such as friend links, friend circles,
   carousels, long images, Mermaid initialization, and zoomable images.
 - `navfolio/friend-circle-sync`: framework-independent CLI and composite
   GitHub Action for synchronizing friend RSS/Atom feeds into static JSON.
+- `navfolio/weread-sync`: privacy-aware WeChat Reading JSON exporter and
+  composite GitHub Action; it is not yet consumed by the main starter.
 
 ## Target Official Package Repositories
 

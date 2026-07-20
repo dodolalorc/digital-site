@@ -1,6 +1,7 @@
 // @ts-check
 
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
@@ -73,5 +74,12 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        'virtual:navfolio/page-runtime': fileURLToPath(
+          new URL('./src/modules/page-runtime.ts', import.meta.url),
+        ),
+      },
+    },
   },
 });

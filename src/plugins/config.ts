@@ -50,14 +50,6 @@ function createPageModuleRoutesIntegration(
             continue;
           }
 
-          if (module.id === 'vibe') {
-            injectRoute({
-              pattern: module.route,
-              entrypoint: new URL('../modules/routes/vibe.astro', import.meta.url),
-              prerender: true,
-            });
-          }
-
           if (module.id === 'projects') {
             injectRoute({
               pattern: module.route,

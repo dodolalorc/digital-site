@@ -32,6 +32,7 @@
     "@expressive-code/plugin-line-numbers": "^0.44.0",
     "@fontsource/maple-mono": "^5.2.6",
     "@navfolio/mdx-components": "github:navfolio/mdx-components#df1852c",
+    "@navfolio/page-vibe": "github:navfolio/page-vibe#8a3ad87",
     "@navfolio/pages": "github:navfolio/pages",
     "@navfolio/plugin-markdown": "github:navfolio/plugin-markdown",
     "@tailwindcss/vite": "^4.3.2",
