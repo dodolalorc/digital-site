@@ -287,7 +287,7 @@
 
     "@navfolio/page-media": ["@navfolio/page-media@github:navfolio/page-media#757a404", { "dependencies": { "@navfolio/mdx-components": "github:navfolio/mdx-components" }, "peerDependencies": { "@navfolio/core": ">=0.1.0", "astro": ">=7.0.0" }, "optionalPeers": ["@navfolio/core"] }, "navfolio-page-media-757a404", "sha512-iuTI1qC23q7f0Ofk0IU2U4ncHk2m6o6ZXqpd7L5s7B/zyLYyHHU80PbfAp4TEQDr2WLVDkZsJaEHkoA8+LQi7w=="],
 
-    "@navfolio/page-projects": ["@navfolio/page-projects@github:navfolio/page-projects#a51bef6", { "peerDependencies": { "@navfolio/core": ">=0.1.0" }, "optionalPeers": ["@navfolio/core"] }, "navfolio-page-projects-a51bef6", "sha512-iQBoRMd6TOM07Xzvn+jlSx316cmG1Bm4BNRE7NafD5E42EVmatzzetPtJAKexWu2ON8bUkFVn92jp3Kdx4CYpQ=="],
+    "@navfolio/page-projects": ["@navfolio/page-projects@github:navfolio/page-projects#7b4f17d", { "peerDependencies": { "@navfolio/core": ">=0.1.0" }, "optionalPeers": ["@navfolio/core"] }, "navfolio-page-projects-7b4f17d", "sha512-rEj/9EEYW85B8HhQ/oIgt0Qwp//n7aj9hBkUVgriQRIsOCANO1p8VpbfO9EgDHvjWUsawrsNaInsgKpBRaYZoA=="],
 
     "@navfolio/page-vibe": ["@navfolio/page-vibe@github:navfolio/page-vibe#fd22f9c", { "peerDependencies": { "@navfolio/core": ">=0.1.0", "astro": ">=7.0.0" }, "optionalPeers": ["@navfolio/core"] }, "navfolio-page-vibe-fd22f9c", "sha512-mz9t+8U5JYN200HrwlR3jOANUpOgw9U445UAx20YmZvESrKLi+SAacpUleMFOJqNd2CrnJGiNyMnavEOT+ui7w=="],
 

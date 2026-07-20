@@ -195,6 +195,10 @@ draft: true
 sticky: false
 heroImage: ""
 showHeroImage: false
+icon: github
+iconColor: ""
+authors: []
+links: []
 tags: []
 categories: []
 series: []

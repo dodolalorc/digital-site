@@ -464,7 +464,55 @@ const about = defineCollection({
 
 const projects = defineCollection({
   loader: glob({ base: `${contentBase}/projects`, pattern: '**/*.{md,mdx}' }),
-  schema: articleSchema,
+  schema: (context) =>
+    articleSchema(context).extend({
+      icon: z
+        .enum([
+          'github',
+          'box',
+          'code-2',
+          'database',
+          'file-code-2',
+          'globe-2',
+          'layers-3',
+          'palette',
+          'rocket',
+          'sparkles',
+          'terminal',
+          'wand-sparkles',
+        ])
+        .optional()
+        .default('github'),
+      iconColor: z
+        .string()
+        .regex(
+          /^(#[0-9a-f]{3,8}|var\(--[a-z0-9-]+\)|[a-z]+)$/i,
+          'Use a CSS color, hex color, or CSS variable.',
+        )
+        .optional(),
+      authors: z
+        .array(
+          z.object({
+            name: z.string(),
+            url: z.url().optional(),
+          }),
+        )
+        .optional()
+        .default([]),
+      links: z
+        .array(
+          z.object({
+            label: z.string(),
+            href: z.url(),
+            kind: z
+              .enum(['github', 'website', 'platform', 'docs', 'demo'])
+              .optional()
+              .default('website'),
+          }),
+        )
+        .optional()
+        .default([]),
+    }),
 });
 
 const vibe = defineCollection({
