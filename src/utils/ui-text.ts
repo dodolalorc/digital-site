@@ -1,4 +1,7 @@
 import type { SiteConfig } from '../data/site';
+import { createI18n, normalizeLocale, type I18nMessages } from '@navfolio/core';
+import { getResolvedPageModuleI18n } from '@navfolio/pages';
+import navfolioConfig from '../../navfolio.config';
 import en from '../i18n/en.json';
 import zhCN from '../i18n/zh-CN.json';
 import zhTW from '../i18n/zh-TW.json';
@@ -226,35 +229,7 @@ const uiText = Object.fromEntries(
 ) as Record<UiLanguage, UiText>;
 
 export function normalizeUiLanguage(value: string | undefined): UiLanguage {
-  const language = value?.trim().toLowerCase();
-
-  if (!language) return defaultUiLanguage;
-
-  const aliases: Record<string, UiLanguage> = {
-    en: 'en',
-    'en-us': 'en',
-    en_us: 'en',
-    zh: 'zh-CN',
-    'zh-cn': 'zh-CN',
-    'zh-sg': 'zh-CN',
-    'zh-my': 'zh-CN',
-    'zh-hans': 'zh-CN',
-    zh_cn: 'zh-CN',
-    zh_sg: 'zh-CN',
-    zh_my: 'zh-CN',
-    zh_hans: 'zh-CN',
-    cn: 'zh-CN',
-    'zh-tw': 'zh-TW',
-    'zh-hant': 'zh-TW',
-    'zh-hk': 'zh-TW',
-    'zh-mo': 'zh-TW',
-    zh_tw: 'zh-TW',
-    zh_hant: 'zh-TW',
-    zh_hk: 'zh-TW',
-    zh_mo: 'zh-TW',
-  };
-
-  return aliases[language] ?? defaultUiLanguage;
+  return normalizeLocale(value, defaultUiLanguage) as UiLanguage;
 }
 
 export function getUiLanguage(config: SiteConfig): UiLanguage {
@@ -263,6 +238,16 @@ export function getUiLanguage(config: SiteConfig): UiLanguage {
 
 export function getUiText(config: SiteConfig): UiText {
   return uiText[getUiLanguage(config)];
+}
+
+export function getI18n(config: SiteConfig) {
+  return createI18n({
+    locale: config.theme.lang,
+    catalogs: [
+      rawUiText as unknown as Record<string, I18nMessages>,
+      ...getResolvedPageModuleI18n(navfolioConfig).map((contribution) => contribution.messages),
+    ],
+  });
 }
 
 export function getHtmlLang(config: SiteConfig): UiText['locale'] {

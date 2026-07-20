@@ -1,5 +1,6 @@
 import {
   getConfiguredPageModules,
+  getResolvedPageModuleI18n,
   getPageModuleRoute,
   getResolvedPageModule,
   getResolvedPageModuleScaffolds,
@@ -12,6 +13,7 @@ import type { NavfolioAstroPluginConfig, NavfolioConfig, NavfolioPluginContext }
 
 export {
   getConfiguredPageModules,
+  getResolvedPageModuleI18n,
   getPageModuleRoute,
   getResolvedPageModule,
   getResolvedPageModuleScaffolds,

@@ -58,6 +58,7 @@ const contentSource = process.env.NAVFOLIO_CONTENT_SOURCE === 'docs' ? 'docs' : 
 const contentBase = contentSource === 'docs' ? './src/docs' : './src/content';
 const projectsModuleEnabled = isPageModuleEnabled(navfolioConfig, 'projects');
 const vibeModuleEnabled = isPageModuleEnabled(navfolioConfig, 'vibe');
+const mediaModuleEnabled = isPageModuleEnabled(navfolioConfig, 'media');
 
 const commentProviderSchema = z.enum(['giscus', 'utterances', 'waline', 'none']);
 const mathRendererSchema = z.enum(['katex', 'mathjax']);
@@ -219,6 +220,11 @@ const defaultPagesConfig = {
     note: 'Not formal enough for blog posts, but still part of the story.',
     showTrail: true,
   },
+  media: {
+    title: 'Media',
+    subtitle: 'Books, films, and music worth returning to.',
+    note: 'A personal shelf for what I have read, watched, and heard.',
+  },
 } as const;
 
 const blogPageSchema = z.object({
@@ -270,6 +276,12 @@ const vibePageSchema = z.object({
   subtitle: z.string().optional().default(defaultPagesConfig.vibe.subtitle),
   note: z.string().optional().default(defaultPagesConfig.vibe.note),
   showTrail: z.boolean().optional().default(defaultPagesConfig.vibe.showTrail),
+});
+
+const mediaPageSchema = z.object({
+  title: z.string().optional().default(defaultPagesConfig.media.title),
+  subtitle: z.string().optional().default(defaultPagesConfig.media.subtitle),
+  note: z.string().optional().default(defaultPagesConfig.media.note),
 });
 
 const siteConfig = defineCollection({
@@ -396,6 +408,7 @@ const siteConfig = defineCollection({
         blog: blogPageSchema.optional().default(defaultPagesConfig.blog),
         projects: projectsPageSchema.optional().default(defaultPagesConfig.projects),
         vibe: vibePageSchema.optional().default(defaultPagesConfig.vibe),
+        media: mediaPageSchema.optional().default(defaultPagesConfig.media),
       })
       .optional()
       .default(defaultPagesConfig),
@@ -472,10 +485,29 @@ const vibe = defineCollection({
     }),
 });
 
+const media = defineCollection({
+  loader: glob({ base: `${contentBase}/media`, pattern: '**/*.{md,mdx}' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      creator: z.string(),
+      type: z.enum(['book', 'film', 'series', 'album', 'podcast']),
+      status: z.enum(['completed', 'in-progress', 'planned', 'abandoned']).default('completed'),
+      completedAt: z.coerce.date().optional(),
+      draft: z.boolean().optional().default(false),
+      cover: contentImageSchema({ image }).optional(),
+      rating: z.number().min(1).max(5).optional(),
+      review: z.boolean().optional().default(false),
+      tags: z.array(z.string()).optional().default([]),
+      externalUrl: z.url().optional(),
+    }),
+});
+
 export const collections = {
   about,
   blog,
   siteConfig,
   ...(projectsModuleEnabled ? { projects } : {}),
   ...(vibeModuleEnabled ? { vibe } : {}),
+  ...(mediaModuleEnabled ? { media } : {}),
 };

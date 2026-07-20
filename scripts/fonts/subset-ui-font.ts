@@ -4,7 +4,11 @@ import { dirname, extname, isAbsolute, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'smol-toml';
 import navfolioConfig from '../../navfolio.config';
-import { getResolvedPageModule, isPageModuleEnabled } from '../../src/plugins/config';
+import {
+  getResolvedPageModule,
+  getResolvedPageModuleI18n,
+  isPageModuleEnabled,
+} from '../../src/plugins/config';
 
 type FontConfig = {
   en: string;
@@ -39,6 +43,10 @@ const resolvedVibeModule = getResolvedPageModule(navfolioConfig, 'vibe');
 const vibeModuleEnabled = Boolean(resolvedVibeModule);
 const vibeRouteEntrypoint = resolvedVibeModule?.routes?.[0]?.entrypoint;
 const vibeRouteSourceFile = vibeRouteEntrypoint ? fileURLToPath(vibeRouteEntrypoint) : undefined;
+const resolvedMediaModule = getResolvedPageModule(navfolioConfig, 'media');
+const mediaModuleEnabled = Boolean(resolvedMediaModule);
+const mediaRouteEntrypoint = resolvedMediaModule?.routes?.[0]?.entrypoint;
+const mediaRouteSourceFile = mediaRouteEntrypoint ? fileURLToPath(mediaRouteEntrypoint) : undefined;
 
 const sourceDirs = [
   'src/pages',
@@ -53,13 +61,18 @@ const sourceFiles = [
     ? ['src/modules/routes/projects-index.astro', 'src/modules/routes/project-detail.astro']
     : []),
   ...(vibeRouteSourceFile ? [vibeRouteSourceFile] : []),
+  ...(mediaRouteSourceFile ? [mediaRouteSourceFile] : []),
 ];
 const contentFrontmatterDirs = [
   `${contentRoot}/blog`,
   ...(projectsModuleEnabled ? [`${contentRoot}/projects`] : []),
   ...(vibeModuleEnabled ? [`${contentRoot}/vibe`] : []),
+  ...(mediaModuleEnabled ? [`${contentRoot}/media`] : []),
 ];
-const lightweightContentDirs = [...(vibeModuleEnabled ? [`${contentRoot}/vibe`] : [])];
+const lightweightContentDirs = [
+  ...(vibeModuleEnabled ? [`${contentRoot}/vibe`] : []),
+  ...(mediaModuleEnabled ? [`${contentRoot}/media`] : []),
+];
 const lightweightContentFiles = [
   `${contentRoot}/about.mdx`,
   `${contentRoot}/about.md`,
@@ -77,6 +90,7 @@ const frontmatterKeys = new Set([
   'tags',
   'categories',
   'series',
+  'creator',
 ]);
 const cjkPattern =
   /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\u3000-\u303f\uff00-\uffef]/u;
@@ -276,6 +290,10 @@ font.save(path)
 }
 
 const chars = new Set<string>();
+
+for (const contribution of getResolvedPageModuleI18n(navfolioConfig)) {
+  collectCjk(chars, JSON.stringify(contribution.messages));
+}
 
 for (const dir of sourceDirs) {
   for (const file of walkFiles(join(projectRoot, dir), sourceExtensions)) {

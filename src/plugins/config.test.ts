@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { vibeModule } from '@navfolio/page-vibe';
-import { projectsModule } from '@navfolio/pages';
+import { mediaModule, projectsModule, vibeModule } from '@navfolio/pages';
 
 import {
   defineNavfolioConfig,
@@ -60,6 +59,7 @@ describe('navfolio plugin config', () => {
     expect(getPageModuleRoute(config, 'projects')).toBe('/projects');
     expect(getPageModuleRoute(config, 'vibe')).toBe('/vibe');
     expect(isPageModuleEnabled(config, 'vibe')).toBe(false);
+    expect(isPageModuleEnabled(config, 'media')).toBe(false);
   });
 
   test('normalizes page module routes', () => {
@@ -69,23 +69,32 @@ describe('navfolio plugin config', () => {
 
   test('supports disabled page modules', () => {
     const config = defineNavfolioConfig({
-      modules: [projectsModule(), vibeModule({ enabled: false })],
+      modules: [projectsModule(), vibeModule({ enabled: false }), mediaModule({ enabled: false })],
     });
 
     expect(isPageModuleEnabled(config, 'projects')).toBe(true);
     expect(isPageModuleEnabled(config, 'vibe')).toBe(false);
+    expect(isPageModuleEnabled(config, 'media')).toBe(false);
     expect(getResolvedPageModules(config).map((module) => module.id)).toEqual(['projects']);
   });
 
   test('supports custom page module routes', () => {
     const config = defineNavfolioConfig({
-      modules: [projectsModule({ route: '/work' }), vibeModule({ route: '/space' })],
+      modules: [
+        projectsModule({ route: '/work' }),
+        vibeModule({ route: '/space' }),
+        mediaModule({ route: '/shelf' }),
+      ],
     });
 
     expect(getPageModuleRoute(config, 'projects')).toBe('/work');
     expect(getPageModuleRoute(config, 'vibe')).toBe('/space');
+    expect(getPageModuleRoute(config, 'media')).toBe('/shelf');
     expect(getResolvedPageModules(config)[1].routes?.[0]?.entrypoint?.pathname).toContain(
       '/page-vibe/routes/vibe.astro',
+    );
+    expect(getResolvedPageModules(config)[2].routes?.[0]?.entrypoint?.pathname).toContain(
+      '/page-media/routes/media.astro',
     );
   });
 
@@ -99,7 +108,7 @@ describe('navfolio plugin config', () => {
 
   test('resolves scaffold metadata from enabled page modules', () => {
     const config = defineNavfolioConfig({
-      modules: [projectsModule(), vibeModule({ enabled: false })],
+      modules: [projectsModule(), vibeModule({ enabled: false }), mediaModule({ enabled: false })],
     });
 
     expect(getResolvedPageModuleScaffolds(config)).toEqual([
