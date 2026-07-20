@@ -1,17 +1,34 @@
 ---
 import { getCollection, render } from 'astro:content';
+import {
+  Box,
+  Code2,
+  Database,
+  ExternalLink,
+  FileCode2,
+  Github,
+  Globe2,
+  Layers3,
+  Palette,
+  Rocket,
+  Sparkles,
+  Terminal,
+  WandSparkles,
+} from 'lucide-astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import BlogArticle from '../../layouts/BlogArticle.astro';
 import { getSiteConfig } from '../../data/site';
 import navfolioConfig from '../../../navfolio.config';
 import { getPageModuleRoute } from '../../plugins/config';
-import { sortByDateDesc } from '../../utils/content-dates';
+import { sortBlogPostsForArchive } from '../../utils/content-dates';
+import { getI18n } from '../../utils/ui-text';
 
-const { pages } = await getSiteConfig();
+const siteConfig = await getSiteConfig();
+const { pages } = siteConfig;
 const pageMeta = pages.projects;
 const projectEntries = await getCollection('projects');
 const projectIndex = projectEntries.find((entry) => entry.id === 'index');
-const projects = sortByDateDesc(
+const projects = sortBlogPostsForArchive(
   projectEntries.filter((entry) => entry.id !== 'index' && !entry.data.draft),
 );
 
@@ -31,6 +48,22 @@ const projectIndexPage = {
 
 const relatedProjects = projects;
 const projectsRoute = getPageModuleRoute(navfolioConfig, 'projects');
+const i18n = getI18n(siteConfig);
+
+const projectIcons = {
+  github: Github,
+  box: Box,
+  'code-2': Code2,
+  database: Database,
+  'file-code-2': FileCode2,
+  'globe-2': Globe2,
+  'layers-3': Layers3,
+  palette: Palette,
+  rocket: Rocket,
+  sparkles: Sparkles,
+  terminal: Terminal,
+  'wand-sparkles': WandSparkles,
+};
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -56,32 +89,73 @@ function withBase(href: string) {
 
   {
     relatedProjects.length > 0 ? (
-      <section class="project-grid" aria-label="Projects">
-        {relatedProjects.map((project) => (
-          <a class="project-card" href={withBase(`${projectsRoute}/${project.id}/`)}>
-            <span class="project-meta">
-              <FormattedDate date={project.data.date} />
-            </span>
-            <h2>{project.data.title}</h2>
-            <p>{project.data.description}</p>
-            {project.data.tags.length > 0 && (
-              <span class="project-tags" aria-label="Project tags">
-                {project.data.tags.slice(0, 3).map((tag) => (
-                  <small>{tag}</small>
-                ))}
-              </span>
-            )}
-          </a>
-        ))}
+      <section class="project-grid" aria-label={i18n.t('projects.listLabel')}>
+        {relatedProjects.map((project) => {
+          const ProjectIcon = projectIcons[project.data.icon] ?? Github;
+          const projectHref = withBase(`${projectsRoute}/${project.id}/`);
+
+          return (
+            <article
+              class="project-card"
+              style={
+                project.data.iconColor
+                  ? `--project-icon-color: ${project.data.iconColor}`
+                  : undefined
+              }
+            >
+              <div class="project-card-heading">
+                <ProjectIcon class="project-icon" size={22} strokeWidth={1.55} aria-hidden="true" />
+                <h2>
+                  <a href={projectHref}>{project.data.title}</a>
+                </h2>
+              </div>
+              <p>{project.data.description}</p>
+              <footer class="project-card-footer">
+                <span class="project-meta">
+                  <FormattedDate date={project.data.date} />
+                </span>
+                {project.data.authors.length > 0 && (
+                  <span class="project-authors" aria-label={i18n.t('projects.authorsLabel')}>
+                    {project.data.authors.map((author) =>
+                      author.url ? (
+                        <a href={author.url}>{author.name}</a>
+                      ) : (
+                        <span>{author.name}</span>
+                      ),
+                    )}
+                  </span>
+                )}
+                {project.data.links.length > 0 && (
+                  <span class="project-links" aria-label={i18n.t('projects.linksLabel')}>
+                    {project.data.links.map((link) => (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.kind === 'github' ? (
+                          <Github size={13} strokeWidth={1.8} aria-hidden="true" />
+                        ) : (
+                          <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
+                        )}
+                        {link.label}
+                      </a>
+                    ))}
+                  </span>
+                )}
+                {project.data.tags.length > 0 && (
+                  <span class="project-tags" aria-label={i18n.t('projects.tagsLabel')}>
+                    {project.data.tags.slice(0, 3).map((tag) => (
+                      <small>{tag}</small>
+                    ))}
+                  </span>
+                )}
+              </footer>
+            </article>
+          );
+        })}
       </section>
     ) : (
-      <section class="project-empty" aria-label="Projects empty state">
+      <section class="project-empty" aria-label={i18n.t('projects.emptyLabel')}>
         <span aria-hidden="true">01</span>
-        <h2>Projects are being collected.</h2>
-        <p>
-          The route is ready; draft entries stay private until they are marked publishable in the
-          content collection.
-        </p>
+        <h2>{i18n.t('projects.emptyTitle')}</h2>
+        <p>{i18n.t('projects.emptyNote')}</p>
       </section>
     )
   }
@@ -89,6 +163,8 @@ function withBase(href: string) {
 
 <style>
   .project-meta,
+  .project-authors,
+  .project-links,
   .project-empty span,
   .project-tags small {
     font-family: var(--font-ui-label);
@@ -104,36 +180,36 @@ function withBase(href: string) {
   .project-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: clamp(12px, 2vw, 22px);
     margin-top: 34px;
-  }
-
-  .project-card,
-  .project-empty {
-    border: 1px solid var(--paper-line);
-    border-radius: 8px;
-    background: var(--paper-surface);
-    box-shadow: var(--paper-shadow);
   }
 
   .project-card {
     display: grid;
-    gap: 12px;
-    min-height: 210px;
-    padding: 22px;
+    gap: 14px;
+    min-height: 196px;
+    padding: 16px;
     color: var(--paper-ink);
     font-family: var(--font-ui-label);
-    text-decoration: none;
+    border-radius: 8px;
     transition:
       transform 180ms ease,
-      border-color 180ms ease,
       background 180ms ease;
   }
 
   .project-card:hover {
-    border-color: var(--paper-line-strong);
     background: var(--paper-control-hover);
     transform: translateY(-1px);
+  }
+
+  .project-card-heading {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+  }
+  .project-icon {
+    flex: none;
+    color: var(--project-icon-color, var(--paper-accent));
   }
 
   .project-meta,
@@ -153,23 +229,92 @@ function withBase(href: string) {
     line-height: 1.28;
   }
 
-  .project-card p {
-    max-width: 58ch;
+  .project-card h2 a {
+    color: inherit;
+    display: -webkit-box;
+    overflow: hidden;
+    text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .project-card h2 a:hover {
+    color: var(--paper-accent);
   }
 
-  .project-tags {
+  .project-card p {
+    max-width: 58ch;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .project-card-footer,
+  .project-tags,
+  .project-authors,
+  .project-links {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    align-items: center;
+  }
+
+  .project-card-footer {
+    display: -webkit-box;
     align-self: end;
+    overflow: hidden;
+    gap: 8px 12px;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .project-card-footer > * {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .project-card-footer > * + * {
+    margin-left: 12px;
+  }
+
+  .project-authors,
+  .project-links {
+    color: var(--paper-ink-faint);
+    display: inline-flex;
+    font-size: 0.72rem;
+  }
+
+  .project-authors > * + *::before {
+    content: '·';
+    margin-right: 8px;
+    color: var(--paper-line-strong);
+  }
+  .project-authors a,
+  .project-links a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .project-authors a:hover,
+  .project-links a:hover {
+    color: var(--paper-accent);
+  }
+  .project-links a {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
   }
 
   .project-tags small {
+    max-width: 12ch;
+    overflow: hidden;
     padding: 3px 8px;
     border: 1px solid var(--paper-line);
     border-radius: 999px;
     color: var(--paper-ink-soft);
     font-size: 0.74rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .project-empty {
@@ -178,6 +323,10 @@ function withBase(href: string) {
     max-width: 680px;
     margin-top: 34px;
     padding: 24px;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-surface);
+    box-shadow: var(--paper-shadow);
   }
 
   @media (max-width: 720px) {
