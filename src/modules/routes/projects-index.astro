@@ -231,7 +231,11 @@ function withBase(href: string) {
 
   .project-card h2 a {
     color: inherit;
+    display: -webkit-box;
+    overflow: hidden;
     text-decoration: none;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
   .project-card h2 a:hover {
     color: var(--paper-accent);
@@ -239,6 +243,10 @@ function withBase(href: string) {
 
   .project-card p {
     max-width: 58ch;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   .project-card-footer,
@@ -252,13 +260,28 @@ function withBase(href: string) {
   }
 
   .project-card-footer {
+    display: -webkit-box;
     align-self: end;
+    overflow: hidden;
     gap: 8px 12px;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .project-card-footer > * {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .project-card-footer > * + * {
+    margin-left: 12px;
   }
 
   .project-authors,
   .project-links {
     color: var(--paper-ink-faint);
+    display: inline-flex;
     font-size: 0.72rem;
   }
 
@@ -283,11 +306,15 @@ function withBase(href: string) {
   }
 
   .project-tags small {
+    max-width: 12ch;
+    overflow: hidden;
     padding: 3px 8px;
     border: 1px solid var(--paper-line);
     border-radius: 999px;
     color: var(--paper-ink-soft);
     font-size: 0.74rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .project-empty {
