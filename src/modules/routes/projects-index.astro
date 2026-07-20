@@ -20,7 +20,7 @@ import BlogArticle from '../../layouts/BlogArticle.astro';
 import { getSiteConfig } from '../../data/site';
 import navfolioConfig from '../../../navfolio.config';
 import { getPageModuleRoute } from '../../plugins/config';
-import { sortByDateDesc } from '../../utils/content-dates';
+import { sortBlogPostsForArchive } from '../../utils/content-dates';
 import { getI18n } from '../../utils/ui-text';
 
 const siteConfig = await getSiteConfig();
@@ -28,7 +28,7 @@ const { pages } = siteConfig;
 const pageMeta = pages.projects;
 const projectEntries = await getCollection('projects');
 const projectIndex = projectEntries.find((entry) => entry.id === 'index');
-const projects = sortByDateDesc(
+const projects = sortBlogPostsForArchive(
   projectEntries.filter((entry) => entry.id !== 'index' && !entry.data.draft),
 );
 

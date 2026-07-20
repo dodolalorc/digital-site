@@ -195,10 +195,6 @@ draft: true
 sticky: false
 heroImage: ""
 showHeroImage: false
-icon: github
-iconColor: ""
-authors: []
-links: []
 tags: []
 categories: []
 series: []
@@ -232,8 +228,13 @@ title: "${escapeYamlString(title)}"
 description: ""
 date: "${isoDate}"
 draft: true
+sticky: false
 heroImage: ""
 showHeroImage: false
+icon: github
+iconColor: ""
+authors: []
+links: []
 tags: []
 categories: []
 series: []

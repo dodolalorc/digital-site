@@ -466,6 +466,7 @@ const projects = defineCollection({
   loader: glob({ base: `${contentBase}/projects`, pattern: '**/*.{md,mdx}' }),
   schema: (context) =>
     articleSchema(context).extend({
+      sticky: z.union([z.boolean(), z.number().positive()]).optional().default(false),
       icon: z
         .enum([
           'github',
