@@ -496,6 +496,7 @@ const media = defineCollection({
       completedAt: z.coerce.date().optional(),
       draft: z.boolean().optional().default(false),
       cover: contentImageSchema({ image }).optional(),
+      coverAspect: z.enum(['portrait', 'landscape', 'square', 'wide']).optional(),
       rating: z.number().min(1).max(5).optional(),
       review: z.boolean().optional().default(false),
       tags: z.array(z.string()).optional().default([]),
