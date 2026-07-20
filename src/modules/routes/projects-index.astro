@@ -128,7 +128,7 @@ function withBase(href: string) {
                 {project.data.links.length > 0 && (
                   <span class="project-links" aria-label={i18n.t('projects.linksLabel')}>
                     {project.data.links.map((link) => (
-                      <a href={link.href} target="_blank" rel="noreferrer">
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
                         {link.kind === 'github' ? (
                           <Github size={13} strokeWidth={1.8} aria-hidden="true" />
                         ) : (

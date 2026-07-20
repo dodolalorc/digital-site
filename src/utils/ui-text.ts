@@ -242,7 +242,7 @@ export function getUiText(config: SiteConfig): UiText {
 
 export function getI18n(config: SiteConfig) {
   return createI18n({
-    locale: config.theme.lang,
+    locale: getUiLanguage(config),
     catalogs: [
       rawUiText as unknown as Record<string, I18nMessages>,
       ...getResolvedPageModuleI18n(navfolioConfig).map((contribution) => contribution.messages),
