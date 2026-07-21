@@ -27,8 +27,9 @@ imports the package subpath and the local copy is removed.
    entry points. The host adapters provide configuration, fallback image assets,
    navigation, and optional runtime controls through props and slots.
 3. Blog layouts and presentational blog components. `BlogPost` is migrated as
-   a slot-based shell; the host keeps content data, navigation, image handling,
-   Mermaid, and footer composition.
+   a slot-based shell; `BlogArticle` has moved its reading-page visual rules to
+   the theme. The host keeps content data, navigation, image handling, Mermaid,
+   comments, TOC, and footer composition.
 4. Dashboard cards and widgets.
 
 Content loading, page routes, Markdown pipeline configuration, search, and

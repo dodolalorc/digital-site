@@ -298,7 +298,7 @@
 
     "@navfolio/plugin-markdown": ["@navfolio/plugin-markdown@github:navfolio/plugin-markdown#225ac4e", { "dependencies": { "@navfolio/plugin-callout": "github:navfolio/plugin-callout", "astro-expressive-code": "^0.44.0", "rehype-katex": "^7.0.1", "rehype-mathjax": "^7.1.0", "remark-math": "^6.0.0" }, "peerDependencies": { "astro": ">=7.0.0" } }, "navfolio-plugin-markdown-225ac4e", "sha512-QCt28DHZak0ac+q4bv1f6xcWwEm5w1uPDhab8pEsN26wWOlizfwbHOirZktyayqXub6KhvmVZfJ9ZnhWSiIF/A=="],
 
-    "@navfolio/theme-default": ["@navfolio/theme-default@github:navfolio/theme-default#58deba7", { "dependencies": { "@navfolio/core": "github:navfolio/core", "lucide-astro": "^0.556.0" }, "peerDependencies": { "astro": ">=7.0.0" } }, "navfolio-theme-default-58deba7", "sha512-vNuML4MDjw4A039f39ZHW/xv6OrjUIaIPkMknAh3uwUCmq1qlZUci0IamapXtqdF7KPHGMxG9JjeKeY1gJQDYQ=="],
+    "@navfolio/theme-default": ["@navfolio/theme-default@github:navfolio/theme-default#4d76d89", { "dependencies": { "@navfolio/core": "github:navfolio/core", "lucide-astro": "^0.556.0" }, "peerDependencies": { "astro": ">=7.0.0" } }, "navfolio-theme-default-4d76d89", "sha512-jpUyy93zNj4jKpCDqdCtCWfPdQxCKN6JXUoiS4O3Dn2Ph4OR1DazoKBM5guSDcz2K0hx9w85l8ZCTnjmRynnWg=="],
 
     "@nodable/entities": ["@nodable/entities@2.1.0", "https://registry.npmmirror.com/@nodable/entities/-/entities-2.1.0.tgz", {}, "sha512-nyT7T3nbMyBI/lvr6L5TyWbFJAI9FTgVRakNoBqCD+PmID8DzFrrNdLLtHMwMszOtqZa8PAOV24ZqDnQrhQINA=="],
 
