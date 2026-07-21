@@ -53,6 +53,36 @@ jobs:
         with:
           node-version: '24'
 
+      # Keep the reviewer script on the default branch. The PR tree is parsed
+      # by Tree-sitter only; no contributor-controlled scripts are executed.
+      - name: Checkout pull request source for graph analysis
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: .review-target
+          fetch-depth: 0
+
+      - name: Setup Python for graph analysis
+        if: github.event_name == 'pull_request'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Build graph review context
+        id: graph-context
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        working-directory: .review-target
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          GRAPH_CONTEXT_PATH: ${{ runner.temp }}/code-review-graph.json
+        run: |
+          git fetch --no-tags origin "+refs/heads/${BASE_REF}:refs/remotes/origin/${BASE_REF}" --depth=1
+          python -m pip install --disable-pip-version-check code-review-graph==2.3.6
+          code-review-graph build
+          code-review-graph detect-changes --base "origin/${BASE_REF}" > "${GRAPH_CONTEXT_PATH}"
+
       - name: Verify reviewer files
         run: |
           test -f .github/scripts/deepseek-inline-review.mjs
@@ -65,6 +95,7 @@ jobs:
           DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL }}
           DEEPSEEK_BASE_URL: ${{ vars.DEEPSEEK_BASE_URL }}
           REVIEW_CONFIG_PATH: .github/deepseek-reviewer.json
+          REVIEW_GRAPH_CONTEXT_PATH: ${{ runner.temp }}/code-review-graph.json
           REVIEW_COMMAND: /deepseek review
           DRY_RUN: ${{ vars.DRY_RUN }}
         run: node .github/scripts/deepseek-inline-review.mjs

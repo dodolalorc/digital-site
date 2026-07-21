@@ -8,8 +8,8 @@
   "requestTimeoutMs": 90000,
   "maxRetries": 3,
   "minSeverity": "medium",
-  "minConfidence": 0.7,
-  "maxComments": 8,
+  "minConfidence": 0.62,
+  "maxComments": 10,
   "maxCommentsPerFile": 3,
   "maxHunks": 50,
   "maxHunkLines": 140,
@@ -17,6 +17,7 @@
   "maxHunkChars": 9000,
   "maxPromptCharsPerRequest": 26000,
   "maxDiffCharsTotal": 90000,
+  "maxGraphContextChars": 14000,
   "postNoIssuesComment": true,
   "includeSuggestionText": true,
   "ignorePatterns": [
@@ -51,7 +52,10 @@
     "cross-platform compatibility for local tooling and CI",
     "Astro lifecycle issues, especially duplicate event listeners after astro:page-load or view transitions",
     "DOM event listener cleanup and repeated initialization bugs",
-    "client-side memory leaks caused by repeated page navigation"
+    "client-side memory leaks caused by repeated page navigation",
+    "global CSS selector leakage outside the intended component boundary",
+    "transitive package dependency updates that leave the runtime on an older implementation",
+    "behavioral changes with affected callers or test gaps identified by the local code-review graph"
   ],
   "ignoreAdvice": [
     "pure formatting",
