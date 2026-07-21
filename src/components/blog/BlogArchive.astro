@@ -5,6 +5,7 @@ import BlogPostList from './BlogPostList.astro';
 import { getSiteConfig } from '../../data/site';
 import { getUiText } from '../../utils/ui-text';
 import { getPaginationItems } from '../../utils/pagination';
+import '@navfolio/theme-default/styles/blog-archive.css';
 
 type BlogPost = CollectionEntry<'blog'>;
 type CoverImageStyle = 'card' | 'mask';
@@ -57,7 +58,6 @@ function withBase(href: string) {
 function getPageHref(pageNumber: number) {
   return pageNumber === 1 ? '/blog/' : `/blog/page/${pageNumber}/`;
 }
-import '@navfolio/theme-default/styles/blog-archive.css';
 ---
 
 <BlogArchiveHeader

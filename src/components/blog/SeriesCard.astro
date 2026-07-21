@@ -4,6 +4,7 @@ import FormattedDate from '../FormattedDate.astro';
 import SeriesProgress from './SeriesProgress.astro';
 import { getSiteConfig } from '../../data/site';
 import { getUiText } from '../../utils/ui-text';
+import '@navfolio/theme-default/styles/blog-series-card.css';
 
 interface Props {
   name: string;
@@ -15,7 +16,6 @@ const { name, slug, posts } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const href = `${basePath}/blog/series/${slug}/`;
 const ui = getUiText(await getSiteConfig());
-import '@navfolio/theme-default/styles/blog-series-card.css';
 ---
 
 <article class="series-card">

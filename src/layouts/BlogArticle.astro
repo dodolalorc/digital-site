@@ -15,6 +15,7 @@ import { sortByDateDesc } from '../utils/content-dates';
 import { getSeriesContext, slugifyGroupName } from '../utils/content-groups';
 import { buildTocTree, countTocItems } from '../utils/toc-tree';
 import { getUiText } from '../utils/ui-text';
+import '@navfolio/theme-default/styles/blog-article.css';
 
 const siteConfig = await getSiteConfig();
 const { comments: rawComments } = siteConfig;
@@ -237,7 +238,3 @@ const hasSidebar = shouldRenderSidebar && hasToc;
     <MermaidRenderer />
   </body>
 </html>
-
-<style is:global>
-  @import '@navfolio/theme-default/styles/blog-article.css';
-</style>

@@ -9,6 +9,7 @@ import { getSiteConfig } from '../../data/site';
 import { slugifyGroupName } from '../../utils/content-groups';
 import { isStickyEntry } from '../../utils/content-dates';
 import { getUiText } from '../../utils/ui-text';
+import '@navfolio/theme-default/styles/blog-post-list.css';
 
 type BlogPost = CollectionEntry<'blog'>;
 type CoverImageStyle = 'card' | 'mask';
@@ -32,7 +33,6 @@ function withBase(href: string) {
 
   return `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
 }
-import '@navfolio/theme-default/styles/blog-post-list.css';
 ---
 
 <ListTag class="post-stack">

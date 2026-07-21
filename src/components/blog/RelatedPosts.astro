@@ -4,6 +4,7 @@ import FormattedDate from '../FormattedDate.astro';
 import SmartImage from '../SmartImage.astro';
 import { getSiteConfig } from '../../data/site';
 import { getUiText } from '../../utils/ui-text';
+import '@navfolio/theme-default/styles/blog-related-posts.css';
 
 interface Props {
   posts: CollectionEntry<'blog'>[];
@@ -22,7 +23,6 @@ function withBase(href: string) {
 
   return `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
 }
-import '@navfolio/theme-default/styles/blog-related-posts.css';
 ---
 
 <aside class:list={['related-posts', 'blog-card', className]}>

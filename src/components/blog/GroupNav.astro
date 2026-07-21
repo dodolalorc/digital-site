@@ -9,6 +9,7 @@ import {
 } from '../../utils/content-groups';
 import { getUiText } from '../../utils/ui-text';
 import Icon from '../Icon.astro';
+import '@navfolio/theme-default/styles/blog-group-nav.css';
 
 interface Props {
   activeView?: 'posts' | 'series' | 'tags' | 'archives';
@@ -31,7 +32,6 @@ function withBase(href: string) {
 function getCategoryName(name: string, slug: string) {
   return slug === uncategorizedCategory.slug ? ui.groups.uncategorized : name;
 }
-import '@navfolio/theme-default/styles/blog-group-nav.css';
 ---
 
 <nav class="group-nav" aria-label={ui.groups.blogBrowsingGroups} data-group-nav>

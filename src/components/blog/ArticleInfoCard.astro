@@ -1,5 +1,6 @@
 ---
 import FormattedDate from '../FormattedDate.astro';
+import '@navfolio/theme-default/styles/blog-article-info-card.css';
 
 interface Props {
   date: Date;
@@ -8,7 +9,6 @@ interface Props {
 }
 
 const { date, readingTime, tags } = Astro.props;
-import '@navfolio/theme-default/styles/blog-article-info-card.css';
 ---
 
 <aside class="article-info blog-card">

@@ -1,5 +1,6 @@
 ---
 import { ArrowLeft } from 'lucide-astro';
+import '@navfolio/theme-default/styles/blog-back-link.css';
 
 interface Props {
   href: string;
@@ -9,7 +10,6 @@ interface Props {
 const { href, label } = Astro.props;
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 const linkHref = `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
-import '@navfolio/theme-default/styles/blog-back-link.css';
 ---
 
 <a class="back-link" href={linkHref} data-back-link>
