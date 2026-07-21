@@ -1,4 +1,6 @@
 ---
+import ThemeBlogArchiveHeader from '@navfolio/theme-default/components/BlogArchiveHeader.astro';
+
 interface Props {
   kicker?: string;
   title?: string;
@@ -6,20 +8,7 @@ interface Props {
   note?: string;
 }
 
-const { kicker = 'Notebook archive', title = 'Writing notes', subtitle, note } = Astro.props;
-const defaultSubtitle =
-  'Loose pages, technical margins, and small notes gathered into a readable stack.';
-const resolvedSubtitle = subtitle ?? note ?? defaultSubtitle;
-const resolvedNote = subtitle !== undefined ? note : undefined;
+const { kicker, title, subtitle, note } = Astro.props;
 ---
 
-<header class="archive-hero archive-header-shared page-header-spacing">
-  <div class="archive-header-main">
-    <p class="archive-kicker">{kicker}</p>
-    <h1 class="archive-title">{title}</h1>
-  </div>
-  <div class="archive-copy">
-    <p class="archive-subtitle">{resolvedSubtitle}</p>
-    {resolvedNote && <p class="archive-note">{resolvedNote}</p>}
-  </div>
-</header>
+<ThemeBlogArchiveHeader kicker={kicker} title={title} subtitle={subtitle} note={note} />

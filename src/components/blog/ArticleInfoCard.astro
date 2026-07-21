@@ -1,5 +1,6 @@
 ---
 import FormattedDate from '../FormattedDate.astro';
+import '@navfolio/theme-default/styles/blog-article-info-card.css';
 
 interface Props {
   date: Date;
@@ -26,54 +27,3 @@ const { date, readingTime, tags } = Astro.props;
     {tags.map((tag) => <span>{tag}</span>)}
   </div>
 </aside>
-
-<style>
-  .article-info {
-    padding: 22px;
-  }
-
-  dl {
-    display: grid;
-    gap: 14px;
-    margin: 0;
-  }
-
-  div {
-    display: grid;
-    gap: 3px;
-  }
-
-  dt {
-    color: var(--paper-ink-faint);
-    font-family: var(--font-ui-label);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  dd {
-    margin: 0;
-    color: var(--paper-ink);
-    font-family: var(--font-meta);
-    font-size: 0.92rem;
-    font-weight: 700;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 18px;
-  }
-
-  .tags span {
-    padding: 6px 10px;
-    border: 1px solid var(--paper-line);
-    border-radius: 8px;
-    background: var(--paper-control);
-    color: var(--paper-accent);
-    font-family: var(--font-meta);
-    font-size: 0.76rem;
-    font-weight: 700;
-  }
-</style>
