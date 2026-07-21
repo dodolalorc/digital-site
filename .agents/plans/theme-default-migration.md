@@ -26,7 +26,9 @@ imports the package subpath and the local copy is removed.
 2. `BaseHead`, `Footer`, and base layout, behind package-addressable component
    entry points. The host adapters provide configuration, fallback image assets,
    navigation, and optional runtime controls through props and slots.
-3. Blog layouts and presentational blog components.
+3. Blog layouts and presentational blog components. `BlogPost` is migrated as
+   a slot-based shell; the host keeps content data, navigation, image handling,
+   Mermaid, and footer composition.
 4. Dashboard cards and widgets.
 
 Content loading, page routes, Markdown pipeline configuration, search, and

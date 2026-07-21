@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import ThemeBlogPost from '@navfolio/theme-default/components/BlogPost.astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -18,124 +19,23 @@ const palette = siteConfig.theme.palette;
 const htmlLang = getHtmlLang(siteConfig);
 ---
 
-<html lang={htmlLang} data-palette={palette}>
-  <head>
+<ThemeBlogPost htmlLang={htmlLang} palette={palette} title={title}>
+  <Fragment slot="head">
     <BaseHead title={title} description={description} />
-    <style>
-      main {
-        width: min(100%, var(--layout-shell-width));
-        max-width: none;
-        margin: 0 auto;
-        padding: 118px var(--layout-page-gutter) var(--layout-page-bottom);
-      }
-      .hero-image {
-        width: 100%;
-        margin: 0 0 34px;
-      }
-      .hero-image img {
-        display: block;
-        margin: 0 auto;
-        border: 1px solid var(--paper-line);
-        border-radius: 8px;
-        box-shadow: var(--paper-shadow);
-        filter: saturate(0.72) contrast(0.98);
-      }
-      .prose {
-        width: min(100%, var(--layout-reading-width));
-        max-width: 100%;
-        min-width: 0;
-        margin: auto;
-        padding: 0 0 42px;
-        color: var(--paper-ink);
-        font-family: var(--font-article);
-        font-size: 1.04rem;
-        line-height: 1.9;
-      }
-      .title {
-        margin-bottom: 34px;
-        padding: 0;
-        text-align: left;
-        line-height: 1.2;
-      }
-      .title h1 {
-        max-width: 100%;
-        margin: 8px 0 18px;
-        color: var(--paper-ink);
-        font-size: clamp(2.4rem, 7vw, 4.2rem);
-        line-height: 1.02;
-      }
-      .date {
-        margin-bottom: 0.5em;
-        color: var(--paper-ink-faint);
-        font-family: var(--font-meta);
-        font-size: 0.86rem;
-        font-weight: 600;
-      }
-      .last-updated-on {
-        font-style: italic;
-      }
-      .prose :global(p) {
-        margin: 0 0 1.35em;
-      }
-      .prose :global(a) {
-        color: var(--paper-accent);
-        text-underline-offset: 4px;
-      }
-      .prose :global(.mermaid-diagram) {
-        overflow-x: auto;
-        margin: 30px 0 34px;
-        padding: 22px;
-        border: 1px solid var(--paper-line-strong);
-        border-radius: 8px;
-        background: var(--paper-surface-muted);
-      }
-      .prose :global(.mermaid-diagram .mermaid) {
-        min-width: max-content;
-        margin: 0;
-        padding: 0;
-        background: transparent;
-        color: var(--paper-ink);
-        font-family: var(--font-article);
-        font-size: 0.95rem;
-        text-align: center;
-      }
-      .prose :global(.mermaid-diagram svg) {
-        display: block;
-        width: auto;
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto;
-      }
-
-      @media (max-width: 640px) {
-        main {
-          padding: 92px 18px 42px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
+  </Fragment>
+  <Fragment slot="navigation">
     <BlogTopNav />
-    <main data-pagefind-body>
-      <article>
-        <div class="prose">
-          <div class="title">
-            <div class="date">
-              <FormattedDate date={date} />
-            </div>
-            <h1>{title}</h1>
-            <hr />
-          </div>
-          <div class="hero-image">
-            {heroImage && <SmartImage width={1020} height={510} src={heroImage} alt="" />}
-          </div>
-          <slot />
-        </div>
-      </article>
-    </main>
+  </Fragment>
+  <Fragment slot="date">
+    <FormattedDate date={date} />
+  </Fragment>
+  <Fragment slot="hero-image">
+    {heroImage && <SmartImage width={1020} height={510} src={heroImage} alt="" />}
+  </Fragment>
+  <slot />
+  <Fragment slot="after-content">
     <ScrollToTopButton />
     <Footer />
     <MermaidRenderer />
-  </body>
-</html>
+  </Fragment>
+</ThemeBlogPost>
