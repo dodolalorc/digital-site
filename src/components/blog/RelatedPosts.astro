@@ -22,6 +22,7 @@ function withBase(href: string) {
 
   return `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
 }
+import '@navfolio/theme-default/styles/blog-related-posts.css';
 ---
 
 <aside class:list={['related-posts', 'blog-card', className]}>
@@ -47,71 +48,3 @@ function withBase(href: string) {
     }
   </div>
 </aside>
-
-<style>
-  .related-posts {
-    padding: 18px;
-  }
-
-  h2 {
-    margin: 0 0 14px;
-    color: var(--paper-ink);
-    font-size: 0.9rem;
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
-
-  .related-list {
-    display: grid;
-    gap: 12px;
-  }
-
-  a {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-    align-items: center;
-    color: var(--paper-ink);
-    text-decoration: none;
-  }
-
-  a.has-thumbnail {
-    grid-template-columns: 58px minmax(0, 1fr);
-    gap: 10px;
-  }
-
-  a:hover strong {
-    color: var(--paper-accent);
-  }
-
-  img {
-    display: block;
-    width: 58px;
-    height: 48px;
-    border-radius: 6px;
-    background: var(--paper-surface-muted);
-    object-fit: cover;
-    box-shadow: var(--paper-shadow);
-    filter: saturate(0.7);
-  }
-
-  span {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
-  }
-
-  strong {
-    display: -webkit-box;
-    overflow: hidden;
-    font-size: 0.86rem;
-    line-height: 1.25;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  small {
-    color: var(--paper-ink-faint);
-    font-size: 0.75rem;
-  }
-</style>
