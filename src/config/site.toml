@@ -146,7 +146,7 @@ label = "空间"
 module = "vibe"
 
 [[config.topNav.links]]
-label = "Media"
+label = "书影音"
 module = "media"
 
 [[config.topNav.links]]
