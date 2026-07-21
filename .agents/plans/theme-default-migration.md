@@ -24,7 +24,8 @@ imports the package subpath and the local copy is removed.
 1. Base tokens and global CSS structure. The host retains only its font and
    KaTeX imports; the theme owns all visual rules.
 2. `BaseHead`, `Footer`, and base layout, behind package-addressable component
-   entry points.
+   entry points. The host adapters provide configuration, fallback image assets,
+   navigation, and optional runtime controls through props and slots.
 3. Blog layouts and presentational blog components.
 4. Dashboard cards and widgets.
 

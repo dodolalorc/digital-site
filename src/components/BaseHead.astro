@@ -1,11 +1,8 @@
 ---
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
+import ThemeBaseHead from '@navfolio/theme-default/components/BaseHead.astro';
 import FallbackImage from '../assets/figure/fail-loading-image.png';
 import { getSiteConfig } from '../data/site';
-import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title: string;
@@ -13,193 +10,15 @@ interface Props {
   image?: ImageMetadata | string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
-
-const { title, description, image = FallbackImage } = Astro.props;
-const imageUrl = typeof image === 'string' ? image : image.src;
+const { title, description, image } = Astro.props;
 const { site, fonts } = await getSiteConfig();
-const fontVariablesCss = createFontCss(fonts);
-
-function normalizeFontFamilyName(fontFamily: string) {
-  return fontFamily
-    .replace(/[\u0000-\u001f\u007f]/g, ' ')
-    .trim()
-    .replace(/^['"]|['"]$/g, '');
-}
-
-function toCssFontFamily(fontFamily: string) {
-  const normalized = normalizeFontFamilyName(fontFamily);
-
-  return `"${normalized.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
-}
-
-function toCssString(value: string) {
-  const normalized = value.replace(/[\u0000-\u001f\u007f]/g, '').trim();
-
-  return `"${normalized.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
-}
-
-function resolveAssetUrl(url: string) {
-  if (/^(?:https?:)?\/\//i.test(url) || url.startsWith('data:')) return url;
-
-  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-  const assetUrl = url.startsWith('/') ? url : `/${url}`;
-
-  return `${baseUrl}${assetUrl}`;
-}
-
-function getFontFormat(url: string) {
-  const extension = url.split('?')[0]?.split('#')[0]?.split('.').pop()?.toLowerCase();
-
-  if (extension === 'woff2') return 'woff2';
-  if (extension === 'woff') return 'woff';
-  if (extension === 'otf') return 'opentype';
-
-  return 'truetype';
-}
-
-function getSubsetFontUrl(fontUrl: string) {
-  const queryIndex = fontUrl.search(/[?#]/);
-  const suffix = queryIndex === -1 ? '' : fontUrl.slice(queryIndex);
-  const path = queryIndex === -1 ? fontUrl : fontUrl.slice(0, queryIndex);
-  const extensionIndex = path.lastIndexOf('.');
-  const basePath = extensionIndex === -1 ? path : path.slice(0, extensionIndex);
-
-  return `${basePath}-ui-subset.woff2${suffix}`;
-}
-
-function createFontCss(fonts: { en: string; code: string; zh: string; file: string }) {
-  const zhFontName = normalizeFontFamilyName(fonts.zh);
-  const zhFamily = toCssFontFamily(zhFontName);
-  const zhSubsetFamily = toCssFontFamily(`${zhFontName} UI Subset`);
-  const enFamily = toCssFontFamily(fonts.en);
-  const codeFontName = normalizeFontFamilyName(fonts.code);
-  const codeFamily = toCssFontFamily(fonts.code);
-  const fontFile = toCssString(resolveAssetUrl(fonts.file));
-  const subsetUrl = getSubsetFontUrl(fonts.file);
-  const subsetFile = toCssString(resolveAssetUrl(subsetUrl));
-  const monacoFontFace =
-    codeFontName === 'Monaco'
-      ? `@font-face{font-family:"Monaco";src:url(${toCssString(resolveAssetUrl('/fonts/Monaco.ttf'))}) format("truetype");font-style:normal;font-weight:400;font-display:swap;}`
-      : '';
-
-  return `
-@font-face{font-family:${zhSubsetFamily};src:url(${subsetFile}) format("${getFontFormat(subsetUrl)}");font-style:normal;font-weight:400;font-display:swap;}
-@font-face{font-family:${zhFamily};src:url(${fontFile}) format("${getFontFormat(fonts.file)}");font-style:normal;font-weight:400;font-display:swap;}
-${monacoFontFace}
-html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
-`;
-}
 ---
 
-<!-- Global Metadata -->
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<style is:inline set:html={fontVariablesCss}></style>
-<ClientRouter />
-<script is:inline>
-  (() => {
-    const storageKey = 'navfolio-theme';
-    const root = document.documentElement;
-    const themeMeta = () => document.querySelector('meta[name="theme-color"]');
-    const systemTheme = () =>
-      window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const storedTheme = () => {
-      try {
-        return localStorage.getItem(storageKey);
-      } catch {
-        return null;
-      }
-    };
-    const setStoredTheme = (theme) => {
-      try {
-        localStorage.setItem(storageKey, theme);
-      } catch {}
-    };
-    const applyTheme = (theme, persist = true) => {
-      const nextTheme = theme === 'dark' ? 'dark' : 'light';
-      const toggleLabel = nextTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
-
-      root.dataset.theme = nextTheme;
-      root.style.colorScheme = nextTheme;
-      themeMeta()?.setAttribute('content', nextTheme === 'dark' ? '#171b18' : '#fdfdf9');
-      for (const button of document.querySelectorAll('[data-theme-toggle]')) {
-        button.setAttribute('aria-label', toggleLabel);
-        button.setAttribute('title', toggleLabel);
-      }
-      if (persist) setStoredTheme(nextTheme);
-      window.dispatchEvent(
-        new CustomEvent('navfolio:theme-change', { detail: { theme: nextTheme } }),
-      );
-    };
-    const syncThemeControls = () => {
-      applyTheme(root.dataset.theme || storedTheme() || systemTheme(), false);
-    };
-
-    applyTheme(storedTheme() || systemTheme(), false);
-
-    if (!window.__navfolioTheme) {
-      window.__navfolioTheme = {
-        toggle() {
-          applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
-        },
-      };
-    }
-
-    if (window.__navfolioThemeInitialized) {
-      syncThemeControls();
-      return;
-    }
-
-    window.__navfolioThemeInitialized = true;
-
-    document.addEventListener('click', (event) => {
-      const toggle = event.target.closest?.('[data-theme-toggle]');
-      if (toggle) window.__navfolioTheme.toggle();
-    });
-
-    document.addEventListener('DOMContentLoaded', syncThemeControls, { once: true });
-    document.addEventListener('astro:page-load', syncThemeControls);
-
-    window.matchMedia?.('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (!storedTheme()) applyTheme(event.matches ? 'dark' : 'light', false);
-    });
-  })();
-</script>
-<link rel="icon" href={assetPath('favicon.svg')} sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href={assetPath('favicon-32x32.png')} />
-<link rel="icon" type="image/png" sizes="16x16" href={assetPath('favicon-16x16.png')} />
-<link rel="apple-touch-icon" sizes="180x180" href={assetPath('apple-touch-icon.png')} />
-<link rel="manifest" href={assetPath('manifest.json')} />
-<meta name="theme-color" content="#fdfdf9" />
-<link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={site.title}
-  href={new URL('rss.xml', Astro.site)}
+<ThemeBaseHead
+  title={title}
+  description={description}
+  image={image}
+  fallbackImage={FallbackImage}
+  site={site}
+  fonts={fonts}
 />
-<meta name="generator" content={Astro.generator} />
-
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
-<meta name="description" content={description} />
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(imageUrl, Astro.url)} />
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(imageUrl, Astro.url)} />

@@ -1,4 +1,5 @@
 ---
+import ThemeBaseLayout from '@navfolio/theme-default/components/BaseLayout.astro';
 import BaseHead from '../components/BaseHead.astro';
 import BlogTopNav from '../components/blog/BlogTopNav.astro';
 import FullFontWarmup from '../components/FullFontWarmup.astro';
@@ -17,15 +18,16 @@ const palette = siteConfig.theme.palette;
 const htmlLang = getHtmlLang(siteConfig);
 ---
 
-<!doctype html>
-<html lang={htmlLang} data-palette={palette}>
-  <head>
+<ThemeBaseLayout htmlLang={htmlLang} palette={palette}>
+  <Fragment slot="head">
     <BaseHead title={title} description={description} />
-  </head>
-  <body>
+  </Fragment>
+  <Fragment slot="navigation">
     <BlogTopNav />
-    <slot />
+  </Fragment>
+  <slot />
+  <Fragment slot="after-content">
     <ScrollToTopButton />
     <FullFontWarmup />
-  </body>
-</html>
+  </Fragment>
+</ThemeBaseLayout>
