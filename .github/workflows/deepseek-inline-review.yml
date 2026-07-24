@@ -49,7 +49,7 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: '24'
 
@@ -65,7 +65,7 @@ jobs:
 
       - name: Setup Python for graph analysis
         if: github.event_name == 'pull_request'
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
