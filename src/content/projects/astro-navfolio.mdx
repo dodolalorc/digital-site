@@ -1,81 +1,210 @@
 ---
-title: 'Astro Navfolio'
-description: '一个用于安静个人发布空间的 Astro 起始模板：将主页、博客、项目笔记和数字花园结构整合在一个易维护的网站中。'
+title: 'Astro Navfolio：个人发布空间 Starter'
+description: '一个基于 Astro 的开源个人发布系统，整合主页、博客、项目、Vibe、书影音、全文搜索与评论，并通过模块化配置和 Markdown / MDX 管理内容。'
 date: '2026-05-18T00:00:00+08:00'
 draft: false
-showHeroImage: true
+sticky: true
+heroImage: ''
+showHeroImage: false
+icon: github
+authors:
+  - dodolalorc
+links:
+  - https://github.com/dodolalorc/astro-navfolio
+  - https://github.com/navfolio/astro-navfolio-docs
 tags:
   - Astro
   - Starter
   - Digital Garden
   - Portfolio
+categories: []
+series: []
 comments: false
 sidebar:
   enable: false
-  toc: false
+  toc: true
   relatedPosts: false
 ---
 
-Astro Navfolio 是一个为个人站点准备的开源 starter。它不是传统的单页简历，也不是只展示文章列表的博客模板，而是把个人介绍、常用入口、文章归档、项目文档和轻量状态组件组织到同一个静态站点里。
+Astro Navfolio 是一个面向个人发布场景的开源 Astro starter。它把个人主页、博客、项目文档、Vibe 短记录和书影音收藏放进同一套静态站点中，让个人介绍、持续写作与作品沉淀不再分散在多个入口。
 
-项目仓库地址：[github.com/dodolalorc/astro-navfolio](https://github.com/dodolalorc/astro-navfolio)
+它不是一张被放大的在线简历，也不只是带有文章列表的博客主题。Navfolio 更接近一套可以长期维护的个人发布系统：主页负责建立入口，内容栏目承载不同密度的表达，配置与模块系统则负责让站点随着使用者的需求继续生长。
+
+- 在线预览：[astro.navfolio.site](https://astro.navfolio.site/)
+- 主题仓库：[github.com/dodolalorc/astro-navfolio](https://github.com/dodolalorc/astro-navfolio)
+- 内容仓库：[github.com/navfolio/astro-navfolio-docs](https://github.com/navfolio/astro-navfolio-docs)
 
 ## 为什么做这个项目
 
-很多个人主页会在作品集、博客、简历、GitHub 链接和近期动态之间拆成多个入口。Navfolio 的目标是让这些内容以更低的维护成本放在一起：主页负责快速导航，博客负责持续写作，Projects 区域负责沉淀项目说明和技术文档。
+个人网站通常需要同时回答几个问题：我是谁、我做过什么、我在写什么，以及读者还能去哪里找到我。单页作品集适合快速介绍，却不适合沉淀长内容；传统博客擅长归档文章，却很难自然容纳项目、动态和个人导航。
 
-这个项目强调的是内容优先和长期可维护。视觉上，它更接近一个安静的开发者笔记本，而不是营销型落地页；交互上，它尽量保持轻量，不让动效和组件抢走阅读注意力。
+Navfolio 尝试用一套清晰的信息结构连接这些内容：
 
-## 核心能力
+- 首页集中呈现个人资料、常用入口、近期内容和当前关注事项。
+- Blog 保存长文、教程、项目复盘与系列内容。
+- Projects 记录作品说明、技术决策和迭代过程。
+- Vibe 收纳不需要扩写成长文的生活片段与开发札记。
+- Media 整理读过、看过和听过的作品，并为需要展开的条目提供独立评论页。
+- About 承载站点说明、作者信息和友情链接。
 
-- 使用 Astro 构建静态站点，适合部署到 GitHub Pages、Vercel 或任意静态托管平台。
-- 用 Markdown / MDX 管理博客、About 页面和项目文档。
-- 首页与站点信息集中在 `src/config/site.toml` 中，便于替换成个人资料、导航入口和联系方式。
-- 文章页支持标题元信息、阅读时间、标签、目录和相关内容。
-- Projects 区域支持项目入口页和单独项目文档，适合记录仓库说明、设计决策和实现细节。
-- 使用 `lucide-astro` 提供统一图标系统，减少手写图标和样式漂移。
-- 内置 RSS、Sitemap 和 GitHub Pages 部署配置。
+这些页面不是彼此孤立的功能展示，而是同一个内容系统里的不同表达尺度。
 
-## 技术结构
+## 核心体验
 
-Navfolio 的实现保持 Astro-first：
+### 配置优先的个人化方式
 
-```bash
-src/
-  components/        页面组件、卡片、博客工具和首页 widget
-  content/           blog、about、projects 的 Markdown / MDX 内容
-  config/site.toml   首页资料和导航配置
-  data/site.ts       TOML 配置读取 helper
-  layouts/           基础布局和文章布局
-  pages/             Astro 路由
-  styles/global.css  全局视觉变量与排版规则
+站点级信息集中在 `src/config/site.toml`。标题、个人资料、顶部导航、首页模块、主题色盘、字体、搜索、评论和各栏目文案都可以从一个入口调整。大多数个人化工作不需要修改 Astro 组件。
+
+配置结构由 Zod schema 校验。字段缺失或类型不符合预期时，生产构建会直接给出错误，让配置问题在部署之前暴露。
+
+### 面向长期写作的内容模型
+
+Blog、Projects 和 About 使用 Markdown / MDX 管理，并共享稳定的文章元数据结构。标签、分类、系列、目录、相关文章、评论和 Hero Image 都可以按页面控制。
+
+Navfolio 的 Markdown 管线不只处理基础排版，也覆盖技术写作常见的内容形式：
+
+- Expressive Code 代码块与行号、折叠和主题配置。
+- KaTeX 或 MathJax 数学公式。
+- Mermaid 图表。
+- 响应式表格与 Obsidian 风格 Callout。
+- 可在 MDX 中使用的图片、轮播、音乐播放器、友链和书影音组件。
+
+这些能力集中在插件与组件包中，正文仍然保持为可迁移的 Markdown，而不是被某个页面编辑器锁定的数据。
+
+### 静态搜索与可选评论
+
+生产构建会使用 Pagefind 为站点生成静态全文索引。搜索可以通过顶部入口或 `Ctrl+K` / `Cmd+K` 唤起，不需要额外部署搜索服务。
+
+评论系统采用可配置方式接入，支持 Giscus、Utterances、Waline 或完全关闭。全站可以设置默认提供方，单篇文章也能在 frontmatter 中独立控制。
+
+### 克制但可辨认的视觉系统
+
+Navfolio 的视觉方向围绕“安静、轻量、结构化”展开。弱边框、低阴影和小幅动效用于提示层级，不让卡片和交互抢走正文的注意力；长文页面则把行宽、节奏和阅读工具放在更高优先级。
+
+内置色盘通过配置切换，页面模块共用主题变量和统一图标系统。视觉可以变化，但不会破坏首页、归档页与文章页之间的整体关系。
+
+## 从主题仓库到模块化生态
+
+Navfolio 最初是一套集中在单个仓库里的 Astro 主题。随着 Projects、Vibe、Media、Markdown 增强和同步工作流逐渐增加，项目开始把可复用能力拆成边界更明确的包。
+
+当前的 `navfolio.config.ts` 是模块组合入口：
+
+```ts
+export default defineNavfolioConfig({
+  modules: [projectsModule(), vibeModule(), mediaModule()],
+  plugins: [
+    markdownPlugin({
+      expressiveCode: true,
+      layouts: true,
+      math: { enabled: true },
+      mermaid: true,
+      responsiveTables: true,
+    }),
+    pages(),
+  ],
+});
 ```
 
-这种结构的好处是清晰、直接，也方便 AI 协作：内容、布局和视觉约束都有明确边界，新增页面时不需要引入复杂的状态管理或客户端框架。
+这套结构把能力分成几个层次：
 
-## 设计方向
+| 层次 | 职责 |
+| :--- | :--- |
+| `@navfolio/core` | 提供跨模块共享的基础契约与运行时能力 |
+| `@navfolio/pages` | 组合 Projects、Vibe、Media 等可选页面模块 |
+| `@navfolio/plugin-markdown` | 组织代码块、公式、图表、表格和 Callout 等 Markdown 能力 |
+| `@navfolio/mdx-components` | 提供需要显式引入的 MDX 内容组件 |
+| `@navfolio/theme-default` | 提供默认主题、布局和视觉变量 |
 
-Navfolio 的视觉语言围绕几个关键词展开：轻、安静、结构化、适合阅读。卡片使用接近 GitHub 的弱边框和低阴影，动效控制在很小的位移与透明度变化内，文章页把正文作为视觉中心。
+站点只启用实际需要的模块。模块负责自己的路由、内容集合与脚手架模板，主项目则保留最终的配置权和内容组织方式。
 
-Projects 页面也遵循同一原则。项目文档不会被塞进厚重的作品集卡片，而是以文章的方式呈现：先说明背景，再记录结构、能力和取舍。
+## 代码与内容分离
 
-## 适合用在什么地方
+项目把可复用主题和演示内容拆成了两个仓库：
 
-这个 starter 适合以下场景：
+- [`dodolalorc/astro-navfolio`](https://github.com/dodolalorc/astro-navfolio) 保存站点实现、配置示例、模块组合和构建流程。
+- [`navfolio/astro-navfolio-docs`](https://github.com/navfolio/astro-navfolio-docs) 保存演示站使用的 Blog、Projects、Vibe、Media 与 About 内容。
 
-- 想要一个轻量个人主页，同时保留博客写作能力。
-- 希望把开源项目、项目文档和个人介绍放在同一个入口。
-- 需要一个可长期维护的静态数字花园。
-- 想用 Astro、MDX 和内容集合搭建一个简单但有秩序的发布系统。
+内容仓库以 Git submodule 的方式挂载到 `src/docs`。开发自己的站点时，默认读取 `src/content`；构建文档与演示站时，则通过 `NAVFOLIO_CONTENT_SOURCE=docs` 切换数据源：
 
-## 后续可以扩展什么
+```bash
+bun run docs:sync
+bun run docs:dev
+bun run docs:build
+```
 
-当前项目已经具备基本的个人发布系统骨架。后续可以继续扩展：
+这种拆分让主题迭代不会和演示文章混在同一条提交历史中，也验证了 Navfolio 的内容模型能够脱离默认示例独立维护。
 
-- 为 Projects 条目增加 repo 元数据、截图和状态标签。
-- 为博客增加标签索引和按主题聚合的专题页。
-- 接入搜索，让文章和项目文档可以统一检索。
-- 为首页增加更真实的个人活动流或 GitHub 数据卡片。
-- 把视觉规范沉淀成更多 `.agents/skills` 文档，方便持续迭代。
+## 技术实现
 
-Navfolio 的重点不是一次性做成复杂系统，而是提供一个足够清晰、足够轻的起点，让个人内容可以稳定生长。
+当前版本建立在 Astro 7、TypeScript 和 Bun 之上，并保持静态输出：
+
+| 领域 | 实现 |
+| :--- | :--- |
+| 站点框架 | Astro 7、Astro Content Collections |
+| 样式 | Tailwind CSS 4、主题变量与组件样式 |
+| 内容 | Markdown、MDX、Zod schema |
+| 搜索 | Pagefind 静态全文索引 |
+| 富文本 | Expressive Code、KaTeX / MathJax、Mermaid |
+| 资源处理 | Sharp、本地字体与构建时 WOFF2 子集化 |
+| 基础能力 | RSS、Sitemap、统一图标与静态部署配置 |
+
+项目继续遵循 Astro-first 的实现方式。能够在构建阶段完成的工作尽量不发送到浏览器，客户端 JavaScript 主要服务于搜索弹层、评论、媒体和少量渐进式交互。
+
+## 内容工作流
+
+常用内容位于以下位置：
+
+```text
+src/config/site.toml        站点配置、个人资料与页面文案
+src/content/about.mdx       关于页面
+src/content/blog/           博客与使用手册
+src/content/projects/       项目入口与项目文档
+src/content/vibe/           轻量动态
+src/content/media/          书、电影、剧集、专辑与播客
+public/images/              Logo、头像与静态图片
+```
+
+项目提供统一的内容脚手架命令：
+
+```bash
+bun run post:new my-first-post
+bun run project:new my-project
+bun run vibe:new today-cloud
+bun run media:new my-favourite-book
+```
+
+文件名会经过安全处理，并作为初始标题和输出文件名。页面模块同时拥有各自的默认模板，因此新增字段或修改 frontmatter 时，不需要改动脚手架的 TypeScript 实现。
+
+## 构建与部署
+
+本地运行需要 Node.js 22.12 或更高版本、Bun 和 Git。生产构建还依赖 Python 3、FontTools 与 Brotli，用于根据站点界面和内容中的中日韩字符生成 WOFF2 字体子集。
+
+```bash
+git clone https://github.com/dodolalorc/astro-navfolio.git
+cd astro-navfolio
+bun install
+bun run dev
+```
+
+完成修改后，可以生成并预览生产版本：
+
+```bash
+bun run build
+bun run preview
+```
+
+构建结果位于 `dist`，可以部署到 GitHub Pages、Vercel、Netlify、Cloudflare Pages 或其他静态托管平台。仓库内置的 GitHub Actions 流程会处理项目页的 `base` 路径，也可以通过 `SITE_URL` 和 `SITE_BASE` 手动覆盖。
+
+## 项目取舍
+
+Navfolio 当前的取舍很明确：
+
+- 采用静态优先架构，换取简单部署、较少运行时依赖和可长期保存的内容。
+- 使用配置文件与 Markdown，而不是提供图形化后台。
+- 将搜索索引、字体处理和部分数据同步放在构建阶段，减少访客端的网络请求。
+- 通过模块和独立包扩展能力，避免所有站点都承担完整功能集。
+- 将演示内容放在独立仓库，让主题代码与内容历史保持清晰边界。
+
+代价是生产构建环境比普通 Astro 模板多出字体工具链，首次使用也需要理解 `site.toml`、内容目录和模块配置。不过，这些复杂度主要留在开发阶段，最终交付的仍然是一套可以直接托管的静态文件。
+
+Astro Navfolio 想提供的不是一个短期展示模板，而是一个足够安静、结构明确，并且能随着内容一起演进的个人发布起点。

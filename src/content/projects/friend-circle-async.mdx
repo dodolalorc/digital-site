@@ -1,0 +1,260 @@
+---
+title: 'Friend Circle Sync：静态友链动态同步器'
+description: '一个在静态站点构建前抓取并归一化友链 RSS / Atom 内容的同步工具，提供 Bun CLI 与 GitHub Action，无需运行时服务或浏览器跨域请求。'
+date: '2026-07-26T16:56:29.737Z'
+draft: false
+sticky: false
+heroImage: ''
+showHeroImage: false
+icon: github
+authors:
+  - dodolalorc
+links:
+  - https://github.com/navfolio/friend-circle-sync
+tags:
+  - RSS
+  - Atom
+  - GitHub Actions
+  - Bun
+categories: []
+series: []
+comments: true
+sidebar:
+  enable: false
+  toc: true
+  relatedPosts: false
+---
+
+Friend Circle Sync 是一个面向静态站点的友链动态同步工具。它读取一份友链 JSON，抓取每个站点公开的 RSS 或 Atom 订阅，将不同来源的数据归一化为一份 JSON 文件，再交给 Astro、Hugo、Hexo、Eleventy 等静态站点生成器使用。
+
+同步发生在网站构建之前，而不是访客打开页面之后。最终页面只需要读取已经生成的静态数据，因此不需要让浏览器逐个请求外部订阅源，也不需要为友链动态单独维护代理服务器或数据库。
+
+项目仓库：[github.com/navfolio/friend-circle-sync](https://github.com/navfolio/friend-circle-sync)
+
+## 为什么做这个项目
+
+“友链朋友圈”需要聚合多个站点的近期文章。直接在浏览器中请求这些订阅源看似简单，但很快会遇到跨域限制、请求数量、加载速度和外部站点稳定性等问题。将抓取逻辑放进自己的服务端可以解决一部分问题，却也给原本纯静态的网站增加了运行时基础设施。
+
+Friend Circle Sync 选择把这项工作前移到 CI 或本地构建阶段：
+
+```text
+友链 JSON
+   ↓
+发现并抓取 RSS / Atom
+   ↓
+解析、裁剪、去重与排序
+   ↓
+public/friend-circle.json
+   ↓
+静态站点构建与发布
+```
+
+访问者拿到的是构建产物中的同源 JSON。外部订阅源暂时不可用，只会影响下一次同步能够收集到的内容，不会让已经发布的网站失去现有页面。
+
+## 同步流程
+
+同步器会执行以下步骤：
+
+1. 从本地文件或远程 URL 读取友链 JSON 数组。
+2. 验证并保留具有名称和站点地址的友链。
+3. 优先请求友链中显式提供的订阅地址。
+4. 未配置订阅地址时，在站点域名下依次尝试常见路径。
+5. 解析 RSS 2.0 或 Atom 条目，并转换为统一字段。
+6. 按每个订阅源的数量上限裁剪文章。
+7. 使用文章 URL 去重，再按发布时间从新到旧排序。
+8. 将友链信息与文章列表写入目标 JSON 文件。
+
+不同友链会并发处理，单次网络请求设置为 12 秒超时。某个站点没有可用订阅源或暂时请求失败时，同步器会记录警告并跳过它，其他订阅源仍会正常写入结果。
+
+## 友链输入
+
+默认输入是一组 JSON 对象：
+
+```json
+[
+  {
+    "name": "Ada's Notes",
+    "url": "https://ada.example.com",
+    "rss": "https://ada.example.com/feed.xml",
+    "avatar": "https://ada.example.com/avatar.png"
+  },
+  {
+    "name": "Lin's Garden",
+    "url": "https://lin.example.com",
+    "avatar": "https://lin.example.com/avatar.png"
+  }
+]
+```
+
+字段要求如下：
+
+| 字段 | 是否必需 | 作用 |
+| :--- | :--- | :--- |
+| `name` | 是 | 友链名称与默认文章作者名 |
+| `url` | 是 | 站点主页地址 |
+| `rss` | 否 | RSS 或 Atom 地址；显式提供时不会探测其他路径 |
+| `avatar` | 否 | 作者头像，会复制到对应的文章数据中 |
+
+当 `rss` 缺失时，同步器会在站点源地址下尝试：
+
+```text
+/rss.xml
+/feed.xml
+/atom.xml
+/index.xml
+/feed
+/rss
+```
+
+自动探测适合兼容常见博客系统，但显式配置订阅地址更稳定，也能减少无效请求。
+
+输入数据不必严格使用这四个字段名。通过 `name-field`、`url-field`、`avatar-field` 和 `rss-field` 可以映射现有 API，例如直接把 `image` 作为头像字段，而不必先转换整份友链数据。
+
+## 归一化输出
+
+输出不是单纯的文章数组，而是同时保留 `friends` 和 `posts`：
+
+```json
+{
+  "friends": [
+    {
+      "name": "Ada's Notes",
+      "url": "https://ada.example.com",
+      "avatar": "https://ada.example.com/avatar.png",
+      "rss": "https://ada.example.com/feed.xml"
+    }
+  ],
+  "posts": [
+    {
+      "title": "A post from the feed",
+      "url": "https://ada.example.com/posts/a-post",
+      "date": "2026-07-14T08:00:00.000Z",
+      "tags": ["notes", "rss"],
+      "author": "Ada's Notes",
+      "authorUrl": "https://ada.example.com",
+      "avatar": "https://ada.example.com/avatar.png"
+    }
+  ]
+}
+```
+
+保留完整友链列表后，消费端即使没有从某位朋友的站点找到订阅源，也能统计和展示真实的友链数量。
+
+文章数据中，`url` 始终指向具体文章，`authorUrl` 指向作者站点主页。标题可以链接到文章，作者名和头像则可以回到对应友站，不会混淆两个不同层级的地址。
+
+## 作为 GitHub Action 使用
+
+项目提供 Composite GitHub Action，适合在静态站点构建之前执行：
+
+```yaml
+name: Deploy site
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: navfolio/friend-circle-sync@main
+        with:
+          input: ${{ vars.FRIEND_LINKS_SRC }}
+          output: public/friend-circle.json
+          max-posts-per-feed: '12'
+          avatar-field: image
+
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+```
+
+`input` 可以是工作区中的 JSON 文件，也可以是远程地址。远程来源适合放在 GitHub Repository Variables 中；本地来源可以直接填写 `data/friend-links.json`。
+
+生成文件通常不需要提交到 Git。每次部署前重新同步，可以让站点构建使用当时可获取的最新内容。
+
+## 作为 Bun CLI 使用
+
+CLI 适合本地调试、其他 CI 平台或自定义部署脚本：
+
+```bash
+git clone https://github.com/navfolio/friend-circle-sync.git
+cd friend-circle-sync
+bun install
+
+bun run sync -- \
+  --input https://example.com/friend-links.json \
+  --output ../your-site/public/friend-circle.json \
+  --max-posts-per-feed 12
+```
+
+可用参数如下：
+
+| 参数 | 默认值 | 说明 |
+| :--- | :--- | :--- |
+| `--input` | 无 | 必填；本地 JSON 路径或远程地址 |
+| `--output` | `public/friend-circle.json` | 输出文件位置，父目录会自动创建 |
+| `--max-posts-per-feed` | `12` | 每个订阅源保留的最大文章数 |
+| `--name-field` | `name` | 友链名称字段 |
+| `--url-field` | `url` | 站点地址字段 |
+| `--avatar-field` | `avatar` | 头像地址字段 |
+| `--rss-field` | `rss` | 订阅源地址字段 |
+
+## 与 Astro Navfolio 集成
+
+在 Navfolio 或其他 Astro 项目中，可以把生成的数据交给 `FriendCircle` 组件：
+
+```astro
+---
+import FriendCircle from '@navfolio/mdx-components/FriendCircle.astro';
+---
+
+<FriendCircle
+  feedSrc="/friend-circle.json"
+  limit={10}
+  title="Friends' updates"
+/>
+```
+
+组件会在构建阶段渲染初始列表，并让客户端刷新按钮继续使用同一份数据。即使 JavaScript 不可用，页面第一次加载时仍然具有可阅读的友链动态。
+
+同步器本身不依赖 Astro。只要目标站点能够在构建阶段读取 JSON，它就可以与其他静态站点生成器或自定义页面配合。
+
+## 技术实现
+
+项目保持了很小的技术边界：
+
+| 领域 | 实现 |
+| :--- | :--- |
+| 运行环境 | Bun |
+| 语言 | TypeScript |
+| XML 解析 | `fast-xml-parser` |
+| 运行方式 | Bun CLI、Composite GitHub Action |
+| 输入 | 本地或远程友链 JSON |
+| 输出 | 格式稳定的静态 JSON |
+
+核心同步逻辑集中在一个 CLI 中，不包含数据库、常驻服务器或第三方聚合 API。RSS 和 Atom 解析完成后，剩余工作都是本地的数据整理与文件写入。
+
+开发时可以运行类型检查，并使用 fixture 验证输出：
+
+```bash
+bun install
+bun run check
+bun run sync -- \
+  --input ./fixtures/friends.json \
+  --output ./tmp/friend-circle.json
+```
+
+## 使用边界
+
+Friend Circle Sync 有意不解决所有订阅聚合问题：
+
+- 它只读取公开可访问的友链与订阅源，不处理需要登录或鉴权的内容。
+- 自动发现只尝试一组常见订阅路径，不解析网页中的 `<link rel="alternate">`；建议优先提供明确的 `rss` 字段。
+- 单个订阅源失败会被跳过，但输入文件无法读取、JSON 格式错误或缺少必需的命令参数仍会终止任务。
+- 同步结果反映构建时刻的公开内容，不是实时流。
+- 外部友链数据会进入 CI 流程，使用远程来源前应先确认其结构与可信度。
+
+这些限制换来的是一条容易理解和维护的数据链路：构建前收集公开内容，构建时生成静态页面，访问时不再依赖外部站点是否在线。
