@@ -86,7 +86,7 @@ note = "一页浏览书、电影、剧集、专辑与播客。"
 
 [config.comments]
 enabled = true
-provider = "giscus"
+provider = "waline"
 show_on_posts = true
 
 [config.comments.giscus]
@@ -111,7 +111,7 @@ label = "comment"
 theme = "github-light"
 
 [config.comments.waline]
-server_url = ""
+server_url = "https://comments.dodolalorc.cn/"
 lang = "zh-CN"
 dark = "html.dark"
 pageview = true
