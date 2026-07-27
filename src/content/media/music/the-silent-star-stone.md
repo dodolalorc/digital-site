@@ -1,10 +1,11 @@
 ---
 title: "飞行器的执行周期"
-creator: "郭顶"
+creator: "郭顶 · 2016"
 type: album
 status: completed
 completedAt: "2016"
 cover: https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/4b/55/95/4b5595a2-5d2c-38c7-8179-0a27e5ba58a1/00602488600859.rgb.jpg/592x592bb.webp
+rate: 5
 coverAspect: square
 draft: false
 review: false
