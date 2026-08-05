@@ -111,7 +111,12 @@ ip变了玉玉中（
   shuffle={true}
 />
 
-<FriendLinkApplication repository="dodolalorc/dodolalorc" showLivePreview />
+<FriendLinkApplication
+  repository="dodolalorc/dodolalorc"
+  issueTitle="[友链申请] {name}" issueTemplate="friend-link.yml"
+  labels={['friend-link']}
+  showLivePreview
+/>
 
 <FriendCircle feedSrc="/friend-circle.json" limit={10} />
 
